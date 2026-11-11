@@ -30,4 +30,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://welearnwegrow.github.io/deciding-together/assets.html</loc>
+  </url>
 </urlset>
