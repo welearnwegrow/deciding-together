@@ -94,11 +94,13 @@ details.tech[open] > summary .tw{transform:rotate(45deg)}
 .drawer::backdrop{background:rgba(20,18,14,.35)}
 .drawer[open]{animation:dslide .28s ease-out}
 @keyframes dslide{from{transform:translateX(40px); opacity:0} to{transform:none; opacity:1}}
-.dhead{position:sticky; top:0; z-index:2; height:0; display:flex; justify-content:flex-end; padding:0 16px}
-.dhead .phact{margin-top:14px}
+.dhead{position:sticky; top:0; z-index:4; display:flex; justify-content:space-between; align-items:center; gap:10px; padding:max(14px, env(safe-area-inset-top)) 18px 10px; background:linear-gradient(var(--paper) 78%, transparent)}
+.dhead .phact{margin-left:auto}
+#tdlgBody{outline:none}
+
 .dclose{margin-top:0; width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:1rem; cursor:pointer}
 .dclose:hover{border-color:var(--ochre)}
-#tdlgBody{padding:30px 28px 40px}
+#tdlgBody{padding:0 28px 40px}
 #tdlgBody > *{max-width:900px}
 #tdlgBody h2{font-family:var(--serif); font-weight:400; font-size:1.9rem; line-height:1.15; padding-right:44px; margin:4px 0 6px}
 #tdlgBody h3{font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--label); font-weight:500; margin:22px 0 6px}
@@ -112,7 +114,7 @@ details.tech[open] > summary .tw{transform:rotate(45deg)}
 .tpn a{text-decoration:none; color:var(--ink); font-family:var(--serif); font-size:1.05rem; line-height:1.25}
 .tpn a small{display:block; font-family:var(--sans); font-size:.78rem; color:var(--ochre-deep); margin-bottom:3px}
 .tpn .tn{text-align:right} .tpn a:hover{text-decoration:underline; text-decoration-color:var(--ochre)}
-@media (max-width:640px){ .drawer{width:100vw; border-left:0} #tdlgBody{padding:26px 18px 32px} }
+@media (max-width:640px){ .drawer{width:100vw; border-left:0} #tdlgBody{padding:0 max(20px, env(safe-area-inset-right)) 32px max(20px, env(safe-area-inset-left))} .dhead{padding-left:20px; padding-right:20px} }
 .cpur{color:var(--ink-soft); font-size:.93rem}
 .recipe .rdec{font-family:var(--serif); font-weight:400; font-size:1.1rem; margin:16px 0 4px; padding-top:12px; border-top:1px solid var(--line)}
 </style>
@@ -267,7 +269,7 @@ window.page = function(){
       <h3>Watch out for</h3>${list(t.pitfalls, "ul")}
       ${cs}
       <nav class="tpn">${prev ? `<a href="#${hy(prev.t.id)}" class="tp"><small>← Previous</small>${esc(prev.t.name)}</a>` : "<span></span>"}${next ? `<a href="#${hy(next.t.id)}" class="tn"><small>Next →</small>${esc(next.t.name)}</a>` : "<span></span>"}</nav>`; };
-  const openT = k => { body.innerHTML = render(k); const sb = document.getElementById("tshare"); sb.innerHTML = SHARE_ICON + "<span>Share</span>"; setShare(sb, "m", ALL[k].t.id, ALL[k].t.name, ALL[k].t.for); if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; };
+  const openT = k => { body.innerHTML = render(k); const sb = document.getElementById("tshare"); sb.innerHTML = SHARE_ICON + "<span>Share</span>"; setShare(sb, "m", ALL[k].t.id, ALL[k].t.name, ALL[k].t.for); if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; body.tabIndex = -1; body.focus({preventScroll:true}); };
   dlg.querySelector(".dclose").onclick = () => dlg.close();
   dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
   dlg.addEventListener("close", () => { if (ALL.some(x => "#" + hy(x.t.id) === location.hash)) history.replaceState(null, "", location.pathname + location.search); });

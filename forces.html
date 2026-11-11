@@ -114,17 +114,19 @@
 .drawer::backdrop{background:rgba(20,18,14,.35)}
 .drawer[open]{animation:dslide .28s ease-out}
 @keyframes dslide{from{transform:translateX(40px); opacity:0} to{transform:none; opacity:1}}
-.dhead{position:sticky; top:0; z-index:2; height:0; display:flex; justify-content:flex-end; padding:0 16px}
-.dhead .dclose{margin-top:0}
-.dhead .phact{margin-top:14px}
+.dhead{position:sticky; top:0; z-index:4; display:flex; justify-content:space-between; align-items:center; gap:10px; padding:max(14px, env(safe-area-inset-top)) 18px 10px; background:linear-gradient(var(--paper) 78%, transparent)}
+.dhead .phact{margin-left:auto}
+#fdlgBody{outline:none}
+
+
 .dk{font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--label)}
 .dclose{width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:1rem; cursor:pointer}
 .dclose:hover{border-color:var(--ochre)}
-#fdlgBody{padding:0 26px 40px}
-#fdlgBody .fsec{border-top:0; padding-top:30px}
+#fdlgBody{padding:0 28px 40px}
+#fdlgBody .fsec{border-top:0; padding-top:4px}
 #fdlgBody .fsec h2{padding-right:44px}
 #fdlgBody .fsec.proto .txt{max-width:none}
-@media (max-width:640px){ .drawer{width:100vw; border-left:0} #fdlgBody{padding:0 18px 32px} }
+@media (max-width:640px){ .drawer{width:100vw; border-left:0} #fdlgBody{padding:0 max(20px, env(safe-area-inset-right)) 32px max(20px, env(safe-area-inset-left))} .dhead{padding-left:20px; padding-right:20px} }
 .drawer{display:none; flex-direction:column}
 .drawer[open]{display:flex}
 #fdlgBody{flex:1 1 auto}
@@ -148,7 +150,7 @@
 .dspec .lab .cur{letter-spacing:0; text-transform:none; font-weight:700; color:var(--ink); font-size:.86rem}
 .dspec .lab .nav{display:inline-flex; gap:10px}
 .dspec .lab button{background:none; border:0; font:inherit; color:var(--ink-soft); cursor:pointer; letter-spacing:0; text-transform:none; font-size:.86rem; font-weight:500; padding:0}
-@media (max-width:640px){ .dspec{padding:8px 14px 10px} .dspec .lab .p, .dspec .lab .t, .dspec .lab .n{display:none} }
+@media (max-width:640px){ .dspec{padding:36px 20px 10px} .dspec .lab .p, .dspec .lab .t, .dspec .lab .n{display:none} }
 
 .strip{margin:26px 0 8px}
 .stripsc{overflow-x:auto}
@@ -447,7 +449,7 @@ window.page = function(){
     document.getElementById("dspec").innerHTML = `<div class="row">${sp.map(p => `<a href="#${hy(p.id)}" style="--c:${p.c}" aria-label="${esc(p.name)}"${p.id === id ? ' aria-current="true"' : ""}><i></i><span>${esc(p.name)}</span></a>`).join("")}</div>
       <div class="lab"><span class="p">Mostly positive</span><span class="n">Mostly harmful</span></div>`;
     const sb = document.getElementById("fshare"); sb.innerHTML = SHARE_ICON + "<span>Share</span>"; setShare(sb, "f", id, FF[id].name, FF[id].what);
-    body.scrollTop = 0; if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; };
+    body.scrollTop = 0; if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; body.tabIndex = -1; body.focus({preventScroll:true}); };
   const closeF = () => { dlg.close(); };
   dlg.addEventListener("close", () => { if (location.hash) history.replaceState(null, "", location.pathname + location.search); });
   dlg.querySelector(".dclose").onclick = closeF;
