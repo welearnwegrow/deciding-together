@@ -164,12 +164,12 @@ async function initEditing(){
 }
 
 /* ---------- page chrome ---------- */
-const PAGES = [["index.html","Structures","path"],["forces.html","Social forces","forces"],["shaping.html","Shaping proposals","shaping"],["tool.html","Tool","tool"],["about.html","About","about"]];
+const PAGES = [["index.html","Structures","path"],["forces.html","Social forces","forces"],["shaping.html","Shaping proposals","shaping"],["about.html","About","about"]];
 function chrome(){
   const cur = window.PAGE;
   const top = document.createElement("header"); top.className = "top";
   top.innerHTML = `<div class="wrap"><a class="brand" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle class="d" cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/></svg>A field guide to making decisions together</a>
-    <nav aria-label="Sections">${PAGES.map(p => `<a href="${p[0]}"${p[2]===cur?' aria-current="page"':''}>${p[1]}</a>`).join("")}</nav></div>`;
+    <nav aria-label="Sections">${PAGES.map(p => `<a href="${p[0]}"${p[2]===cur?' aria-current="page"':''}>${p[1]}</a>`).join("")}<a class="gme" href="tool.html"${cur==="tool"?' aria-current="page"':''}><span aria-hidden="true">✦</span> Guide me</a></nav></div>`;
   document.body.prepend(top);
   const ft = document.createElement("footer"); ft.className = "site";
   ft.innerHTML = `<div class="wrap">

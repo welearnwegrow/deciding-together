@@ -80,6 +80,10 @@ p{margin:0}
 .top nav a{text-decoration:none; font-size:.94rem; color:var(--ink-soft); padding-block:2px; border-bottom:2px dotted transparent}
 .top nav a:hover{color:var(--ink)}
 .top nav a[aria-current="page"]{color:var(--ink); border-bottom-color:var(--ochre)}
+.top nav{align-items:center}
+.top nav a.gme{display:inline-flex; align-items:center; gap:7px; font-size:.84rem; font-weight:700; letter-spacing:.02em; color:#fff; background:linear-gradient(120deg,#bd8f34,#96701c); border:0; border-radius:20px; padding:7px 16px; box-shadow:0 4px 12px rgba(120,90,20,.25); white-space:nowrap}
+.top nav a.gme:hover{color:#fff; filter:brightness(1.06)}
+.top nav a.gme[aria-current="page"]{color:#fff; box-shadow:0 0 0 2px var(--paper), 0 0 0 4px #b0822f}
 
 main{padding-block:40px 64px}
 section.block{padding-block:40px; border-top:1px solid var(--line)}

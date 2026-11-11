@@ -98,7 +98,7 @@ window.page = function(){
   const on = {}; const add = (r, label, href) => { (on[r] = on[r] || []).push(`<a href="${href}">${label}</a>`); };
   Object.entries(FG.entries).forEach(([id,e]) => e.refs.forEach(r => add(r, S[id].name, sHref(id))));
   FG.forces.filter(f => f.id !== "org_silence").forEach(f => f.refs.forEach(r => add(r, f.name, fHref(f.id))));
-  ["vroom1973","vroom1988","hoy2008","rau2018","lalley2018"].forEach(r => add(r, "Tool", "tool.html"));
+  ["vroom1973","vroom1988","hoy2008","rau2018","lalley2018"].forEach(r => add(r, "Guide me", "tool.html"));
   ["sterman2000","meadows2008"].forEach(r => add(r, "Social forces", "forces.html"));
   (window.SHAPING || []).forEach(st => st.techs.forEach(t => (t.refs || []).forEach(r => add(r, "Shaping proposals: " + t.name, "shaping.html#" + hy(t.id)))));
   const strip = s => s.replace(/<[^>]+>/g,"");
