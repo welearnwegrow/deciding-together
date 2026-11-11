@@ -186,7 +186,10 @@ footer.site .brand{color:var(--ink); font-size:.95rem}
 @media (prefers-reduced-motion: reduce){ .scard{transition:none} .scard:hover{transform:none} }
 
 /* pop-up */
-dialog.pop{border:none; padding:0; width:min(940px, calc(100% - 24px)); max-height:calc(100% - 32px); border-radius:20px; background:var(--paper); color:var(--ink); box-shadow:var(--shadow-lift); overflow:auto}
+dialog.pop{position:fixed; inset:0 0 0 auto; margin:0; border:none; border-left:1px solid var(--line); padding:0; width:80vw; max-width:100vw; height:100dvh; max-height:100dvh; border-radius:0; background:var(--paper); color:var(--ink); box-shadow:-24px 0 60px rgba(20,18,14,.18); overflow:auto}
+dialog.pop[open]{animation:popslide .28s ease-out}
+@keyframes popslide{from{transform:translateX(40px); opacity:0} to{transform:none; opacity:1}}
+@media (max-width:640px){ dialog.pop{width:100vw; border-left:0} }
 dialog.pop::backdrop{background:rgba(30,28,24,.5)}
 .popin{padding:22px max(18px, 3vw) 30px; display:flex; flex-direction:column; gap:20px}
 .pophead{display:flex; justify-content:space-between; align-items:center; gap:12px; position:sticky; top:-22px; padding-top:4px; background:var(--paper); z-index:2}
@@ -208,6 +211,19 @@ dialog.pop::backdrop{background:rgba(30,28,24,.5)}
 .cap b{font-weight:700}
 .cap span{color:var(--ink-mute); font-size:.9rem}
 .pophead .close{white-space:nowrap; flex:none}
+.phact{display:inline-flex; align-items:center; gap:10px; flex:none}
+/* share */
+.shr{position:relative; display:inline-flex}
+.shbtn{display:inline-flex; align-items:center; gap:7px; height:36px; padding:0 14px 0 11px; border-radius:18px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font:inherit; font-size:.86rem; font-weight:700; cursor:pointer}
+.shbtn:hover, .shbtn[aria-expanded="true"]{border-color:var(--ochre)}
+.shbtn svg, .shmenu svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:none}
+.shmenu{position:absolute; top:calc(100% + 8px); right:0; z-index:20; min-width:200px; display:flex; flex-direction:column; padding:6px; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-lift)}
+.shmenu[hidden]{display:none}
+.shmenu a, .shmenu button{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:9px; border:0; background:none; font:inherit; font-size:.92rem; color:var(--ink); text-decoration:none; cursor:pointer; text-align:left}
+.shmenu a:hover, .shmenu button:hover{background:var(--surface)}
+.shmenu .wa svg{stroke:#1f9e55}
+.shurl{display:block; padding:4px 12px 8px; font-size:.78rem; color:var(--ink-soft); word-break:break-all; user-select:all}
+@media (max-width:480px){ .shbtn span{display:none} .shbtn{padding:0; width:36px; justify-content:center} }
 
 /* edit mode */
 .edbar{position:fixed; right:max(16px, env(safe-area-inset-right, 0px)); bottom:calc(16px + env(safe-area-inset-bottom, 0px)); z-index:50; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:flex-end; max-width:min(560px, calc(100% - 32px)); padding:8px; border-radius:14px; background:color-mix(in srgb, var(--paper) 92%, transparent); border:1px solid var(--line); box-shadow:var(--shadow-lift)}

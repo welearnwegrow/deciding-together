@@ -946,9 +946,9 @@ Object.assign(SCENES, {
     VB.tally(g, [{n:n[0], v:0},{n:n[1], v:.5},{n:n[2], v:1}], 400, 0, ease(ph(t,.72,.8)));
     SX.ring(g, cards[0].x, cards[0].y, 42, 28, ease(ph(t,.74,.8)));
     if (t > .84) tick(g, cards[0].x + 34, cards[0].y - 18, C.sage);
-    if (t < .22) caption(g, "Students write proposals to improve their school", "The school gets one euro per student, and at least 500");
+    if (t < .22) caption(g, "Students write proposals to improve their school", "The school sets aside part of its budget");
     else if (t < .45) caption(g, "They campaign for their ideas", "Classmates talk them over in the breaks");
-    else if (t < .72) caption(g, "On National Student Day, everyone votes", "Each student has one vote");
+    else if (t < .72) caption(g, "On voting day, everyone votes", "Each student has one vote");
     else caption(g, "The winning project is built that year", "A losing idea can try again next year");
   }},
   "majority:risky":{ P:14, draw(g,t){
@@ -960,7 +960,7 @@ Object.assign(SCENES, {
       actor(g, s.x, s.y, 18, {v: on > 0 ? v[i] : null}); });
     VB.tally(g, [{n:a, v:0},{n:b, v:1}], 400, 1, ease(ph(t,.74,.82)));
     if (t < .18) caption(g, "A school district puts a tax to voters in a special election", "No other election is on the ballot that day");
-    else if (t < .44) caption(g, "Few people turn out", "Nearly half of those who do are over 50");
+    else if (t < .44) caption(g, "Few people turn out", "Most who do are older residents without children in school");
     else if (t < .74) caption(g, "More than half of those who vote say no", "Many families with children did not vote");
     else caption(g, "The measure fails", "A small group has decided school funding for everyone");
   }},
@@ -1098,10 +1098,10 @@ Object.assign(SCENES, {
       actor(g, p.x, p.y, 14, {v: t > .74 ? 0 : v, decider:true, alpha: quiet.includes(i) && t > .86 ? .3 : 1});
       if (named.includes(i) && t > .56 && t < .86) SX.flag(g, p.x + 16, p.y - 18); });
     SX.ring(g, C0.x, C0.y, 40, 28, ease(vote));
-    if (t < .24) caption(g, "Students and staff meet openly about a bullying concern", "Everyone can speak, and the meeting aims to agree what to do");
-    else if (t < .48) caption(g, "Staff know what happened but cannot say", "The facts are about individual students and must stay private");
-    else if (t < .76) caption(g, "The room fills the gap with rumour", "Some students are named in front of everyone");
-    else caption(g, "The meeting agrees a rule that misses the problem", "Students who were hurt stop coming to meetings");
+    if (t < .24) caption(g, "Parents and staff meet openly about complaints over a teacher", "Anyone can speak, and the meeting aims to agree what to do");
+    else if (t < .48) caption(g, "The head knows what happened but cannot say", "The facts are about one member of staff and must stay private");
+    else if (t < .76) caption(g, "The room fills the gap with rumour", "The teacher is named in front of everyone");
+    else caption(g, "The meeting agrees steps that miss the problem", "The parents who complained stop coming");
   }}
 });
 /* Show of hands vote and Liberum veto, new format */
@@ -1631,7 +1631,7 @@ Object.assign(SCENES, {
     O.forEach((p,i) => { actor(g, p.x, p.y, 11, {v: null}); if (t > .84 + i*.004) tick(g, p.x + 14, p.y - 14, C.sage); });
     SX.ring(g, c.x, c.y, 118, 98, agree);
     if (t < .06) caption(g, "The head, two council chairs and two teachers sit in the centre", "Students, staff and parents listen around them");
-    else if (t < .66) caption(g, "Every no must come with another idea", "Listeners pass notes in");
+    else if (t < .66) caption(g, "Two sides start to dig in, but every no must come with another idea", "Listeners pass notes in");
     else if (t < .84) caption(g, "The five agree to try projects in two subjects", "Exams stay in the others for a year");
     else caption(g, "The wider group endorses it", "They heard how the plan was reached");
   }},

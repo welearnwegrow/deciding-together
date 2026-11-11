@@ -163,6 +163,38 @@ async function initEditing(){
   document.addEventListener("click", e => { if (EDITING && e.target.closest("[data-edit]") && e.target.closest("a")){ e.preventDefault(); e.stopImmediatePropagation(); } }, true);
 }
 
+/* ---------- share: each structure, force and method has its own public link ---------- */
+const PUBLIC_URL = "https://welearnwegrow.github.io/deciding-together/";
+const SHARE_DIR = {s:"s", f:"f", m:"m"};
+const shareURL = (k, id) => PUBLIC_URL + SHARE_DIR[k] + "/" + hy(id) + "/";
+const SHARE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4"/></svg>';
+function shareBtn(k, id, title, line){
+  return `<span class="shr"><button type="button" class="shbtn" data-share="${k}" data-id="${esc(id)}" data-title="${esc(title)}" data-line="${esc(firstSentence(strip0(line || "")))}" aria-haspopup="true" aria-expanded="false">${SHARE_ICON}<span>Share</span></button><span class="shmenu" hidden></span></span>`;
+}
+function strip0(s){ return String(s).replace(/<[^>]+>/g, ""); }
+function setShare(btn, k, id, title, line){ if (!btn) return; Object.assign(btn.dataset, {share: k, id, title, line: firstSentence(strip0(line || ""))}); }
+document.addEventListener("click", async e => {
+  const b = e.target.closest(".shbtn");
+  document.querySelectorAll(".shmenu:not([hidden])").forEach(m => { if (!b || m !== b.nextElementSibling){ m.hidden = true; m.previousElementSibling.setAttribute("aria-expanded", "false"); } });
+  if (b){ e.preventDefault(); e.stopPropagation();
+    const m = b.nextElementSibling; if (!m.hidden){ m.hidden = true; b.setAttribute("aria-expanded", "false"); return; }
+    const d = b.dataset, url = shareURL(d.share, d.id), text = `${d.title}${d.line ? " — " + d.line : ""}`;
+    const wa = "https://wa.me/?text=" + encodeURIComponent(text + "\n" + url);
+    const native = navigator.share && !(window.claude && window.claude.use);
+    m.innerHTML = `<a href="${wa}" target="_blank" rel="noopener" class="wa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/><path d="M8.8 8.6c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.1-.2.3 0 .5.6 1 1.4 1.8 2.5 2.4.2.1.4.1.5 0l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.2.3.4 0 .6-.3 1.4-1 1.7-.7.3-1.6.4-3.4-.4a9 9 0 0 1-3.6-3.3c-.7-1.1-.8-2.2-.5-3z"/></svg>WhatsApp</a>
+      <button type="button" class="cp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Copy link</button>
+      ${native ? `<button type="button" class="nt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>More…</button>` : ""}
+      <span class="shurl" hidden>${esc(url)}</span>`;
+    m.hidden = false; b.setAttribute("aria-expanded", "true");
+    m.querySelector(".cp").onclick = async ev => { ev.stopPropagation(); const c = ev.currentTarget;
+      try { await navigator.clipboard.writeText(url); c.lastChild.textContent = "Link copied"; }
+      catch (er){ const u = m.querySelector(".shurl"); u.hidden = false; c.lastChild.textContent = "Copy this link:";
+        const r = document.createRange(); r.selectNodeContents(u); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); } };
+    const nt = m.querySelector(".nt"); if (nt) nt.onclick = async ev => { ev.stopPropagation(); try { await navigator.share({title: d.title, text, url}); } catch (er){} };
+    return; }
+  if (!e.target.closest(".shmenu")) return;
+});
+
 /* ---------- page chrome ---------- */
 const PAGES = [["index.html","Structures","path"],["forces.html","Social forces","forces"],["shaping.html","Shaping proposals","shaping"],["about.html","About","about"]];
 function chrome(){
@@ -834,7 +866,7 @@ function openStructure(id){
   DLG.dataset.id = id;
   const e = FG.entries[id], fam = FAM[s.family];
   DLG.innerHTML = `<div class="popin">
-    <div class="pophead"><p class="kicker"><a href="index.html#group-${fam.id}" data-group="${fam.id}">${esc(fam.name)}</a></p><button class="btn close" type="button" aria-label="Close">✕</button></div>
+    <div class="pophead"><p class="kicker"><a href="index.html#group-${fam.id}" data-group="${fam.id}">${esc(fam.name)}</a></p><span class="phact">${shareBtn("s", id, s.name, s.line)}<button class="btn close" type="button" aria-label="Close">✕</button></span></div>
     <h2 id="popTitle"${E(`str:${id}:name`)}>${esc(s.name)}</h2>
     <p class="popline"${E(`str:${id}:line`)}>${esc(s.line)}</p>
     ${e && e.summary ? `<figure class="hero"><img id="popImg" alt="Drawing of ${esc(s.name)}"><figcaption class="legend">${legendHTML(id)}</figcaption></figure>

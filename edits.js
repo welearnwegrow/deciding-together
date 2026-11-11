@@ -6,7 +6,7 @@ window.FG_EDITS = {
 },
 "dom:about:p2": {
 "html": true,
-"v": "This education edition uses examples from schools, school systems and education projects, with a few from the wider social impact sector. It is written for students, teachers, parents, school leaders, policy makers, and the NGOs and universities that work with schools: anyone who takes part in decisions about education. The examples are drawn from situations that have been reported in the news and in research, as well as personal experience of working in schools for a decade, with names and details changed. The diagrams (feedback loops, icebergs, fishbones and causal layered analysis) are our own models of the mechanisms the research describes. References follow APA 7th edition."
+"v": "This education edition uses examples from schools, school systems and education projects, with a few from the wider social impact sector. It is written for students, teachers, parents, school leaders, policy makers, and the NGOs and universities that work with schools: anyone who takes part in decisions about education. The examples are drawn from situations that have been reported in the news and in research, as well as personal experience of working in schools for a decade, with names and details changed. The diagrams (feedback loops, icebergs and fishbones) are our own models of the mechanisms the research describes. References follow APA 7th edition."
 },
 "dom:about:p3": {
 "html": true,
