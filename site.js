@@ -679,7 +679,7 @@ function carouselHTML(kind, c, id){
           <p><span${E(k("why"),true)}>${c.why}</span>${c.together ? ` <span${E(k("together"),true)}>${c.together}</span>` : ""}</p></div>
         <div class="txt fcol"><p class="lab">Social forces</p>
           ${(c.forces || []).map((x,i) => { const f = F[x.f]; return f ? `<div class="fitem"><h5 class="fname">${fLabel(x)}${x.st ? ` <span class="st ${x.st}">${FST[x.st]}</span>` : ""}</h5><p${E(k("forces."+i+".how"),true)}>${x.how}</p></div>` : ""; }).join("")}</div>
-        ${FB_PILOT.includes(id) ? `<div class="fb" data-ex="${id}:${kind}"><p class="fbq">Does this example ring true?</p>
+        ${FB_ON(id) ? `<div class="fb" data-ex="${id}:${kind}"><p class="fbq">Does this example ring true?</p>
           <div class="fbb"><button type="button" data-r="yes">Rings true</button><button type="button" data-r="no">Doesn't ring true</button></div>
           <p class="fbmsg" aria-live="polite"></p>
           <form class="fbnote" hidden><label>What feels off? <span>(optional)</span><input type="text" maxlength="280" autocomplete="off"></label><button type="submit">Send</button></form></div>` : ""}
@@ -717,8 +717,8 @@ function legendHTML(id){
   const keys = (sc && sc.legend) || Object.keys(all);
   return keys.map(k => `<span><i class="sw ${k}"></i>${all[k]}</span>`).join("");
 }
-/* Reader feedback (pilot): one doc per reader at fb/<id>, readable only by the owner and editors. */
-const FB_PILOT = ["autocracy"];
+/* Reader feedback on every example: one doc per reader at fb/<id>, readable only by the owner and editors. */
+const FB_ON = id => !!FG.entries[id];
 let FB_DOC = null, FB_DATA = null;
 async function fbInit(root){
   const boxes = root.querySelectorAll(".fb"); if (!boxes.length) return;
@@ -744,7 +744,9 @@ async function fbInit(root){
 function fbInitStatic(boxes, msg){
   const url = window.FG_FEEDBACK_URL; if (!url){ boxes.forEach(b => b.hidden = true); return; }
   let mine = {}; try { mine = JSON.parse(localStorage.getItem("fg_fb") || "{}"); } catch (e){}
-  const send = async (ex, r, note) => { try { const res = await fetch(url, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({example: ex, reaction: r, note: note || "", page: location.pathname})}); return res.ok; } catch (e){ return false; } };
+  /* Anonymous visitor ID: random, made in this browser, never tied to a name or account. */
+  let vid = ""; try { vid = localStorage.getItem("fg_vid") || ""; if (!/^[a-f0-9]{32}$/.test(vid)){ const r = new Uint8Array(16); crypto.getRandomValues(r); vid = Array.from(r, x => x.toString(16).padStart(2, "0")).join(""); localStorage.setItem("fg_vid", vid); } } catch (e){ vid = ""; }
+  const send = async (ex, r, note) => { try { const res = await fetch(url, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({example: ex, reaction: r, note: note || "", page: location.pathname, visitor: vid})}); return res.ok; } catch (e){ return false; } };
   boxes.forEach(b => { const ex = b.dataset.ex;
     const mark = r => b.querySelectorAll("[data-r]").forEach(x => x.setAttribute("aria-pressed", x.dataset.r === r ? "true" : "false"));
     if (mine[ex]){ mark(mine[ex]); msg(b, "Thanks. You can change your answer."); }
