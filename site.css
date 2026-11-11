@@ -191,6 +191,11 @@ dialog.pop[open]{animation:popslide .28s ease-out}
 @keyframes popslide{from{transform:translateX(40px); opacity:0} to{transform:none; opacity:1}}
 @media (max-width:640px){ dialog.pop{width:100vw; border-left:0} .popin{padding-left:max(20px, env(safe-area-inset-left)); padding-right:max(20px, env(safe-area-inset-right))} }
 .shbtn:focus:not(:focus-visible){outline:none}
+/* a page shown inside the Guide me drawer: only its drawer is visible */
+html.embed main > .wrap > :not(dialog){display:none}
+html.embed .drawer, html.embed dialog.pop{width:100vw; border-left:0; box-shadow:none; animation:none}
+html.embed .drawer::backdrop, html.embed dialog.pop::backdrop{background:transparent}
+html.embed .dclose, html.embed .pophead .close{display:none}
 dialog.pop::backdrop{background:rgba(30,28,24,.5)}
 .popin{padding:22px max(18px, 3vw) 30px; display:flex; flex-direction:column; gap:20px}
 .pophead{display:flex; justify-content:space-between; align-items:center; gap:12px; position:sticky; top:-22px; padding-top:4px; background:var(--paper); z-index:2}

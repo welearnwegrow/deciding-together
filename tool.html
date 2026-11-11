@@ -150,6 +150,16 @@ main{overflow-x:clip}
 .gfb form button{background:none; border:0; font:inherit; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); cursor:pointer}
 .gfb .m{flex:1 1 100%; font-size:.84rem; color:var(--ink-mute); margin:0}
 .gfb .m:empty{display:none}
+/* drawer for structures, forces and methods linked from the answer */
+.xdrawer{position:fixed; inset:0 0 0 auto; margin:0; padding:0; border:0; border-left:1px solid var(--line); width:80vw; max-width:100vw; height:100dvh; max-height:100dvh; background:var(--paper); box-shadow:-24px 0 60px rgba(20,18,14,.18); overflow:hidden}
+.xdrawer[open]{display:flex; flex-direction:column; animation:popslide .28s ease-out}
+.xdrawer::backdrop{background:rgba(30,28,24,.5)}
+.xhead{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:max(12px, env(safe-area-inset-top)) 18px 10px 24px; border-bottom:1px solid var(--line)}
+.xhead p{margin:0; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--label)}
+.xclose{width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:1rem; cursor:pointer}
+.xclose:hover{border-color:var(--ochre)}
+#xframe{flex:1 1 auto; width:100%; border:0; background:var(--paper)}
+@media (max-width:640px){ .xdrawer{width:100vw; border-left:0} .xhead{padding-left:20px} }
 @media (max-width:860px){ .gwrap{grid-template-columns:minmax(0,1fr)} .gconsider{position:static; order:-1} .gask, .gbig, .glead, .gfirst{max-width:100%} .gkwrap{grid-template-columns:minmax(0,1fr)} }
 @media (max-width:560px){ .gdet{padding-left:16px} .gpeople th:nth-child(3), .gpeople td:nth-child(3){display:none} }
 </style>
@@ -187,6 +197,10 @@ main{overflow-x:clip}
     </div>
     <div id="gask"></div>
     <div class="gout" id="gout" aria-live="polite"></div>
+    <dialog id="xdlg" class="xdrawer" aria-labelledby="xdlgTitle">
+      <div class="xhead"><p id="xdlgTitle">From the guide</p><button class="xclose" type="button" aria-label="Close and return to your guide">✕</button></div>
+      <iframe id="xframe" title="Guide page"></iframe>
+    </dialog>
   </div>
 </main>
 <script src="data.js"></script>
@@ -252,6 +266,20 @@ window.PAGE = "tool";
     if (d.length < 160 && !NUDGED){ NUDGED = true; $("gnudge").hidden = false;
       $("gnudge").textContent = "A fuller description gives a sharper answer. Try covering the questions alongside, or press Guide me again to go ahead."; return; }
     $("gnudge").hidden = true; DESC = d; QS = []; $("gask").innerHTML = ""; run([], true); });
+  /* links in the answer, or in a structure drawer, open over the page so the answer stays */
+  const X = $("xdlg"), XF = $("xframe");
+  const openFrame = (url, label) => { $("xdlgTitle").textContent = label || "From the guide"; XF.src = url; if (!X.open) X.showModal(); };
+  X.querySelector(".xclose").onclick = () => X.close();
+  X.addEventListener("click", e => { if (e.target === X) X.close(); });
+  X.addEventListener("close", () => { XF.src = "about:blank"; });
+  addEventListener("message", e => { if (e.data && e.data.fg === "close" && X.open) X.close(); });
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[href]"); if (!a || a.closest("header.top, footer.site, #xdlg")) return;
+    const m = (a.getAttribute("href") || "").match(/^(index|forces|shaping)\.html#([\w-]+)$/); if (!m) return;
+    if (m[1] === "index"){ const id = Object.keys(S).find(k => hy(k) === m[2]); if (!id) return; e.preventDefault(); e.stopPropagation(); openStructure(id); return; }
+    e.preventDefault(); e.stopPropagation();
+    openFrame(`${m[1]}.html?embed=1#${m[2]}`, m[1] === "forces" ? "Social force" : "Shaping method");
+  }, true);
   GUIDE.available().then(ok => { if (!ok){ $("ggo").disabled = true; status("Guide me can't run in this view."); } });
 })();
 </script>

@@ -198,7 +198,18 @@ document.addEventListener("click", async e => {
 
 /* ---------- page chrome ---------- */
 const PAGES = [["index.html","Structures","path"],["forces.html","Social forces","forces"],["shaping.html","Shaping proposals","shaping"],["about.html","About","about"]];
+const EMBED = new URLSearchParams(location.search).has("embed");
+if (EMBED){
+  document.documentElement.classList.add("embed");
+  /* closing the inner drawer closes the outer one */
+  document.addEventListener("close", e => { if (e.target.tagName === "DIALOG") parent.postMessage({fg: "close"}, "*"); }, true);
+  /* links to other pages stay inside the drawer */
+  document.addEventListener("click", e => { const a = e.target.closest("a[href]"); if (!a) return;
+    const h = a.getAttribute("href"); const m = h.match(/^(index|forces|shaping)\.html(#.*)?$/);
+    if (m && !a.target) { e.preventDefault(); location.href = m[1] + ".html?embed=1" + (m[2] || ""); } }, true);
+}
 function chrome(){
+  if (EMBED) return;
   const cur = window.PAGE;
   const top = document.createElement("header"); top.className = "top";
   top.innerHTML = `<div class="wrap"><a class="brand" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle class="d" cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/></svg>A field guide to making decisions together</a>
