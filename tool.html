@@ -124,7 +124,14 @@ main{overflow-x:clip}
 .gnode.key details{border-color:var(--ochre); background:color-mix(in srgb, var(--ochre) 14%, var(--paper))}
 .gnode.key .gnum{background:var(--ochre); color:#2a2214}
 .gnode.gfall details{border-style:dashed; background:transparent}
-.gfat{font-size:.88rem; color:var(--ink-mute)}
+.gfchips{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.gfchip{font-size:.74rem; font-weight:700; border-radius:999px; padding:2px 9px; border:1px solid var(--line); background:var(--paper)}
+.gfchip.watch{color:var(--terra)} .gfchip.help{color:var(--good)}
+.gfat{margin-top:10px; padding:10px 12px; border-radius:10px; background:var(--paper); border-left:3px solid var(--terra)}
+.gfat.help{border-left-color:var(--good)}
+.gfat p{margin:0 0 4px; font-size:.92rem}
+.gfat .gfn{font-weight:700; color:var(--ink)}
+.gfat .gdo::before{content:"Do: "; font-weight:700}
 .gfstep{margin-left:8px; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--ink-mute); border:1px solid var(--line); border-radius:999px; padding:1px 7px; vertical-align:2px}
 /* who */
 .gpeople{width:100%; max-width:900px; border-collapse:collapse; font-size:.95rem}

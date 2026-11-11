@@ -35,7 +35,7 @@ HOW TO THINK (briefly; keep the answer short)
    - complex: no one can know in advance what will work. Prefer a small trial that can be undone, with a review date. Bring in the people closest to the problem; decide by consent where commitment matters.
    - chaotic: something is going wrong now. One person acts at once, then hands the wider decision back.
 2. Give a flow of 3 to 6 steps in order. Each step has: a label of 2 to 5 words; a role ("shape" prepares the decision, "decide" is the moment it is made, "fallback" only if the group gets stuck or time runs out, "review"); "because": one short clause naming the detail in their description that makes this step needed (do not start it with "Because"); "how": one or two sentences on running it, naming who takes part. Mark "key" true on exactly one step, the moment of decision. Mark "loop" true only for a step the group repeats until something is true, and say that in "until"; otherwise "until" is "". In "summary", one sentence naming the approach.
-3. Name two or three social forces their details point to. "why": what in their description makes it likely. "do": one concrete thing to do. "effect": "helps" or "watch". "step": the step number where it matters most, or 0.
+3. Name two or three social forces their details point to. "why": what in their description makes it likely. "do": one concrete thing to do. "effect": "helps" or "watch". "step": the number of the step where it matters most (always a step number).
 
 RULES
 - Use only catalogue items, by exact id. If a step needs none, use kind "none" and id "".
@@ -75,7 +75,7 @@ function clean(r){
   r.approach.steps.forEach(s => { s.role = ROLE[s.role] ? s.role : "shape"; s.because = String(s.because || "").replace(/^because\s+/i, ""); s.key = s.key === true; });
   const keys = r.approach.steps.filter(s => s.key); if (keys.length !== 1){ r.approach.steps.forEach(s => s.key = false); const d = r.approach.steps.find(s => s.role === "decide"); if (d) d.key = true; }
   r.crux = String(r.crux || ""); r.rule = String(r.rule || "");
-  r.forces = (r.forces || []).filter(f => f && IDS.force.has(f.id)).map(f => (f.step = Math.max(0, Math.min(r.approach.steps.length, parseInt(f.step, 10) || 0)), f));
+  r.forces = (r.forces || []).filter(f => f && IDS.force.has(f.id)).map(f => { const n = r.approach.steps.length, k = r.approach.steps.findIndex(s => s.key) + 1; let st = parseInt(f.step, 10) || 0; if (st < 1 || st > n) st = k || 1; f.step = st; return f; });
   ["ask","assumptions","people","first","shift"].forEach(k => r[k] = Array.isArray(r[k]) ? r[k] : []);
   return r;
 }
@@ -119,14 +119,14 @@ const SV = {
 const RINGS = [["is told", "Are told"], ["is consulted", "Are asked"], ["shapes the proposal", "Shape it"], ["carries it out", "Carry it out"], ["decides", "Decide"]];
 function render(r){
   const steps = r.approach.steps;
-  const node = (s, i) => `<li class="gnode${s.loop ? " loops" : ""}${s.key ? " key" : ""}${s.role === "fallback" ? " gfall" : ""}"><details><summary><span class="gnum">${i + 1}</span><span class="glab">${s.key ? `<em class="gkey">The decision</em>` : s.role === "fallback" ? `<em class="grole">Only if stuck</em>` : s.role === "review" ? `<em class="grole">Review</em>` : ""}<b>${esc(s.label || ROLE[s.role] || "")}</b>${s.kind === "none" ? "" : `<small>${s.kind === "structure" ? "Structure" : "Method"}: ${link(s.kind, s.id)}</small>`}${s.because ? `<span class="gbec"><i>Because</i> ${esc(s.because)}</span>` : ""}</span>${s.loop ? LOOP : ""}</summary>
-      <div class="gdet">${s.how ? `<p>${esc(s.how)}</p>` : ""}${s.loop && s.until ? `<p class="guntil">Repeat until ${esc(s.until.replace(/^until\s+/i, ""))}</p>` : ""}${(r.forces.filter(f => f.step === i + 1)).map(f => `<p class="gfat">${f.effect === "helps" ? "May help here" : "Watch for here"}: ${link("force", f.id)}</p>`).join("")}</div></details></li>`;
+  const here = i => r.forces.filter(f => f.step === i + 1), fname = id => (FORCES.find(x => x.id === id) || {name: id}).name;
+  const node = (s, i) => `<li class="gnode${s.loop ? " loops" : ""}${s.key ? " key" : ""}${s.role === "fallback" ? " gfall" : ""}"><details><summary><span class="gnum">${i + 1}</span><span class="glab">${s.key ? `<em class="gkey">The decision</em>` : s.role === "fallback" ? `<em class="grole">Only if stuck</em>` : s.role === "review" ? `<em class="grole">Review</em>` : ""}<b>${esc(s.label || ROLE[s.role] || "")}</b>${s.kind === "none" ? "" : `<small>${s.kind === "structure" ? "Structure" : "Method"}: ${link(s.kind, s.id)}</small>`}${s.because ? `<span class="gbec"><i>Because</i> ${esc(s.because)}</span>` : ""}${here(i).length ? `<span class="gfchips">${here(i).map(f => `<span class="gfchip ${f.effect === "helps" ? "help" : "watch"}">${f.effect === "helps" ? "May help" : "Watch for"}: ${esc(fname(f.id))}</span>`).join("")}</span>` : ""}</span>${s.loop ? LOOP : ""}</summary>
+      <div class="gdet">${s.how ? `<p>${esc(s.how)}</p>` : ""}${s.loop && s.until ? `<p class="guntil">Repeat until ${esc(s.until.replace(/^until\s+/i, ""))}</p>` : ""}${here(i).map(f => `<div class="gfat ${f.effect === "helps" ? "help" : "watch"}"><p class="gfn">${f.effect === "helps" ? "May help" : "Watch for"}: ${link("force", f.id)}</p><p>${esc(f.why)}</p>${f.do ? `<p class="gdo">${esc(f.do)}</p>` : ""}</div>`).join("")}</div></details></li>`;
   const help = r.forces.filter(f => f.effect === "helps"), watch = r.forces.filter(f => f.effect !== "helps");
   const fl = a => a.map(f => `<li><span class="gfn">${link("force", f.id)}${f.step ? `<span class="gfstep">step ${f.step}</span>` : ""}</span><p>${esc(f.why)}</p>${f.do ? `<p class="gdo">${esc(f.do)}</p>` : ""}</li>`).join("");
   const sec = (cls, icon, h, body) => `<section class="gsec ${cls}"><h3>${ic(icon)}<span>${h}</span></h3>${body}</section>`;
   return [
-    sec("b-how", "how", "How to decide", `${r.approach.summary ? `<p class="glead">${esc(r.approach.summary)}</p>` : ""}<p class="gtip">Click a step for how to run it. ${LOOP}<span> marks a step to repeat.</span></p><ol class="gflow">${steps.map(node).join("")}</ol>`),
-    r.forces.length ? sec("b-forces", "forces", "Social forces to call out", `<div class="gfcols">${watch.length ? `<div class="watch"><h4>Watch for</h4><ul>${fl(watch)}</ul></div>` : ""}${help.length ? `<div class="help"><h4>May help</h4><ul>${fl(help)}</ul></div>` : ""}</div>`) : ""
+    sec("b-how", "how", "How to decide", `${r.approach.summary ? `<p class="glead">${esc(r.approach.summary)}</p>` : ""}<p class="gtip">Click a step for how to run it and the social forces to call out. ${LOOP}<span> marks a step to repeat.</span></p><ol class="gflow">${steps.map(node).join("")}</ol>`),
   ].join("");
 }
 /* the carousel: tabs, dots, buttons, swipe, arrow keys; steps open on click */
