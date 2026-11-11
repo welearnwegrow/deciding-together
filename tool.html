@@ -117,6 +117,15 @@ main{overflow-x:clip}
 .gdet{padding:0 16px 16px 58px; color:var(--ink-soft)}
 .guntil{font-size:.88rem; color:var(--dot-blue); font-weight:500}
 .guntil::before{content:"↻ "}
+.glab em{display:block; font-style:normal; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ink-mute); margin-bottom:3px}
+.glab .gkey{color:var(--ochre-deep)}
+.gbec{display:block; font-size:.9rem; color:var(--ink-soft); margin-top:8px; padding-top:7px; border-top:1px dotted var(--line); line-height:1.45}
+.gbec i{font-style:normal; font-weight:700; color:var(--ink)}
+.gnode.key details{border-color:var(--ochre); background:color-mix(in srgb, var(--ochre) 14%, var(--paper))}
+.gnode.key .gnum{background:var(--ochre); color:#2a2214}
+.gnode.gfall details{border-style:dashed; background:transparent}
+.gfat{font-size:.88rem; color:var(--ink-mute)}
+.gfstep{margin-left:8px; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--ink-mute); border:1px solid var(--line); border-radius:999px; padding:1px 7px; vertical-align:2px}
 /* who */
 .gpeople{width:100%; max-width:900px; border-collapse:collapse; font-size:.95rem}
 .gpeople th{text-align:left; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); font-weight:700; padding:0 14px 8px 0; border-bottom:1.5px solid var(--ink-soft)}
@@ -271,7 +280,7 @@ main{overflow-x:clip}
   <div class="wrap">
     <div class="sechead">
       <h1>Guide me</h1>
-      <p class="soft" data-edit="dom:tool:p2" data-html="1">Describe a decision you are facing, in any organisation or field. Guide me suggests how to make it: what kind of situation it is, a sequence of structures and methods from this guide, the social forces to expect, who to involve and what to do first. Treat it as a starting point to talk through with the people the decision affects.</p>
+      <p class="soft" data-edit="dom:tool:p2" data-html="1">Describe a decision you are facing, in any organisation or field. Guide me suggests how to make it: a sequence of steps using structures and methods from this guide, and the social forces to call out. Treat it as a starting point to talk through with the people the decision affects.</p>
     </div>
     <div class="gwrap">
       <form class="gin" id="gform">
@@ -334,7 +343,7 @@ window.PAGE = "tool";
       QA = extra; LAST = GUIDE.transcript(DESC, QA, r);
       $("gask").innerHTML = "";
       $("gout").innerHTML = `<div class="gbar"><h2>Your guide</h2><div class="acts"><button class="gdl" type="button" id="gpdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download PDF</button></div></div>` + GUIDE.render(r) + fbHTML();
-      GUIDE.mount($("gcar")); fbWire(); status("");
+      fbWire(); status("");
       $("gpdf").onclick = async () => { const b = $("gpdf"); b.disabled = true; try { await GUIDE.pdf(LAST); } catch (e){ alertMsg("The PDF couldn't be made in this view."); } finally { b.disabled = false; } };
       GUIDE.saveTranscript(LAST, $("gsave").checked);
       $("gout").scrollIntoView({behavior: "smooth", block: "start"});
