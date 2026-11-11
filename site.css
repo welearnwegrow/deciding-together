@@ -84,7 +84,9 @@ p{margin:0}
 main{padding-block:40px 64px}
 section.block{padding-block:40px; border-top:1px solid var(--line)}
 section.block:first-child{border-top:none}
-.sechead{display:flex; flex-direction:column; gap:10px; margin-bottom:26px; max-width:var(--measure)}
+.sechead{display:flex; flex-direction:column; gap:10px; margin-bottom:26px; max-width:80%}
+.sechead > p{font-size:1rem}
+@media (max-width:700px){ body .sechead, body .hero .lede, body .lede, body .about, body .refnote{max-width:100%} }
 
 /* dotted devices (WLWG) */
 .ring{display:inline-flex; align-items:center; justify-content:center; border-radius:50%; border:2.5px dotted var(--dot-orange); font-family:var(--serif); color:var(--ochre-deep); flex:none}

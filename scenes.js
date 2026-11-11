@@ -1136,15 +1136,15 @@ Object.assign(SCENES, {
     const count = ph(t,.6,.74); if (count > 0 && count < 1){ const k = Math.floor(count*32); if (P[k]) SX.ring(g, P[k].x, P[k].y - 14, 22, 26, .8); }
     SX.ring(g, C0.x, C0.y, 46, 30, ease(ph(t,.74,.8)));
     if (t > .82) P.forEach((p,i) => { const u = ph(t, .82 + (i % 8)*.01, .88 + (i % 8)*.01); SX.move(g, C0, p, u, C.ochre, 3); });
-    if (t < .24) caption(g, "A student proposes a change to a school rule", "At the weekly meeting, anyone of any age can bring a proposal");
+    if (t < .24) caption(g, "One pitch is closed for repairs, and older students take the other", "A student proposes alternate days for younger and older students");
     else if (t < .52) caption(g, "Those for and against make their case", "Students and staff hear the same arguments");
     else if (t < .76) caption(g, "Hands go up, and the chair counts them", "One person, one vote, students and staff alike");
-    else caption(g, "The new rule takes effect that week", "Anyone who lost can bring it back to a later meeting");
+    else caption(g, "Alternate days start that week", "Anyone who lost can bring it back to a later meeting");
   }},
   "landsgemeinde:risky":{ P:15, draw(g,t){
-    /* staff vote by hand on the head's proposal: the front rows (senior staff) go first, others follow, some against their view */
-    const P = SH.room(), H = {x:400, y:80}, priv = i => (i < 8 ? 0 : [0,1,0,1,1,0,1,0][i % 8]);
-    const follow = new Set([9,11,12,17,19,22,25,28]), keep = new Set([14,30]);
+    /* a class votes by hand for a lesson by the sea; two students who cannot go keep their hands down and say nothing */
+    const P = SH.room(), H = {x:400, y:80}, priv = i => (i === 14 || i === 30 ? 1 : 0);
+    const follow = new Set(), keep = new Set([14,30]);
     SX.card(g, H.x + 60, H.y, 44, 28);
     actor(g, H.x, H.y, 20, {v:0, decider:true});
     P.forEach((p,i) => { const r = Math.floor(i/8), s = .3 + r*.1, raise = priv(i) === 0 || follow.has(i);
@@ -1153,10 +1153,10 @@ Object.assign(SCENES, {
       actor(g, p.x, p.y, 14, {v: t > .06 ? (up > 0 || (t > .82 && raise && !keep.has(i)) ? 0 : priv(i)) : null, inner: follow.has(i) && t > s ? 1 : null, decider:true, alpha: quietly ? .5 : 1});
       handUp(g, p.x, p.y, 14, up); });
     SX.ring(g, H.x + 60, H.y, 40, 26, ease(ph(t,.74,.8)));
-    if (t < .3) caption(g, "The head proposes a new marking policy at a staff meeting", "She asks for a show of hands");
-    else if (t < .55) caption(g, "Senior staff in the front rows raise their hands first", "Others look around before deciding");
-    else if (t < .82) caption(g, "Most hands go up, and only a few stay down", "Inner dots: teachers who disagreed but raised their hands anyway");
-    else caption(g, "The policy passes by a wide margin", "Within weeks, many teachers quietly ignore it");
+    if (t < .3) caption(g, "Tired after a sports weekend, the class asks for an easy lesson", "The teacher proposes the waves lesson by the sea, or problems in small groups");
+    else if (t < .55) caption(g, "Hands go up for the sea", "Two students keep their hands down and say nothing");
+    else if (t < .82) caption(g, "The sea wins by a wide margin", "The two cannot go, for medical reasons");
+    else caption(g, "The teacher cannot leave them alone", "The outing is called off at the door");
   }},
   liberum_veto:{ P:13, hero:.6, legend:["s","d"], draw(g,t){
     /* six members around a proposal; five say yes; one says no; the proposal stops */
@@ -1353,12 +1353,12 @@ Object.assign(SCENES, {
     else caption(g, "The design graded good by almost everyone wins", "Few people are unhappy with the result");
   }},
   "score_voting:risky":{ P:15, draw(g,t){
-    const R = [[5,0],[0,3],[0,1]], W = [14,16];
+    const R = [[5,2],[0,4],[0,2]], W = [3,6];
     SV.table(g, R, {max:5, weights:W, fill: clamp((t - .12)/.34, 0, 1)*2, sums: ph(t,.48,.52), avg: ph(t,.52,.58), med: ph(t,.8,.86), win: t < .8 ? 0 : 1, hl: t < .8 ? "avg" : "med", ring: t > .6 && t < .8 ? ease(ph(t,.6,.66)) : ease(ph(t,.88,.94))});
-    if (t < .12) caption(g, "Thirty students rate three trips from 0 to 5", "The trip with the best average rating will win");
-    else if (t < .48) caption(g, "Fourteen give their favourite 5 and every other trip 0", "The other sixteen give the second trip a 3");
-    else if (t < .8) caption(g, "On the average, the first trip wins, 2.3 to 1.6", "It is the favourite of fourteen students");
-    else caption(g, "The middle rating would have chosen the second trip", "Most students rated it acceptable");
+    if (t < .12) caption(g, "Nine directors rate three candidates for head of school", "From 0 to 5; the best average rating wins");
+    else if (t < .48) caption(g, "Three give their favourite 5 and the others 0", "The other six give the second candidate a 4");
+    else if (t < .8) caption(g, "On the average, the first candidate wins, 3.0 to 2.7", "The favourite of three directors");
+    else caption(g, "The middle rating would have chosen the second candidate", "Most of the board rated that candidate highly");
   }}
 });
 /* Weighted voting and Conviction voting */
@@ -1621,18 +1621,18 @@ Object.assign(SCENES, {
     else caption(g, "The wider group endorses it", "They watched the whole conversation");
   }},
   "indaba:useful":{ P:14, draw(g,t){
-    const c = {x:400, y:240}, I = SX.around(6, c.x, c.y, 80, 64), O = SX.around(18, c.x, c.y, 290, 190, -Math.PI/2 + .17);
-    const iv = [0, .2, 1, .7, .4, .9];
-    for (let k = 0; k < 8; k++){ const u = ((t*5) + k*.13) % 1, a = I[k % 6], b = I[(k*2 + 1) % 6]; if (t > .06 && t < .78) SX.move(g, a, b, u, C["ink-mute"], 3); }
+    const c = {x:400, y:240}, I = SX.around(5, c.x, c.y, 80, 64), O = SX.around(18, c.x, c.y, 290, 190, -Math.PI/2 + .17);
+    const iv = [0, .2, 1, .7, .4];
+    for (let k = 0; k < 8; k++){ const u = ((t*5) + k*.13) % 1, a = I[k % 5], b = I[(k*2 + 1) % 5]; if (t > .06 && t < .78) SX.move(g, a, b, u, C["ink-mute"], 3); }
     [3, 9, 14].forEach((o,k) => { const s = .3 + k*.1, u = ph(t, s, s + .07); if (u > 0 && u < 1) SX.card(g, lerp(O[o].x, c.x, ease(u)*.7), lerp(O[o].y, c.y, ease(u)*.7), 18, 13); });
-    [[2,.25],[5,.48]].forEach(([i,s]) => { if (t > s && t < s + .1) SX.flag(g, I[i].x + 20, I[i].y - 18); if (t > s + .04 && t < s + .14){ SX.card(g, I[i].x + 40, I[i].y - 18, 20, 14); g.fillStyle = C.sage; g.fillRect(I[i].x + 33, I[i].y - 20, 14, 4); } });
+    [[2,.25],[4,.48]].forEach(([i,s]) => { if (t > s && t < s + .1) SX.flag(g, I[i].x + 20, I[i].y - 18); if (t > s + .04 && t < s + .14){ SX.card(g, I[i].x + 40, I[i].y - 18, 20, 14); g.fillStyle = C.sage; g.fillRect(I[i].x + 33, I[i].y - 20, 14, 4); } });
     const agree = ease(ph(t,.66,.76));
     I.forEach((p,i) => actor(g, p.x, p.y, 18, {v: lerp(iv[i], .2, agree), decider:true}));
     O.forEach((p,i) => { actor(g, p.x, p.y, 11, {v: null}); if (t > .84 + i*.004) tick(g, p.x + 14, p.y - 14, C.sage); });
     SX.ring(g, c.x, c.y, 118, 98, agree);
-    if (t < .06) caption(g, "Two students, two teachers and two parents sit in the centre", "Everyone else sits around them and listens");
+    if (t < .06) caption(g, "The head, two council chairs and two teachers sit in the centre", "Students, staff and parents listen around them");
     else if (t < .66) caption(g, "Every no must come with another idea", "Listeners pass notes in");
-    else if (t < .84) caption(g, "The circle agrees on phones in lockers during lessons", "Free at lunch");
+    else if (t < .84) caption(g, "The five agree to try projects in two subjects", "Exams stay in the others for a year");
     else caption(g, "The wider group endorses it", "They heard how the plan was reached");
   }},
   "indaba:risky":{ P:14, draw(g,t){
@@ -1759,9 +1759,9 @@ Object.assign(SCENES, {
   }},
   "stigmergy:useful":{ P:14, draw(g,t){
     NT.trail(g, t, {w: (k, T) => clamp(T*1.4, 0, 1)*[1, .35, .3][k], paved:0});
-    if (t < .2) caption(g, "A new campus opens with lawns and no paths", "Students cross however they like");
-    else if (t < .82) caption(g, "Each crossing wears the grass a little", "The shortest routes get walked most");
-    else caption(g, "After a term, the worn tracks are paved", "The paths match how people move");
+    if (t < .2) caption(g, "Teachers tick each practice question they use", "And note whether students got it");
+    else if (t < .82) caption(g, "Questions that worked rise to the top", "Weak ones sink");
+    else caption(g, "After a term, the bank has sorted itself", "No one had to review it");
   }},
   "stigmergy:risky":{ P:14, draw(g,t){
     NT.trail(g, t, {w: (k, T) => k === 1 ? clamp(.25 + T*1.2, 0, 1) : clamp(T*.5, 0, 1)*[.3, 0, .2][k], paved:1});
@@ -1783,9 +1783,9 @@ Object.assign(SCENES, {
   }},
   "slime_mould:risky":{ P:16, draw(g,t){
     NT.mould(g, t, {need:true});
-    if (t < .25) caption(g, "The network keeps busy groups and closes idle ones", "One closed group linked two schools' special needs staff");
-    else if (t < .78) caption(g, "Busy links get stronger, quiet ones are cut", "The special needs group rarely met");
-    else caption(g, "A student with complex needs moves between those schools", "Information goes the long way round, and support is six weeks late");
+    if (t < .25) caption(g, "The student council keeps busy peer groups and closes idle ones", "One closed group was for students new to the country");
+    else if (t < .78) caption(g, "Busy groups get stronger, quiet ones are cut", "The new-arrivals group had only three members");
+    else caption(g, "Two students arrive mid-year with little English", "With no group to join, they spend lunchtimes alone");
   }}
 });
 /* No structure, new format */
@@ -1828,7 +1828,7 @@ Object.assign(SCENES, {
   }},
   "no_structure:risky":{ P:15, draw(g,t){
     NS.draw(g, t, {});
-    if (t < .3) caption(g, "The parent group has no committee and no rules", "Four friends meet for coffee every week");
+    if (t < .3) caption(g, "The parent group has no official committee or shared agreements", "Four friends meet for coffee every week");
     else if (t < .55) caption(g, "The friends arrive with plans already agreed", "New parents' ideas are welcomed, then go nowhere");
     else if (t < .9) caption(g, "New parents stop coming", "Each thinks the problem is only them");
     else caption(g, "The structure was there all along", "It was the friendship group, hidden and impossible to challenge");

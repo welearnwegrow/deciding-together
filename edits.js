@@ -2,11 +2,11 @@
 window.FG_EDITS = {
 "dom:about:p1": {
 "html": true,
-"v": "A field guide to making decisions together maps the ways groups make decisions, and the social forces that shape how people reach agreement inside each one. It sorts 22 structures and methods into five groups: shaping proposals, deciding by authority, by vote or by consensus, and cases where no one is in charge. Many come with variations, which are described inside them. This education edition uses examples from schools, school systems and education projects, with a few from the wider social impact sector. It is written for students, teachers, parents, school leaders, policy makers, and the NGOs and universities that work with schools: anyone who takes part in decisions about education."
+"v": "A field guide to making decisions together maps the ways groups make decisions, and the social forces that shape how people reach agreement inside each one. It sorts 25 structures and methods into five groups: shaping proposals, deciding by authority, by vote or by consensus, and cases where no one is in charge. Many come with variations, which are described inside them."
 },
 "dom:about:p2": {
 "html": true,
-"v": "It builds on two earlier articles: <a href=\"https://welearnwegrow.medium.com/successful-collaboration-starts-with-eight-simple-rules-bbf60ee47498\">How to collaborate?</a> (2019), which first compared hierarchy, no structure, majority, unanimity, consensus and consent, and <a href=\"https://welearnwegrow.medium.com/a-better-way-to-dialogue-6a8b29fc8d3d\">A better way to dialogue</a> (2025), which looked at twelve dialogue traditions schools can learn from. The examples are drawn from situations that have been reported in the news and in research, as well as personal experience of working in schools for a decade, with names and details changed. The diagrams (feedback loops, icebergs, fishbones and causal layered analysis) are our own models of the mechanisms the research describes. References follow APA 7th edition."
+"v": "This education edition uses examples from schools, school systems and education projects, with a few from the wider social impact sector. It is written for students, teachers, parents, school leaders, policy makers, and the NGOs and universities that work with schools: anyone who takes part in decisions about education. The examples are drawn from situations that have been reported in the news and in research, as well as personal experience of working in schools for a decade, with names and details changed. The diagrams (feedback loops, icebergs, fishbones and causal layered analysis) are our own models of the mechanisms the research describes. References follow APA 7th edition."
 },
 "dom:about:p3": {
 "html": true,
@@ -34,11 +34,11 @@ window.FG_EDITS = {
 },
 "dom:index:lead1": {
 "html": true,
-"v": "When making decisions, people tend to default to two options: the person in charge makes the call, or everyone votes and majority wins. But people have more options than that. Consent-based decision making is often a good choice when everyone's voice matters. And when some people care much more than others, quadratic voting lets them show how strongly they feel, which a simple majority vote can’t. This guide sets out those options so an individual or group can choose <b><i>how</i></b><b> </b>the decision gets made before the default takes hold. These structures don't exist in isolation from one another, for example, a committee of 12 experts may use a majority-wins voting to arrive at a decision."
+"v": "When making decisions, people tend to default to two options: the person in charge makes the call, or everyone votes and majority wins. But people have more options than that. Consent-based decision making is often a good choice when everyone's voice matters. And when some people are affected more than others, weighted voting lets them show how strongly they feel. This guide sets out those options so an individual or group can choose <b><i>how</i></b><b> </b>the decision gets made before the default takes hold. These structures don't exist in isolation from one another and can be combined for use."
 },
 "dom:index:lead2": {
 "html": true,
-"v": "This education edition is written for the people who make decisions in and around schools: teachers; parents; principals and owners; boards and policy makers; students in councils and clubs; and the NGOs and universities that work with schools. Each structure is shown alongside the social forces that shape it, such as who speaks first, who stays quiet and who copies the crowd. There are no good or bad structures, and this guide highlights when each structure is useful and when it backfires using real-world examples. If you have a decision in front of you now, start with the <a href=\"tool.html\">tool</a>, which suggests structures to try."
+"v": "This education edition is written for the people who make decisions in and around schools: teachers; parents; principals and owners; boards and policy makers; students in councils and clubs; and the NGOs and universities that work with schools. Each structure is explained alongside the social forces that shape it, such as who speaks first or who stays quiet. There are no good or bad structures, and this guide highlights when each structure is useful and when it backfires using real-world examples. If you have a decision in front of you now, start with the <a href=\"tool.html\">tool</a>, which suggests structures to try."
 },
 "dom:index:lead3": {
 "html": true,
