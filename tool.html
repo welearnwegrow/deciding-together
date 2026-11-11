@@ -150,6 +150,108 @@ main{overflow-x:clip}
 .gfb form button{background:none; border:0; font:inherit; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); cursor:pointer}
 .gfb .m{flex:1 1 100%; font-size:.84rem; color:var(--ink-mute); margin:0}
 .gfb .m:empty{display:none}
+/* the answer as a carousel: one accent (ochre) for the crux and the decision; the rest stays neutral */
+.gcar{margin-top:8px}
+.gclbl{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--label); font-weight:700}
+.gctabs{display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 14px}
+.gctabs button{font:inherit; font-size:.85rem; border:1px solid var(--line); background:transparent; color:var(--ink-soft); padding:6px 12px 6px 8px; border-radius:999px; cursor:pointer; display:flex; align-items:center; gap:7px}
+.gctabs .n{width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:.72rem; background:var(--paper-2); color:var(--ink-mute)}
+.gctabs button[aria-selected="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.gctabs button[aria-selected="true"] .n{background:var(--ochre); color:#2a2214}
+.gctrack{display:flex; align-items:flex-start; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; gap:16px; scrollbar-width:none; border-radius:18px; transition:height .3s}
+.gctrack::-webkit-scrollbar{display:none}
+.gcs{flex:0 0 100%; min-width:0; max-width:100%; scroll-snap-align:start; background:var(--surface); border-radius:18px; padding:28px 30px 30px; min-height:380px}
+.gcnav{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px}
+.gcnav button{font:inherit; white-space:nowrap; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px; padding:9px 18px; cursor:pointer}
+.gcnav button:disabled{opacity:.35; cursor:default}
+.gcnav .gcnext{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.gcdots{display:flex; gap:8px}
+.gcdots i{width:8px; height:8px; border-radius:50%; background:var(--line); transition:.2s}
+.gcdots i.on{background:var(--ochre); width:22px; border-radius:6px}
+.gcheard{font-family:var(--serif); font-size:1.35rem; line-height:1.4; max-width:62ch; margin:6px 0 22px}
+.gccards{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,230px), 1fr)); gap:14px}
+.gccard{background:var(--paper); border-radius:14px; padding:18px 18px 20px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px}
+.gccard.crux{box-shadow:inset 0 0 0 2px var(--ochre), var(--shadow)}
+.gcico{width:44px; height:44px}
+.gcbig{font-family:var(--serif); font-size:1.15rem; line-height:1.38}
+.gcread{font-size:.82rem; color:var(--ink-mute); margin-top:auto}
+.gcread button{font:inherit; font-size:.82rem; border:0; background:none; color:var(--ochre-deep); text-decoration:underline; cursor:pointer; padding:0}
+.gcassume{margin:18px 0 0; padding:0; list-style:none; display:flex; gap:8px; flex-wrap:wrap}
+.gcassume li{font-size:.82rem; background:var(--paper); border:1px dashed var(--line); padding:5px 10px; border-radius:8px; color:var(--ink-soft)}
+.gckwrap{display:grid; grid-template-columns:minmax(0,360px) minmax(0,1fr); gap:24px 32px; align-items:center; margin-top:12px}
+.gckgrid{margin:0; display:grid; grid-template-columns:1fr 1fr; gap:6px}
+.gckgrid div{border-radius:10px; padding:14px; background:var(--paper); opacity:.55; display:flex; flex-direction:column; justify-content:flex-end; min-height:120px; position:relative}
+.gckgrid b{font-family:var(--serif); font-weight:400; font-size:1.12rem}
+.gckgrid span{font-size:.78rem; color:var(--ink-soft)}
+.gckgrid div.on{opacity:1; background:var(--ink); color:var(--paper); box-shadow:var(--shadow)}
+.gckgrid div.on span{color:var(--paper); opacity:.8}
+.gckgrid div.on::before{content:"You are here"; position:absolute; top:12px; left:14px; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700}
+.gckwhy{font-family:var(--serif); font-size:1.22rem; line-height:1.45; margin:0}
+.gcmeans{margin-top:16px; display:grid; gap:8px}
+.gcmeans div{display:flex; gap:10px; align-items:flex-start; font-size:.95rem}
+.gcmeans svg{flex:0 0 20px; width:20px; height:20px; margin-top:2px; fill:none; stroke:var(--ink-mute); stroke-width:2; stroke-linecap:round}
+.gch{font-family:var(--serif); font-weight:400; font-size:1.45rem; line-height:1.3; margin:4px 0 4px; max-width:60ch}
+.gctip{font-size:.84rem; color:var(--ink-mute); margin:0 0 16px}
+.gcflow{display:grid; grid-template-columns:repeat(var(--lanes), minmax(0,1fr)); gap:12px}
+.gclane{display:flex; flex-direction:column; gap:10px; min-width:0}
+.gclane h4{margin:0; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); padding-bottom:6px; border-bottom:1px solid var(--line)}
+.gclane.decide h4{color:var(--ochre-deep); border-bottom:2px solid var(--ochre)}
+.gcstep{background:var(--paper); border-radius:12px; padding:12px 13px 13px; cursor:pointer; display:flex; flex-direction:column}
+.gcstep:focus-visible{outline:2px solid var(--ochre-deep); outline-offset:2px}
+.gctop{display:flex; align-items:center; gap:8px}
+.gctop b{font-size:1rem; line-height:1.3}
+.gcnum{flex:0 0 24px; width:24px; height:24px; border-radius:50%; border:1.5px solid var(--line); color:var(--ink-soft); display:grid; place-items:center; font-size:.78rem; font-weight:700}
+.gcitem{font-size:.8rem; color:var(--ink-mute); margin:4px 0 0 32px}
+.gcbecause{font-size:.9rem; color:var(--ink-soft); margin-top:8px; padding-top:8px; border-top:1px dotted var(--line)}
+.gcbecause em{font-style:normal; font-weight:700; color:var(--ink)}
+.gcloop{display:flex; align-items:flex-start; gap:5px; font-size:.78rem; color:var(--ink-mute); margin-top:6px}
+.gcloop .gloop{flex:0 0 15px; width:15px; height:15px; stroke:currentColor; margin-top:1px}
+.gchow{display:none; font-size:.9rem; margin-top:8px; background:var(--surface); color:var(--ink); border-radius:8px; padding:9px 10px}
+.gcstep[aria-expanded="true"] .gchow{display:block}
+.gcstep.key{background:color-mix(in srgb, var(--ochre) 16%, var(--paper)); box-shadow:inset 0 0 0 2px var(--ochre)}
+.gcstep.key .gcnum{background:var(--ochre); border-color:var(--ochre); color:#2a2214}
+.gcstep.key .gchow{background:var(--paper)}
+.gckeytag{font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); margin:0 0 8px}
+.gcstep.dashed{background:transparent; border:1.5px dashed var(--line)}
+.gcfoot{display:flex; gap:20px; margin-top:16px; font-size:.82rem; color:var(--ink-mute); flex-wrap:wrap}
+.gcfoot span{display:flex; gap:6px; align-items:center}
+.gcfoot svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2}
+.gcwhogrid{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,320px), 1fr)); gap:24px 30px; align-items:start; margin-top:12px}
+.gcring{border-radius:28px; padding:14px 16px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:3px; background:color-mix(in srgb, var(--paper) 45%, transparent)}
+.gcring .gcring{margin-top:12px; width:100%; background:color-mix(in srgb, var(--paper) 70%, transparent)}
+.gcring .gcring .gcring{background:var(--paper)}
+.gcring.core{background:color-mix(in srgb, var(--ochre) 22%, var(--paper)); box-shadow:inset 0 0 0 2px var(--ochre); border-radius:999px; padding:16px 22px}
+.gcring.core .gclbl{color:var(--ochre-deep)}
+.gcwho{font-size:.92rem; color:var(--ink)}
+.gcring.core .gcwho{font-weight:700}
+.gcforces{display:grid; gap:10px}
+.gcforce{background:var(--paper); border-radius:12px; padding:12px 14px; display:grid; grid-template-columns:34px minmax(0,1fr); gap:10px; align-items:start}
+.gcbadge{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line); display:grid; place-items:center}
+.gcbadge svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round}
+.gcforce.watch .gcbadge{color:var(--terra)} .gcforce.help .gcbadge{color:var(--good)}
+.gcat{display:block; font-size:.72rem; color:var(--ink-mute); text-transform:uppercase; letter-spacing:.1em}
+.gcforce b{display:block; font-size:1rem}
+.gcforce p{margin:4px 0 0; font-size:.9rem; color:var(--ink-soft)}
+.gcforce .gcdo{color:var(--ink)} .gcforce .gcdo::before{content:"Do: "; font-weight:700}
+.gcnextgrid{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,300px), 1fr)); gap:22px; margin-top:12px}
+.gch4{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--label); margin:0 0 10px}
+.gcchecks{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+.gcchecks li{background:var(--paper); border-radius:12px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start}
+.gcchecks li span{flex:0 0 26px; height:26px; border-radius:7px; border:1.5px solid var(--line); display:grid; place-items:center; font-size:.8rem; font-weight:700; color:var(--ink-soft)}
+.gcifthen{display:grid; gap:10px; margin:0}
+.gcifthen div{background:var(--paper); border-radius:12px; padding:12px 14px; display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px}
+.gcifthen dt{font-weight:700} .gcifthen dd{margin:0; grid-column:2; color:var(--ink-soft)}
+.gcifthen svg{width:20px; height:20px; grid-row:span 2; fill:none; stroke:var(--ink-mute); stroke-width:2; stroke-linecap:round}
+.gctake{margin-top:22px; background:var(--ink); color:var(--paper); border-radius:14px; padding:20px 22px}
+.gctake .gclbl{color:var(--ochre)}
+.gctake p{font-family:var(--serif); font-size:1.3rem; margin:6px 0 0}
+@media (max-width:820px){
+  .gcs{padding:22px 18px; min-height:0}
+  .gctabs .t{display:none}
+  .gckwrap{grid-template-columns:minmax(0,1fr)}
+  .gcflow{grid-template-columns:minmax(0,1fr)}
+  .gcnav .gcnext{max-width:62%; overflow:hidden; text-overflow:ellipsis}
+}
 /* drawer for structures, forces and methods linked from the answer */
 .xdrawer{position:fixed; inset:0 0 0 auto; margin:0; padding:0; border:0; border-left:1px solid var(--line); width:80vw; max-width:100vw; height:100dvh; max-height:100dvh; background:var(--paper); box-shadow:-24px 0 60px rgba(20,18,14,.18); overflow:hidden}
 .xdrawer[open]{display:flex; flex-direction:column; animation:popslide .28s ease-out}
@@ -232,7 +334,7 @@ window.PAGE = "tool";
       QA = extra; LAST = GUIDE.transcript(DESC, QA, r);
       $("gask").innerHTML = "";
       $("gout").innerHTML = `<div class="gbar"><h2>Your guide</h2><div class="acts"><button class="gdl" type="button" id="gpdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download PDF</button></div></div>` + GUIDE.render(r) + fbHTML();
-      fbWire(); status("");
+      GUIDE.mount($("gcar")); fbWire(); status("");
       $("gpdf").onclick = async () => { const b = $("gpdf"); b.disabled = true; try { await GUIDE.pdf(LAST); } catch (e){ alertMsg("The PDF couldn't be made in this view."); } finally { b.disabled = false; } };
       GUIDE.saveTranscript(LAST, $("gsave").checked);
       $("gout").scrollIntoView({behavior: "smooth", block: "start"});
@@ -280,6 +382,10 @@ window.PAGE = "tool";
     e.preventDefault(); e.stopPropagation();
     openFrame(`${m[1]}.html?embed=1#${m[2]}`, m[1] === "forces" ? "Social force" : "Shaping method");
   }, true);
+  /* "Not quite? Correct it": back to the description, to add what we got wrong */
+  document.addEventListener("click", e => { if (!e.target.closest("[data-correct]")) return;
+    $("gdesc").scrollIntoView({behavior: "smooth", block: "center"}); $("gdesc").focus();
+    $("gnudge").hidden = false; $("gnudge").textContent = "Add what we got wrong about your situation, then press Guide me again."; });
   GUIDE.available().then(ok => { if (!ok){ $("ggo").disabled = true; status("Guide me can't run in this view."); } });
 })();
 </script>

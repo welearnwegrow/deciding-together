@@ -22,8 +22,10 @@ const SCHEMA = `{
  "heard": string,
  "assumptions": [string],
  "kind": {"type": "clear" | "complicated" | "complex" | "chaotic", "why": string},
- "approach": {"summary": string, "steps": [{"label": string, "role": "shape" | "decide" | "fallback" | "review", "kind": "structure" | "technique" | "none", "id": string, "how": string, "loop": boolean, "until": string}]},
- "forces": [{"id": string, "effect": "helps" | "watch", "why": string, "do": string}],
+ "crux": string,
+ "rule": string,
+ "approach": {"summary": string, "steps": [{"label": string, "role": "shape" | "decide" | "fallback" | "review", "kind": "structure" | "technique" | "none", "id": string, "because": string, "how": string, "key": boolean, "loop": boolean, "until": string}]},
+ "forces": [{"id": string, "effect": "helps" | "watch", "step": number, "why": string, "do": string}],
  "people": [{"who": string, "part": "decides" | "shapes the proposal" | "is consulted" | "is told" | "carries it out", "when": string}],
  "first": [string],
  "shift": [{"if": string, "then": string}],
@@ -42,8 +44,9 @@ HOW TO THINK
    - complex: no one can know in advance what will work; people, causes and effects keep interacting. Prefer a small, reversible trial with a set review date over a final answer. Bring in the people closest to the problem, keep several views alive, and decide by consent ("can you live with trying this?") where commitment matters.
    - chaotic: something is going wrong now. One person acts at once to stabilise, then hands the wider decision back to the group.
    If parts of the decision fall into different kinds, say which part is which.
-2. Build an approach as a flow of 4 to 7 steps in order, not a single structure: typically agreeing the purpose, gathering views or information, shaping a proposal, deciding, a fallback if the group gets stuck or time runs out, and a review. Give each step a short label of 2 to 5 words (for example "Agree the purpose", "Gather concerns", "Decide by consent"). Mark "loop" true for steps the group repeats until something is true (for example, questions until everyone understands the purpose), and say that condition in "until"; otherwise "loop" is false and "until" is "". Fit the flow to their size, time, reversibility, conflict, who has authority, who must carry it out, and anything private or unequal in the situation.
-3. Name the two to four social forces most likely here, and only ones their details point to. Say what in their description makes each likely, and one concrete thing to do about it. Mark forces that could help as "helps".
+2. Build an approach as a flow of 4 to 7 steps in order, not a single structure: typically agreeing the purpose, gathering views or information, shaping a proposal, deciding, a fallback if the group gets stuck or time runs out, and a review. Give each step a short label of 2 to 5 words (for example "Agree the purpose", "Gather concerns", "Decide by consent"). Mark "loop" true for steps the group repeats until something is true (for example, questions until everyone understands the purpose), and say that condition in "until"; otherwise "loop" is false and "until" is "". Fit the flow to their size, time, reversibility, conflict, who has authority, who must carry it out, and anything private or unequal in the situation. Give every step a role: "shape" (preparing the decision), "decide" (the moment the decision is made), "fallback" (only if the group gets stuck or time runs out) or "review". For each step, "because" says in one short clause why this step is here, pointing to a specific detail in their description; do not start it with "Because". Mark "key" true on exactly one step: the moment the decision is actually made.
+   Then say what the whole decision hinges on in "crux": one or two sentences naming the one or two details of their situation that most shaped this advice (for example, who must carry it out, whether it can be undone, a deadline, a power gap). Put the rule for deciding in "rule": one sentence saying who decides, how, and after hearing whom.
+3. Name the two to four social forces most likely here, and only ones their details point to. Say what in their description makes each likely, and one concrete thing to do about it. Mark forces that could help as "helps". In "step", give the number of the step (counting from 1) where the force matters most, or 0 if it runs through all of them.
 4. Say who should be involved and how, and give three first steps they could take this week.
 5. Say what would change this advice (for example, if the deadline moves or the decision turns out to be hard to undo).
 6. End with one question for the reader to think about with the people involved.
@@ -85,7 +88,10 @@ async function ask(p, onText){
 /* keep only catalogue ids the guide can link to */
 function clean(r){
   r.approach = r.approach || {}; r.approach.steps = (r.approach.steps || []).filter(s => s && (s.kind === "none" || s.kind === "" || IDS[s.kind] && IDS[s.kind].has(s.id) || (s.kind = "none"))).map(s => (s.kind === "" && (s.kind = "none"), s));
-  r.forces = (r.forces || []).filter(f => f && IDS.force.has(f.id));
+  r.approach.steps.forEach(s => { s.role = ROLE[s.role] ? s.role : "shape"; s.because = String(s.because || "").replace(/^because\s+/i, ""); s.key = s.key === true; });
+  const keys = r.approach.steps.filter(s => s.key); if (keys.length !== 1){ r.approach.steps.forEach(s => s.key = false); const d = r.approach.steps.find(s => s.role === "decide"); if (d) d.key = true; }
+  r.crux = String(r.crux || ""); r.rule = String(r.rule || "");
+  r.forces = (r.forces || []).filter(f => f && IDS.force.has(f.id)).map(f => (f.step = Math.max(0, Math.min(r.approach.steps.length, parseInt(f.step, 10) || 0)), f));
   ["ask","assumptions","people","first","shift"].forEach(k => r[k] = Array.isArray(r[k]) ? r[k] : []);
   return r;
 }
@@ -109,25 +115,90 @@ const ICON = {
 };
 const ic = k => `<svg class="gic" viewBox="0 0 24 24" aria-hidden="true">${ICON[k]}</svg>`;
 const LOOP = '<svg class="gloop" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg>';
+const MEANS = {
+  complex: ["tries something small that can be undone, not a final answer", "brings in the people closest to the problem", "sets a date to look again"],
+  complicated: ["gathers independent expert judgement", "compares options against criteria agreed first", "decides once the analysis is in"],
+  chaotic: ["one person acts now to steady things", "tells people what was done and why", "hands the wider decision back to the group"],
+  clear: ["follows the known answer or agreed rule", "keeps it simple: one person or a set rule is enough", "checks the rule still fits this case"]
+};
+const SV = {
+  crux: '<svg viewBox="0 0 48 48" aria-hidden="true" class="gcico"><path d="M6 20l36-8" stroke="var(--ochre-deep)" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M24 16l-8 22h16z" fill="var(--ochre)" stroke="var(--ochre-deep)" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="16" r="2.5" fill="var(--ink)"/></svg>',
+  rule: '<svg viewBox="0 0 48 48" aria-hidden="true" class="gcico"><path d="M12 26l7 7 17-18" fill="none" stroke="var(--ink-soft)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  first: '<svg viewBox="0 0 48 48" aria-hidden="true" class="gcico"><path d="M12 42V8M12 9h22l-5 7 5 7H12" fill="none" stroke="var(--ink-soft)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h12M11 6l6 6-6 6"/></svg>',
+  watch: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/></svg>',
+  help: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12l4 4 8-9"/></svg>',
+  swap: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg>',
+  dash: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3" stroke-dasharray="3 3"/></svg>',
+  key: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3" fill="var(--ochre)" stroke="none"/></svg>'
+};
+const RINGS = [["is told", "Are told"], ["is consulted", "Are asked"], ["shapes the proposal", "Shape it"], ["carries it out", "Carry it out"], ["decides", "Decide"]];
 function render(r){
-  const k = (r.kind && r.kind.type) || "";
-  const grid = `<figure class="gkind" aria-label="Kind of situation: ${esc(k)}">${KINDS.map(([id, n, d]) => `<div class="${id}${id === k ? " on" : ""}"><b>${n}</b><span>${d}</span></div>`).join("")}</figure>`;
-  const steps = r.approach.steps.map((s, i) => `<li class="gnode${s.loop ? " loops" : ""}"><details><summary><span class="gnum">${i + 1}</span><span class="glab"><b>${esc(s.label || ROLE[s.role] || "")}</b>${s.kind === "none" ? "" : `<small>${s.kind === "structure" ? "Structure" : "Method"}: ${link(s.kind, s.id)}</small>`}</span>${s.loop ? LOOP : ""}</summary>
-      <div class="gdet"><p>${esc(s.how)}</p>${s.loop && s.until ? `<p class="guntil">Repeat until ${esc(s.until.replace(/^until\s+/i, ""))}</p>` : ""}</div></details></li>`).join("");
-  const help = r.forces.filter(f => f.effect === "helps"), watch = r.forces.filter(f => f.effect !== "helps");
-  const fl = a => a.map(f => `<li><span class="gfn">${link("force", f.id)}</span><p>${esc(f.why)}</p>${f.do ? `<p class="gdo">${esc(f.do)}</p>` : ""}</li>`).join("");
-  const people = r.people.length ? `<table class="gpeople"><thead><tr><th>Who</th><th>Part</th><th>When</th></tr></thead><tbody>${r.people.map(p => `<tr><td>${esc(p.who)}</td><td><span class="gpart">${esc(p.part)}</span></td><td>${esc(p.when)}</td></tr>`).join("")}</tbody></table>` : "";
-  const sec = (cls, icon, h, body) => `<section class="gsec ${cls}"><h3>${ic(icon)}<span>${h}</span></h3>${body}</section>`;
-  return [
-    sec("b-heard", "heard", "What we heard", `<p class="gbig">${esc(r.heard)}</p>${r.assumptions.length ? `<ul class="gassume">${r.assumptions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`),
-    sec("b-kind", "kind", "What kind of situation this is", `<div class="gkwrap">${grid}<p>${esc((r.kind || {}).why || "")}</p></div>`),
-    sec("b-how", "how", "How to decide", `<p class="glead">${esc(r.approach.summary || "")}</p><p class="gtip">Click a step for details. ${LOOP}<span> marks a step to repeat.</span></p><ol class="gflow">${steps}</ol>`),
-    people ? sec("b-who", "who", "Who to involve", people) : "",
-    r.forces.length ? sec("b-forces", "forces", "Social forces to expect", `<div class="gfcols">${watch.length ? `<div class="watch"><h4>Watch for</h4><ul>${fl(watch)}</ul></div>` : ""}${help.length ? `<div class="help"><h4>May help</h4><ul>${fl(help)}</ul></div>` : ""}</div>`) : "",
-    r.first.length ? sec("b-first", "first", "First steps", `<ol class="gfirst">${r.first.map(x => `<li>${esc(x)}</li>`).join("")}</ol>`) : "",
-    r.shift.length ? sec("b-shift", "shift", "What would change this advice", `<dl class="gshift">${r.shift.map(x => `<div><dt>If ${esc(String(x.if).replace(/^if\s+/i, ""))}</dt><dd>${esc(x.then)}</dd></div>`).join("")}</dl>`) : "",
-    r.question ? sec("b-q", "question", "A question to take back", `<p class="gbig">${esc(r.question)}</p>`) : ""
-  ].join("");
+  const k = (r.kind && r.kind.type) || "", steps = r.approach.steps;
+  const slide = (id, title, body) => `<section class="gcs gcs-${id}" data-t="${title}" role="tabpanel" aria-label="${title}">${body}</section>`;
+  const lbl = (n, t) => `<span class="gclbl">${n} · ${t}</span>`;
+  // 1 in short
+  const s1 = slide("short", "In short", `${lbl(1, "In short")}<p class="gcheard">${esc(r.heard)}</p>
+    <div class="gccards">
+      ${r.crux ? `<div class="gccard crux">${SV.crux}<span class="gclbl">It hinges on</span><span class="gcbig">${esc(r.crux)}</span><span class="gcread">[Our reading] <button type="button" data-correct>Not quite? Correct it</button></span></div>` : ""}
+      ${r.rule ? `<div class="gccard">${SV.rule}<span class="gclbl">How to decide</span><span class="gcbig">${esc(r.rule)}</span></div>` : ""}
+      ${r.first[0] ? `<div class="gccard">${SV.first}<span class="gclbl">This week</span><span class="gcbig">${esc(r.first[0])}</span></div>` : ""}
+    </div>${r.assumptions.length ? `<ul class="gcassume">${r.assumptions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`);
+  // 2 situation
+  const s2 = slide("kind", "Situation", `${lbl(2, "What kind of situation this is")}<div class="gckwrap">
+    <figure class="gckgrid" aria-label="Kind of situation: ${esc(k)}">${KINDS.map(([id, n, d]) => `<div class="${id === k ? "on" : ""}"><b>${n}</b><span>${d}</span></div>`).join("")}</figure>
+    <div><p class="gckwhy">${esc((r.kind || {}).why || "")}</p>${MEANS[k] ? `<div class="gcmeans"><span class="gclbl">So the approach</span>${MEANS[k].map(m => `<div>${SV.arrow}<span>${m}</span></div>`).join("")}</div>` : ""}</div></div>`);
+  // 3 flow, in lanes by role
+  const num = new Map(steps.map((s, i) => [s, i + 1]));
+  const lanes = ["shape", "decide", "fallback", "review"].map(role => [role, steps.filter(s => s.role === role)]).filter(([, a]) => a.length);
+  const stepHTML = s => `<div class="gcstep${s.key ? " key" : ""}${s.role === "fallback" ? " dashed" : ""}" tabindex="0" role="button" aria-expanded="false">
+      ${s.key ? `<span class="gckeytag">The decision</span>` : ""}<span class="gctop"><span class="gcnum">${num.get(s)}</span><b>${esc(s.label || ROLE[s.role])}</b></span>
+      ${s.kind === "none" ? "" : `<span class="gcitem">${s.kind === "structure" ? "Structure" : "Method"}: ${link(s.kind, s.id)}</span>`}
+      ${s.because ? `<span class="gcbecause"><em>Because</em> ${esc(s.because)}</span>` : ""}
+      ${s.loop ? `<span class="gcloop">${LOOP}${s.until ? "Repeat until " + esc(s.until.replace(/^until\s+/i, "")) : "Repeat"}</span>` : ""}
+      ${s.how ? `<span class="gchow">${esc(s.how)}</span>` : ""}</div>`;
+  const s3 = slide("flow", "How to decide", `${lbl(3, "How to decide")}<h3 class="gch">${esc(r.approach.summary || "")}</h3>
+    <p class="gctip">Each step shows its job and why it is here. Click a step for how to run it.</p>
+    <div class="gcflow" style="--lanes:${lanes.length}">${lanes.map(([role, a]) => `<div class="gclane ${role}"><h4>${ROLE[role]}</h4>${a.map(stepHTML).join("")}</div>`).join("")}</div>
+    <div class="gcfoot"><span>${LOOP}repeat</span>${steps.some(s => s.role === "fallback") ? `<span>${SV.dash}only if needed</span>` : ""}<span>${SV.key}the moment of decision</span></div>`);
+  // 4 who and forces
+  const ring = i => { if (i >= RINGS.length) return "";
+    const [part, name] = RINGS[i], who = r.people.filter(p => p.part === part).map(p => esc(p.who)).join(" · ");
+    const inner = ring(i + 1); if (!who) return inner;
+    return `<div class="gcring r${i}${part === "decides" ? " core" : ""}"><span class="gclbl">${name}</span><span class="gcwho">${who}</span>${inner}</div>`; };
+  const forceHTML = f => `<div class="gcforce ${f.effect === "helps" ? "help" : "watch"}"><span class="gcbadge">${f.effect === "helps" ? SV.help : SV.watch}</span><div>
+    <span class="gcat">${f.effect === "helps" ? "May help" : "Watch for"}${f.step ? " · at step " + f.step : ""}</span><b>${link("force", f.id)}</b><p>${esc(f.why)}</p>${f.do ? `<p class="gcdo">${esc(f.do)}</p>` : ""}</div></div>`;
+  const s4 = (r.people.length || r.forces.length) ? slide("who", "Who and forces", `${lbl(4, "Who to involve, and what to watch for")}<div class="gcwhogrid">
+    ${r.people.length ? `<div class="gconion">${ring(0)}</div>` : ""}
+    ${r.forces.length ? `<div class="gcforces">${r.forces.map(forceHTML).join("")}</div>` : ""}</div>`) : "";
+  // 5 next
+  const s5 = slide("next", "What next", `${lbl(s4 ? 5 : 4, "What next")}<div class="gcnextgrid">
+    ${r.first.length ? `<div><h4 class="gch4">First steps</h4><ol class="gcchecks">${r.first.map((x, i) => `<li><span>${i + 1}</span>${esc(x)}</li>`).join("")}</ol></div>` : ""}
+    ${r.shift.length ? `<div><h4 class="gch4">What would change this advice</h4><dl class="gcifthen">${r.shift.map(x => `<div>${SV.swap}<dt>If ${esc(String(x.if).replace(/^if\s+/i, ""))}</dt><dd>${esc(x.then)}</dd></div>`).join("")}</dl></div>` : ""}
+    </div>${r.question ? `<div class="gctake"><span class="gclbl">A question to take back</span><p>${esc(r.question)}</p></div>` : ""}`);
+  return `<div class="gcar" id="gcar"><div class="gctabs" role="tablist"></div><div class="gctrack">${s1}${s2}${s3}${s4}${s5}</div>
+    <div class="gcnav"><button type="button" class="gcprev">← Back</button><div class="gcdots"></div><button type="button" class="gcnext">Next →</button></div></div>`;
+}
+/* the carousel: tabs, dots, buttons, swipe, arrow keys; steps open on click */
+function mount(root){
+  if (!root) return;
+  const track = root.querySelector(".gctrack"), slides = [...track.children], tabs = root.querySelector(".gctabs"), dots = root.querySelector(".gcdots");
+  const prev = root.querySelector(".gcprev"), next = root.querySelector(".gcnext");
+  let cur = 0;
+  slides.forEach((s, i) => { const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab");
+    b.innerHTML = `<span class="n">${i + 1}</span><span class="t">${s.dataset.t}</span>`; b.onclick = () => go(i); tabs.append(b); dots.append(document.createElement("i")); });
+  const fit = () => { track.style.height = slides[cur].offsetHeight + "px"; };
+  const mark = () => { [...tabs.children].forEach((b, i) => b.setAttribute("aria-selected", i === cur)); [...dots.children].forEach((d, i) => d.classList.toggle("on", i === cur));
+    prev.disabled = cur === 0; next.disabled = cur === slides.length - 1; next.textContent = cur < slides.length - 1 ? slides[cur + 1].dataset.t + " →" : "End"; };
+  const go = i => { cur = Math.max(0, Math.min(slides.length - 1, i)); fit(); track.scrollTo({left: slides[cur].offsetLeft - track.offsetLeft, behavior: "smooth"}); mark(); };
+  prev.onclick = () => go(cur - 1); next.onclick = () => go(cur + 1);
+  let t; track.addEventListener("scroll", () => { clearTimeout(t); t = setTimeout(() => { const i = Math.round(track.scrollLeft / track.clientWidth); if (i !== cur){ cur = i; mark(); fit(); } }, 90); });
+  root.addEventListener("keydown", e => { if (e.target.closest("input, textarea")) return; if (e.key === "ArrowRight"){ e.preventDefault(); go(cur + 1); } if (e.key === "ArrowLeft"){ e.preventDefault(); go(cur - 1); } });
+  root.querySelectorAll(".gcstep").forEach(s => { const flip = () => { s.setAttribute("aria-expanded", s.getAttribute("aria-expanded") !== "true"); fit(); };
+    s.addEventListener("click", e => { if (!e.target.closest("a")) flip(); });
+    s.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target === s){ e.preventDefault(); flip(); } }); });
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(slides[0].parentNode); addEventListener("resize", fit);
+  mark(); fit(); setTimeout(fit, 300);
 }
 
 /* a plain-text transcript, for Notion and the PDF */
@@ -138,12 +209,15 @@ function transcript(desc, qa, r){
   if (r){
     const nm = s => s.kind === "structure" ? S[s.id].name : s.kind === "technique" ? (TECHS.find(x => x.t.id === s.id) || {t:{name:""}}).t.name : "";
     L.push("WHAT WE HEARD", r.heard); r.assumptions.forEach(a => L.push("- " + a)); L.push("");
+    if (r.crux) L.push("IT HINGES ON (OUR READING)", r.crux, "");
+    if (r.rule) L.push("HOW TO DECIDE, IN SHORT", r.rule, "");
     L.push("KIND OF SITUATION: " + ((r.kind || {}).type || ""), (r.kind || {}).why || "", "");
     L.push("HOW TO DECIDE", r.approach.summary || "");
-    r.approach.steps.forEach((s, i) => L.push(`${i + 1}. ${s.label || ""}${nm(s) ? " (" + nm(s) + ")" : ""}${s.loop ? " [repeat until " + String(s.until || "").replace(/^until\s+/i, "") + "]" : ""}`, "   " + (s.how || "")));
+    r.approach.steps.forEach((s, i) => { L.push(`${i + 1}. ${ROLE[s.role] ? ROLE[s.role].toUpperCase() + ": " : ""}${s.label || ""}${nm(s) ? " (" + nm(s) + ")" : ""}${s.key ? " [THE DECISION]" : ""}${s.loop ? " [repeat until " + String(s.until || "").replace(/^until\s+/i, "") + "]" : ""}`);
+      if (s.because) L.push("   Because " + s.because); if (s.how) L.push("   " + s.how); });
     L.push("");
     if (r.people.length){ L.push("WHO TO INVOLVE"); r.people.forEach(p => L.push(`- ${p.who}: ${p.part}${p.when ? " (" + p.when + ")" : ""}`)); L.push(""); }
-    if (r.forces.length){ L.push("SOCIAL FORCES TO EXPECT"); r.forces.forEach(f => { const ff = FORCES.find(x => x.id === f.id); L.push(`- ${ff.name} (${f.effect === "helps" ? "may help" : "watch for"}): ${f.why}${f.do ? " Do: " + f.do : ""}`); }); L.push(""); }
+    if (r.forces.length){ L.push("SOCIAL FORCES TO EXPECT"); r.forces.forEach(f => { const ff = FORCES.find(x => x.id === f.id); L.push(`- ${ff.name} (${f.effect === "helps" ? "may help" : "watch for"}${f.step ? ", at step " + f.step : ""}): ${f.why}${f.do ? " Do: " + f.do : ""}`); }); L.push(""); }
     if (r.first.length){ L.push("FIRST STEPS"); r.first.forEach((x, i) => L.push(`${i + 1}. ${x}`)); L.push(""); }
     if (r.shift.length){ L.push("WHAT WOULD CHANGE THIS ADVICE"); r.shift.forEach(x => L.push(`- If ${String(x.if).replace(/^if\s+/i, "")}: ${x.then}`)); L.push(""); }
     if (r.question) L.push("A QUESTION TO TAKE BACK", r.question);
@@ -211,7 +285,7 @@ async function feedback(rx, note, kind){
   try { const res = await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({kind: "tool", example: "tool:" + (kind || "answer"), reaction: rx, note: note || "", page: location.pathname, visitor: vid})}); return res.ok; } catch (e){ return false; }
 }
 
-window.GUIDE = {prompt, ask, clean, render, feedback, transcript, saveTranscript, pdf, available: async () => {
+window.GUIDE = {prompt, ask, clean, render, mount, feedback, transcript, saveTranscript, pdf, available: async () => {
   if (window.claude && window.claude.use){ try { if (await window.claude.use("sample")) return true; } catch (e){} }
   return !!window.FG_GUIDE_URL; }};
 })();
