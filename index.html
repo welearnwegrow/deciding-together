@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Making Decisions Together: A Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<link rel="stylesheet" href="site.css">
+<style>
+.hero{display:flex; flex-direction:column; gap:28px}
+.herotop{position:relative; display:grid; grid-template-columns:minmax(0,1fr); gap:20px; align-items:center; min-height:calc(80vh - 120px)}
+.herotop .txt{display:flex; flex-direction:column; gap:22px; position:relative; z-index:1}
+.herotop h1{font-size:clamp(2.6rem,7.6vw,7.4rem); width:80vw; max-width:100%; line-height:1}
+.edition{align-self:flex-start; border:1px solid var(--ochre); border-radius:999px; padding:5px 14px; margin-bottom:-6px}
+.hero .lede{font-size:1.12rem; max-width:80%; display:flex; flex-direction:column; gap:14px}
+
+.heroart{margin:0; position:relative; align-self:stretch; min-height:300px}
+.heroart img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:60% 50%;
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 28%), linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%); -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right, transparent 0, #000 28%), linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%); mask-composite:intersect}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .heroart img{opacity:.78} }
+:root[data-theme="dark"] .heroart img{opacity:.78}
+@media (max-width:820px){ .herotop{grid-template-columns:minmax(0,1fr); min-height:0} .heroart{min-height:220px; order:-1} .heroart img{-webkit-mask-image:linear-gradient(to bottom, #000 70%, transparent 100%); mask-image:linear-gradient(to bottom, #000 70%, transparent 100%)} }
+.smap{margin-top:8px}
+.smk{font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--label); margin-bottom:6px}
+.smcols{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); border-top:2px solid var(--ink)}
+.smcol{padding:12px 18px 6px; border-left:1px solid var(--line)}
+.smcol:first-child{border-left:0; padding-left:0}
+.smh{display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink)}
+.smn{font-family:var(--serif); font-size:2.4rem; line-height:1; color:var(--ochre-deep)}
+.smt{font-family:var(--serif); font-size:1.25rem; line-height:1.15}
+.smh:hover .smt{text-decoration:underline; text-decoration-color:var(--ochre); text-underline-offset:4px}
+.sms{font-size:.86rem; color:var(--ink-mute); margin:4px 0 6px; min-height:2.6em}
+.smcol ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0}
+.smcol li a{display:flex; gap:7px; align-items:baseline; font-size:.93rem; color:var(--ink-soft); text-decoration:none; padding:2px 0}
+.smcol li a::before{content:"\2192"; flex:none; color:var(--ochre-deep); font-size:.85em; transition:transform .15s}
+.smcol li a:hover{color:var(--ink)}
+.smcol li a:hover::before{transform:translateX(3px)}
+@media (max-width:980px){ .smcols{grid-template-columns:repeat(2, minmax(0,1fr))} .smcol:nth-child(3){border-left:0; padding-left:0} .smcol{border-top:1px solid var(--line)} .smcol:nth-child(-n+2){border-top:0} }
+@media (max-width:560px){ .smcols{grid-template-columns:minmax(0,1fr)} .smcol{border-left:0; padding-left:0; border-top:1px solid var(--line)} .smcol:first-child{border-top:0} .smcol:nth-child(2){border-top:1px solid var(--line)} .sms{min-height:0} }
+.menu{border:1px solid var(--line); border-radius:16px; background:var(--surface); box-shadow:var(--shadow); padding:20px 22px}
+.menu h2{font-size:1.5rem; margin-bottom:12px}
+.menu ol{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:2px 28px}
+.menu a{display:grid; grid-template-columns:2.2rem minmax(0,1fr); gap:10px; align-items:baseline; padding:9px 4px; border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink)}
+.menu a:hover{color:var(--ochre-deep)}
+.menu a span:first-child{font-family:var(--serif); font-size:1.25rem; color:var(--ochre-deep)}
+.menu a.tool span:first-child{color:var(--ink)}
+.stops{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
+.stop{display:grid; grid-template-columns:64px minmax(0,1fr); gap:10px 22px; padding-block:30px; position:relative; scroll-margin-top:16px}
+.stop::before{content:""; position:absolute; left:31px; top:0; bottom:0; border-left:2px dotted var(--line)}
+.stop:first-child::before{top:40px} .stop:last-child::before{bottom:calc(100% - 40px)}
+.stop .ring{width:62px; height:62px; font-size:1.8rem; background:var(--paper); position:relative; z-index:1}
+.stop .body{display:flex; flex-direction:column; gap:14px; min-width:0}
+.stop .body > p{max-width:70ch}
+.stop .sub{font-size:1.2rem; font-weight:700; line-height:1.35; color:var(--ink); margin-top:-6px}
+.stop .school{font-size:.97rem; color:var(--ink-soft)}
+.stop .school b{font-weight:700; color:var(--ink)}
+.agree{border-left:3px solid var(--teal); padding:4px 0 4px 16px; display:flex; flex-direction:column; gap:8px}
+.agree .kicker{color:var(--teal)}
+.agree .flinks{font-size:.9rem; color:var(--ink-mute)}
+.agree .flinks a{color:var(--ink-soft)}
+.stop.final .ring{border-color:var(--ochre); border-style:solid; border-width:3px; background:var(--ochre); color:#2A2113}
+@media (max-width:560px){ .stop{grid-template-columns:44px minmax(0,1fr)} .stop .ring{width:44px; height:44px; font-size:1.2rem} .stop::before{left:21px} }
+</style>
+</head>
+<body>
+
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <div class="herotop">
+        <div class="txt">
+          <p class="kicker edition" data-edit="dom:index:edition">Education edition</p>
+          <h1 data-edit="dom:index:h1" data-html="1">A field guide to <em>making decisions together</em></h1>
+          <div class="lede soft">
+            <p data-edit="dom:index:lead1" data-html="1">Most people think decisions are made in one of two ways: the person in charge makes the call, or everyone votes and the majority wins. Individuals and groups have more options than that. Consent-based decision making is often a good choice when participation matters, and when some people care much more than others, quadratic voting lets them show how strongly they feel, which a simple majority vote can’t. This guide sets out those options so an individual or group can choose <b><i>how</i></b><b><i> it decides</i></b>.</p>
+            <p data-edit="dom:index:lead2" data-html="1">It is written for the people who make decisions in and around schools, public or private: students in councils, clubs and activities; teachers; parents; principals and owners; boards and policy makers; and the NGOs and universities that work with schools. Each structure is shown alongside the social forces that shape it, the pressures inside any group such as who speaks first, who stays quiet and who copies the crowd. The same structure can work well or badly depending on the context.</p>
+            <p data-edit="dom:index:lead3" data-html="1">So go ahead and explore the 38 structures presented by who or what makes the final call. Open one to see examples of it working and backfiring. If you have a decision in front of you now, start with the <a href="tool.html">tool</a>, which suggests structures to try.</p>
+          </div>
+        </div>
+      </div>
+      <nav class="smap" aria-label="Structures"><p class="smk">At a glance</p><div class="smcols" id="menu"></div></nav>
+    </section>
+  </div>
+  <div class="wrap">
+    <section class="block">
+      <ol class="stops" id="stops"></ol>
+    </section>
+  </div>
+</main>
+<script src="data.js"></script>
+<script src="entries.js"></script>
+<script src="config.js"></script>
+<script src="edits.js"></script>
+<script src="site.js"></script>
+<script src="scenes.js"></script>
+<script>
+window.PAGE = "path";
+window.page = function(){
+  const FAMS = FG.families.filter(f => f.id !== "8");
+  const inFam = f => FG.structures.filter(s => S[s.id] && (FG.familyOf ? FG.familyOf[s.id] : s.family) === f.id && !(FG.asExample || {})[s.id]).sort((a,b) => (FG.order.indexOf(a.id) + 999*(FG.order.indexOf(a.id) < 0)) - (FG.order.indexOf(b.id) + 999*(FG.order.indexOf(b.id) < 0)));
+  document.getElementById("menu").innerHTML = FAMS.map((f,n) => { const list = inFam(f);
+    return `<div class="smcol"><a class="smh" href="#group-${f.id}"><span class="smn">${n+1}</span><span class="smt"${E(`fam:${f.id}:name`)}>${esc(f.name)}</span></a>
+      <p class="sms">${esc(f.sub || "")}</p>
+      <ul>${list.map(s => `<li><a href="#${hy(s.id)}">${esc(s.name)}</a></li>`).join("")}</ul></div>`; }).join("");
+
+  const flink = id => F[id] ? `<a href="${fHref(id)}">${F[id].name}</a>` : "";
+  const card = s => built(s.id)
+    ? `<a class="scard" href="#${hy(s.id)}" data-id="${s.id}"><canvas width="460" height="288" aria-hidden="true" data-thumb="${s.id}"></canvas><span class="nm"${E(`str:${s.id}:name`)}>${esc(s.name)}</span><span class="ln"${E(`str:${s.id}:card`)}>${esc(s.card || s.line)}</span></a>`
+    : `<a class="scard draft" href="#${hy(s.id)}" data-id="${s.id}"><span class="ph"><span></span></span><span class="nm"${E(`str:${s.id}:name`)}>${esc(s.name)}</span><span class="ln"${E(`str:${s.id}:card`)}>${esc(s.card || s.line)}</span></a>`;
+  document.getElementById("stops").innerHTML = FAMS.map((f,n) => `
+    <li class="stop" id="group-${f.id}">
+      <span class="ring" aria-hidden="true">${n+1}</span>
+      <div class="body">
+        <h2${E(`fam:${f.id}:name`)}>${esc(f.name)}</h2>
+        <p class="sub"${E(`fam:${f.id}:sub`)}>${esc(f.sub)}</p>
+        <p${E(`fam:${f.id}:text`,true)}>${f.text}</p>
+        <div class="scards">${FG.structures.filter(s => s.family === f.id && !(FG.variantOf || {})[s.id] && !(FG.asExample || {})[s.id] && !(FG.subgroup || {})[s.id]).map(card).join("")}</div>
+        ${[...new Set(FG.structures.filter(s => s.family === f.id && (FG.subgroup || {})[s.id]).map(s => FG.subgroup[s.id]))].map(t => `<h3 class="subgroup">${esc(t)}</h3><div class="scards">${FG.structures.filter(s => s.family === f.id && FG.subgroup[s.id] === t).map(card).join("")}</div>`).join("")}
+      </div>
+    </li>`).join("") + `
+    <li class="stop" id="group-shaping">
+      <span class="ring" aria-hidden="true">+</span>
+      <div class="body">
+        <h2>Before you decide: shaping proposals</h2>
+        <p class="sub">Methods that improve what gets decided</p>
+        <p>None of the structures above work well on a weak proposal. Methods such as the nominal group technique, affinity mapping, pre-mortems and gradients of agreement help a group frame the question, gather ideas, understand each other and test support before anyone decides. They now have their own page, set out as a step-by-step guide.</p>
+        <p><a class="btn" href="shaping.html">Go to Shaping proposals →</a></p>
+      </div>
+    </li>`;
+  const thumbs = () => { readColors(); document.querySelectorAll("canvas[data-thumb]").forEach(c => drawStill(c, c.dataset.thumb)); };
+  thumbs();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", thumbs);
+  new MutationObserver(thumbs).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a.scard, a.chip"); if (!a) return;
+    const href = a.getAttribute("href") || ""; if (!href.startsWith("#") && !href.startsWith("index.html#")) return;
+    const id = unhy(href.split("#")[1]); if (!S[id]) return;
+    e.preventDefault(); openStructure(id);
+  });
+  const route = () => { const [h, part] = location.hash.slice(1).split("--"); const id = unhy(h); if (!S[id]) return; openStructure(id);
+    if (part === "risky" || part === "useful") setTimeout(() => { const el = document.querySelector("dialog .pcase." + part); if (el) el.scrollIntoView({block:"start"}); }, 60); };
+  addEventListener("hashchange", route); route();
+};
+</script>
+
+</body></html>

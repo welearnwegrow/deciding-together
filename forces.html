@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Social Forces · Making Decisions Together: A Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@500;600&display=swap">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<link rel="stylesheet" href="site.css">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
+.menu{border:1px solid var(--line); border-radius:16px; background:var(--surface); box-shadow:var(--shadow); padding:20px 22px; margin-top:22px}
+.menu h2{font-size:1.5rem; margin-bottom:12px}
+.menu ol{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:2px 28px}
+.menu a{display:grid; grid-template-columns:2.2rem minmax(0,1fr); gap:10px; align-items:baseline; padding:9px 4px; border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink)}
+.menu a:hover{color:var(--ochre-deep)}
+.menu a span:first-child{font-family:var(--serif); font-size:1.25rem; color:var(--ochre-deep)}
+.fsec .loopfig > .kicker{display:none}
+.fsec > h2{grid-column:1 / -1; margin-bottom:-8px}
+.fsec .what{font-size:1.12rem; color:var(--ink)}
+.fsec .how{border-left:1px dotted var(--line); padding-left:24px}
+.slider{display:flex; flex-direction:column; gap:10px}
+.slider .track{display:grid; grid-auto-flow:column; grid-auto-columns:100%; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; border:1px solid var(--line); border-radius:18px; background:var(--surface); box-shadow:var(--shadow)}
+.slider .track::-webkit-scrollbar{display:none}
+.slide{scroll-snap-align:start; display:flex; flex-direction:column; gap:8px; padding:20px 22px; border-left:3px solid var(--teal); border-radius:18px}
+.slide.risky{border-left-color:var(--terra)}
+.slide h4{font-family:var(--serif); font-weight:400; font-size:1.25rem}
+.slide .where{font-size:.88rem; color:var(--ink-mute); margin-top:-4px}
+.slide .kicker a{color:inherit}
+.slide .more{font-size:.92rem; margin-top:4px}
+.sbtns{display:flex; gap:12px; align-items:center}
+.sbtns .count{font-size:.9rem; color:var(--ink-mute); min-width:4.5em; text-align:center}
+@media (max-width:820px){ .fsec .how{border-left:0; padding-left:0} }
+.fsec h2 .n{font-family:var(--serif); color:var(--ochre-deep)}
+.fsec{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:30px; align-items:start; padding-block:36px; border-top:1px dotted var(--line); scroll-margin-top:16px}
+.fsec .txt{display:flex; flex-direction:column; gap:14px}
+.fsec h2{display:flex; gap:12px; align-items:baseline; flex-wrap:wrap}
+.fsec .lt{font-size:1rem}
+.in-school{font-size:.97rem}
+.finder{margin-top:34px}
+.gnote{font-size:.88rem; margin-top:12px; max-width:var(--measure)}
+.finder h2{font-size:1.5rem; margin-bottom:4px}
+.finder .lead{color:var(--ink-mute); font-size:.95rem; margin-bottom:12px}
+.symtab{width:100%; border-collapse:collapse}
+.symtab th{text-align:left; font-weight:500; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--label); padding:8px 10px; border-bottom:2px solid var(--ink)}
+.symtab td{padding:13px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+.symtab tr:hover td{background:color-mix(in srgb, var(--ochre) 7%, transparent)}
+.symtab td.said{font-family:var(--serif); font-size:1.12rem; line-height:1.35; width:58%}
+.symtab td.said q{quotes:"\201C" "\201D"}
+.symtab td.said q::before, .symtab td.said q::after{color:var(--ochre-deep)}
+.symtab tr.grp th{padding:30px 10px 8px; border-bottom:1px solid var(--ink); text-transform:none; letter-spacing:0; color:var(--ink)}
+.symtab tr.grp:first-child th{padding-top:14px}
+.symtab .gn{font-family:var(--serif); font-weight:400; font-size:1.45rem; margin-right:12px}
+.symtab .gt{font-size:.9rem; color:var(--ink-mute)}
+.symtab .ev{display:block; font-family:var(--sans); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:2px}
+.symtab .ev.helps{color:var(--sage)} .symtab .ev.hurts{color:var(--terra)}
+.symtab tr.p1 td.said{border-bottom:1px dashed var(--line)}
+.symtab td.pat[rowspan]{vertical-align:middle}
+.symtab td.pat{font-size:.97rem}
+.symtab td.pat a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ochre); white-space:nowrap}
+.symtab td.pat a + a{margin-left:14px}
+.symtab td.pat a::after{content:" \2192"; color:var(--ochre-deep)}
+@media (max-width:640px){ .symtab, .symtab tbody{display:block; width:100%} .symtab td.pat a{display:inline-block; margin:2px 12px 2px 0} .symtab td.pat a + a{margin-left:0} .symtab thead{display:none} .symtab tr{display:block; border-bottom:1px solid var(--line); padding:10px 0} .symtab td{display:block; border:0; padding:4px 0; width:auto} .symtab td.said{width:auto} .symtab tr.grp th{display:block; padding-left:0; padding-right:0} }
+.famhead{padding-top:40px; scroll-margin-top:70px}
+.famhead h2{font-size:1.9rem}
+.famhead p{color:var(--ink-soft); max-width:var(--measure); margin-top:4px}
+.menu .fam{grid-column:1 / -1; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--label); margin-top:10px}
+.guide h4{font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--label); margin-bottom:5px; font-weight:500}
+.guide ul{margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:4px}
+.where{font-size:.92rem; display:flex; flex-direction:column; gap:6px}
+.where .row{display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.where b{font-weight:500; min-width:5.5em}
+.schoolex{border-left:3px solid var(--sage); padding-left:12px; font-size:.95rem}
+.fsec.proto{grid-template-columns:minmax(0,1fr)}
+.fsec.proto .txt{max-width:820px; display:flex; flex-direction:column; gap:20px}
+.fsec.proto .how.in{max-width:520px; padding:0; border:0; background:none; box-shadow:none}
+.fsec.proto .how.in figcaption{display:none}
+.guide h4, .how.in h4, .spot h4{font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--label); margin-bottom:6px; font-weight:500}
+.excols{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.excol{border:1px solid var(--line); border-radius:14px; background:var(--surface); padding:14px 16px; display:flex; flex-direction:column; gap:6px; border-top:3px solid var(--sage)}
+.excol.hurt{border-top-color:var(--terra)}
+.excol h4{font-family:var(--serif); font-weight:400; font-size:1.15rem}
+.excol .mute{font-size:.85rem}
+@media (max-width:700px){ .excols{grid-template-columns:1fr} }
+.in-school b{font-weight:500}
+.links{display:flex; flex-direction:column; gap:8px; font-size:.93rem}
+.links .row{display:flex; flex-wrap:wrap; gap:6px 8px; align-items:center}
+@media (max-width:820px){ .fsec{grid-template-columns:minmax(0,1fr)} }
+
+.drawer{position:fixed; inset:0 0 0 auto; margin:0; height:100dvh; max-height:100dvh; width:min(640px, 100vw); max-width:100vw; border:0; border-left:1px solid var(--line); padding:0; background:var(--paper); color:var(--ink); overflow:auto; box-shadow:-24px 0 60px rgba(0,0,0,.18)}
+.drawer::backdrop{background:rgba(20,18,14,.35)}
+.drawer[open]{animation:dslide .28s ease-out}
+@keyframes dslide{from{transform:translateX(40px); opacity:0} to{transform:none; opacity:1}}
+.dhead{position:sticky; top:0; z-index:2; height:0; display:flex; justify-content:flex-end; padding:0 16px}
+.dhead .dclose{margin-top:14px}
+.dk{font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--label)}
+.dclose{width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:1rem; cursor:pointer}
+.dclose:hover{border-color:var(--ochre)}
+#fdlgBody{padding:0 26px 40px}
+#fdlgBody .fsec{border-top:0; padding-top:30px}
+#fdlgBody .fsec h2{padding-right:44px}
+#fdlgBody .fsec.proto .txt{max-width:none}
+@media (max-width:640px){ .drawer{width:100vw; border-left:0} #fdlgBody{padding:0 18px 32px} }
+
+.strip{margin:26px 0 8px}
+.stripsc{overflow-x:auto}
+.strip svg{width:100%; min-width:820px; height:auto; display:block}
+.strip text{font:500 13px var(--sans)}
+.strip text.ax{font:600 11px var(--sans); letter-spacing:.08em; text-transform:uppercase}
+.strip a.sp{cursor:pointer} .strip a.sp:hover text{fill:var(--ochre-deep); text-decoration:underline} .strip a.sp:hover circle{r:7}
+.strip figcaption{font-size:.86rem; color:var(--ink-mute); font-style:italic; margin-top:4px}
+.sgrp{margin-top:34px}
+.sgrp > h2{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; padding-bottom:8px; border-bottom:3px solid var(--sage)}
+.sgrp.two > h2{border-bottom-color:var(--ochre)} .sgrp.neg > h2{border-bottom-color:var(--terra)}
+.sgrp .gn{font-family:var(--serif); font-weight:400; font-size:1.55rem}
+.sgrp .gt{font-size:.92rem; color:var(--ink-mute)}
+.srows{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 340px), 1fr)); column-gap:36px}
+.srows li{padding:14px 0 13px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:6px}
+.srows .said{font-family:var(--serif); font-size:1.1rem; line-height:1.35; margin:0}
+.srows .said q{quotes:"\201C" "\201D"} .srows .said q::before, .srows .said q::after{color:var(--ochre-deep)}
+.srows .ev{display:block; font-family:var(--sans); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase}
+.srows .ev.helps{color:var(--sage)} .srows .ev.hurts{color:var(--terra)}
+.srows .pat{margin:0; font-size:1rem; font-weight:500}
+.srows .pat a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ochre); margin-right:14px}
+.srows .pat a::after{content:" \2192"; color:var(--ochre-deep)}
+.drawer{width:min(800px, 100vw)}
+#fdlgBody .fsec.proto .how.in{max-width:none}
+#fdlgBody .fsec.proto .how.in:not(.wide) .loopfig svg{max-width:520px}
+#fdlgBody .loopfig.model svg{max-width:none}
+.spot p{font-family:var(--serif); font-size:1.08rem; line-height:1.4; margin:0 0 6px; padding-left:18px; position:relative}
+.spot p::before{content:"\201C"; position:absolute; left:0; top:-2px; color:var(--ochre-deep); font-size:1.4rem}
+.act.two{display:grid; grid-template-columns:1fr 1fr; gap:26px}
+.act .wh h4{color:var(--sage)} .act .wd h4{color:var(--ochre-deep)}
+@media (max-width:640px){ .act.two{grid-template-columns:1fr} }
+
+/* speech-bubble statements */
+.srows li{gap:10px; padding:18px 0 20px}
+.srows .said{position:relative}
+.srows .said q{display:block; quotes:none; position:relative; padding:14px 18px 15px; border-radius:20px 20px 20px 4px; background:color-mix(in srgb, var(--bub) 17%, var(--paper)); border:1px solid color-mix(in srgb, var(--bub) 38%, var(--paper)); margin-bottom:12px}
+.srows .said q::before, .srows .said q::after{content:none}
+.srows .said q::after{content:""; position:absolute; left:20px; bottom:-8px; width:14px; height:14px; background:color-mix(in srgb, var(--bub) 17%, var(--paper)); border-right:1px solid color-mix(in srgb, var(--bub) 38%, var(--paper)); border-bottom:1px solid color-mix(in srgb, var(--bub) 38%, var(--paper)); transform:rotate(45deg)}
+.sgrp.neg{--bub:var(--terra)} .sgrp.pos{--bub:var(--sage)} .sgrp.two{--bub:var(--ochre)}
+.srows li:nth-child(3n+1) .said q{transform:rotate(-.8deg)} .srows li:nth-child(3n+2) .said q{transform:rotate(.6deg)} .srows li:nth-child(3n) .said q{transform:rotate(-.3deg)}
+.sgrp.two .said:has(.ev.helps){--bub:var(--sage)}
+.sgrp.two .said:has(.ev.hurts){--bub:var(--terra); margin-left:12%}
+.sgrp.two .said:has(.ev.hurts) q{border-radius:20px 20px 4px 20px}
+.sgrp.two .said:has(.ev.hurts) q::after{left:auto; right:20px}
+.sgrp.two .said:has(.ev.helps){margin-right:12%}
+.sgrp.two .said:has(.ev.hurts) .ev{text-align:right}
+.srows .ev{margin-bottom:4px}
+.srows li{border-bottom:0}
+
+/* v3: clusters, hidden names, shades */
+.clus{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap:10px 34px; margin-top:16px; align-items:start}
+.sgrp.two .clus{grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr))}
+.cl h3{font-family:var(--serif); font-style:italic; font-weight:400; font-size:1.08rem; color:var(--ink-soft); margin:0 0 4px; padding-bottom:4px; border-bottom:1px dotted var(--line)}
+.cl .srows{display:flex; flex-direction:column; gap:0}
+.cl .srows li{padding:12px 0 6px}
+a.bub{display:flex; flex-direction:column; gap:10px; text-decoration:none; color:var(--ink)}
+a.bub .said{display:block; font-family:var(--serif); font-size:1.08rem; line-height:1.35}
+a.bub .ev{display:block; font-family:var(--sans); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px}
+a.bub .said.helps .ev{color:var(--sage)} a.bub .said.hurts .ev{color:var(--terra); text-align:right}
+a.bub .said q{display:block; quotes:none; position:relative; padding:13px 17px 14px; border-radius:20px 20px 20px 4px; background:color-mix(in srgb, var(--bub) var(--t,17%), var(--paper)); border:1px solid color-mix(in srgb, var(--bub) calc(var(--t,17%) + 20%), var(--paper)); margin-bottom:10px; transition:transform .15s}
+a.bub .said q::before{content:none}
+a.bub .said q::after{content:""; position:absolute; left:20px; bottom:-8px; width:14px; height:14px; background:color-mix(in srgb, var(--bub) var(--t,17%), var(--paper)); border-right:1px solid color-mix(in srgb, var(--bub) calc(var(--t,17%) + 20%), var(--paper)); border-bottom:1px solid color-mix(in srgb, var(--bub) calc(var(--t,17%) + 20%), var(--paper)); transform:rotate(45deg)}
+.sgrp.two a.bub .said.helps{--bub:var(--sage); margin-right:12%}
+.sgrp.two a.bub .said.hurts{--bub:var(--terra); margin-left:12%}
+.sgrp.two a.bub .said.hurts q{border-radius:20px 20px 4px 20px}
+.sgrp.two a.bub .said.hurts q::after{left:auto; right:20px}
+.srows li.sh0{--t:13%} .srows li.sh1{--t:22%} .srows li.sh2{--t:17%} .srows li.sh3{--t:27%}
+.srows li.sh0 q{transform:rotate(-.8deg)} .srows li.sh1 q{transform:rotate(.6deg)} .srows li.sh2 q{transform:rotate(-.3deg)} .srows li.sh3 q{transform:rotate(.9deg)}
+a.bub .who{font-size:.92rem; font-weight:500; color:var(--ochre-deep); opacity:0; transform:translateY(-4px); transition:opacity .2s, transform .2s; min-height:1.3em}
+a.bub .who::before{content:"It's "; font-weight:400; color:var(--ink-mute)}
+a.bub:hover .who, a.bub:focus-visible .who{opacity:1; transform:none}
+a.bub:hover q{transform:rotate(0) translateY(-2px)}
+@media (hover:none){ a.bub .who{opacity:1; transform:none} a.bub .who::before{content:""} }
+
+/* v4: post-it notes */
+.cl .srows li{padding:14px 0 8px}
+a.bub .said q{border-radius:2px 2px 3px 14px / 2px 2px 3px 6px; border:0; padding:22px 18px 20px; min-height:96px; font-family:"Caveat", var(--serif); font-size:1.42rem; line-height:1.2; color:#2f2a22; background:color-mix(in srgb, var(--bub) var(--t,22%), #fbf6e6); box-shadow:0 1px 1px rgba(0,0,0,.06), 0 10px 14px -10px rgba(40,30,10,.35); margin-bottom:8px}
+a.bub .said q::after{content:none}
+a.bub .said q::before{content:""; position:absolute; top:-8px; left:50%; width:58px; height:16px; margin-left:-29px; background:rgba(255,255,255,.55); border:1px solid rgba(0,0,0,.05); transform:rotate(-3deg); box-shadow:0 1px 1px rgba(0,0,0,.04)}
+.srows li.sh0{--t:20%} .srows li.sh1{--t:30%} .srows li.sh2{--t:25%} .srows li.sh3{--t:36%}
+.srows li.sh0 q{transform:rotate(-1.6deg)} .srows li.sh1 q{transform:rotate(1.2deg)} .srows li.sh2 q{transform:rotate(-.6deg)} .srows li.sh3 q{transform:rotate(1.8deg)}
+.sgrp.two a.bub .said.hurts q{border-radius:2px 2px 14px 3px / 2px 2px 6px 3px}
+.sgrp.two a.bub .said.helps q{transform:rotate(-1.4deg)} .sgrp.two a.bub .said.hurts q{transform:rotate(1.3deg); margin-top:-4px}
+.sgrp.two a.bub .said.hurts{margin-left:14%} .sgrp.two a.bub .said.helps{margin-right:14%}
+a.bub:hover q{transform:rotate(0) translateY(-3px) !important; box-shadow:0 1px 1px rgba(0,0,0,.06), 0 16px 18px -10px rgba(40,30,10,.4)}
+.clus{gap:4px 34px}
+
+/* v5: each force its own colour from the strip */
+.srows li{--t:30%}
+.srows li.sh0, .srows li.sh1, .srows li.sh2, .srows li.sh3{--t:32%}
+.sgrp.two a.bub .said.helps, .sgrp.two a.bub .said.hurts{--bub:inherit}
+.sgrp.two a.bub .said.helps q, .sgrp.two a.bub .said.hurts q{background:color-mix(in srgb, var(--bub) 32%, #fbf6e6)}
+.sgrp.two a.bub .said.hurts q{background:color-mix(in srgb, var(--bub) 44%, #fbf6e6)}
+
+/* v6: two-sided halves, no tags */
+.halves{display:grid; grid-template-columns:1fr 1fr; gap:0 48px; margin-top:16px; position:relative}
+.halves::before{content:""; position:absolute; left:50%; top:10px; bottom:10px; border-left:1px dashed var(--line)}
+.srows.half{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:0 22px}
+.srows.half li{padding:14px 0 8px}
+.sgrp.two li.helps q{background:color-mix(in srgb, color-mix(in srgb, var(--bub) 40%, var(--sage)) 34%, #fbf6e6) !important}
+.sgrp.two li.hurts q{background:color-mix(in srgb, color-mix(in srgb, var(--bub) 40%, var(--terra)) 34%, #fbf6e6) !important}
+@media (max-width:760px){ .halves{grid-template-columns:1fr} .halves::before{display:none} }
+
+.srows.flat{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:4px 26px; margin-top:16px}
+.srows.flat li{padding:14px 0 8px}
+@media (max-width:820px){ .srows.flat{grid-template-columns:repeat(2, minmax(0,1fr))} }
+@media (max-width:520px){ .srows.flat, .srows.half{grid-template-columns:1fr} }
+
+/* v7: overlapping pairs */
+.srows.pairs{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px 26px; margin-top:16px}
+.srows.pairs li{padding:14px 0 10px}
+.srows.pairs a.bub{gap:0}
+.srows.pairs .said{margin:0 !important}
+.srows.pairs .said.helps{width:84%; position:relative; z-index:1}
+.srows.pairs .said.hurts{width:84%; margin-left:16% !important; margin-top:-26px !important; position:relative; z-index:2}
+.srows.pairs .said.helps q{transform:rotate(-2deg)} .srows.pairs .said.hurts q{transform:rotate(1.6deg)}
+.srows.pairs .said q{min-height:110px; font-size:1.28rem}
+.srows.pairs .said.helps q{padding-bottom:40px}
+.srows.pairs li.helps q, .sgrp.two .said.helps q{background:color-mix(in srgb, color-mix(in srgb, var(--bub) 40%, var(--sage)) 34%, #fbf6e6) !important}
+.sgrp.two .said.hurts q{background:color-mix(in srgb, color-mix(in srgb, var(--bub) 40%, var(--terra)) 34%, #fbf6e6) !important}
+.srows.pairs a.bub:hover .said q{transform:rotate(0) !important}
+.srows.pairs a.bub:hover .said.hurts q{transform:translate(4px,3px) !important}
+@media (max-width:980px){ .srows.pairs{grid-template-columns:repeat(2, minmax(0,1fr))} }
+@media (max-width:520px){ .srows.pairs{grid-template-columns:1fr} }
+
+/* lesson layout */
+.pairs2{display:flex; flex-direction:column; gap:22px}
+.sp2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.9fr); gap:18px; align-items:start}
+.sp2 .lfig{margin:0} .sp2 .loopfig figcaption{display:none} .sp2 .loopfig{margin:0}
+@media (max-width:640px){ .sp2{grid-template-columns:1fr} }
+.scene p.case{font-family:var(--sans); font-style:normal; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 6px}
+.ices.two{display:flex; flex-direction:column; gap:18px}
+.ices .loopfig figcaption{display:none}
+.ices .loopfig.model svg{max-width:100%}
+.lesson .loopfig:not(.model) figcaption{display:none}
+.lesson .txt{gap:24px !important}
+.lesson .what{font-size:1.2rem !important; font-family:var(--serif); line-height:1.4}
+.scenes.two{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.scene{padding:16px 18px; border-left:4px solid var(--good); background:color-mix(in srgb, var(--good) 8%, var(--paper))}
+.scene.bad{border-left-color:var(--bad); background:color-mix(in srgb, var(--bad) 8%, var(--paper))}
+.scene p{font-family:var(--serif); font-style:italic; font-size:1.06rem; line-height:1.45; margin:0 0 8px}
+.scene .from{font-size:.85rem; color:var(--ink-mute); text-decoration:none; border-bottom:1px solid var(--line)}
+.scene .from:hover{color:var(--ink)}
+.lsec h4{font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--label); margin-bottom:6px; font-weight:500}
+.lsec p{line-height:1.6; margin:0}
+.lsec .ev{margin-top:8px; font-size:.86rem}
+.lfig{margin-top:16px}
+.nums{margin:0; display:flex; flex-direction:column; gap:14px}
+.nrow .nl{font-size:.88rem; font-weight:600; margin:0 0 4px}
+.nrow.good .nl{color:var(--good)} .nrow.bad .nl{color:var(--bad)}
+.nrow .nv{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 18px; margin:0; font-family:var(--serif); font-size:1.6rem}
+.nrow .nv b{font-family:var(--sans); font-size:.95rem; font-weight:600; margin-left:6px}
+.nrow.good .nv b{color:var(--good)} .nrow.bad .nv b{color:var(--bad)}
+.nums figcaption{font-size:.84rem; color:var(--ink-mute); font-style:italic}
+.remember{margin:4px 0 0; padding:14px 0 0; border-top:2px solid var(--ink); font-family:var(--serif); font-size:1.25rem; line-height:1.35}
+.remember::before{content:"Remember"; display:block; font-family:var(--sans); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--label); margin-bottom:4px}
+@media (max-width:640px){ .scenes.two{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<main>
+  <div class="wrap">
+    <div class="sechead">
+      <h1>Social forces</h1>
+      <p class="soft" data-edit="dom:forces:p1" data-html="1">A structure is the rule a group uses to decide. Social forces are the pressures inside the group that shape what people think and say before the rule is ever used: who speaks first, who stays quiet, who everyone copies. A group can choose its structure, but the social forces come with the people. To use this page, find the situation below that sounds familiar, then click it to see the pattern behind it and what to do.</p>
+    </div>
+    <section class="finder">
+      <figure class="strip" id="strip"></figure>
+      <div id="finder"></div></section>
+    <dialog id="fdlg" class="drawer" aria-labelledby="fdlgTitle">
+      <div class="dhead"><span class="dk"></span><button class="dclose" type="button" aria-label="Close">✕</button></div>
+      <div id="fdlgBody"></div>
+    </dialog>
+  </div>
+</main>
+<script src="data.js"></script>
+<script src="entries.js"></script>
+<script src="config.js"></script>
+<script src="edits.js"></script>
+<script src="site.js"></script>
+<script src="scenes.js"></script>
+<script src="forces_guide.js"></script>
+<script>
+window.PAGE = "forces";
+window.page = function(){
+  const G = window.FGUIDE, FF = {}; FG.forces.forEach(f => FF[f.id] = f);
+  const order = []; G.groups.forEach(g => g.rows.forEach(r => r.f.forEach(id => { if (FF[id] && !G.hidden.includes(id) && !order.includes(id)) order.push(id); })));
+  FG.forces.forEach(f => { if (!order.includes(f.id) && !G.hidden.includes(f.id)) order.push(f.id); });
+  const num = {}; order.forEach((id,i) => num[id] = i + 1);
+  const chip = id => FF[id] ? `<a class="fchip" href="#${hy(id)}">${esc(FF[id].name)}</a>` : "";
+  const link = id => `<a href="#${hy(id)}">${esc(FF[id].name)}</a>`;
+  const SEQ = ["pos","two","neg"].flatMap(g => G.clusters[g].flatMap(c => c[1]));
+  document.getElementById("finder").innerHTML = G.groups.map(g => {
+    const rows = {}; g.rows.forEach(x => { const f = x.f[0]; (rows[f] = rows[f] || {f, items:[]}).items.push(x); });
+    const note = (f, x, k, cls) => `<li class="sh${k % 4} ${cls || ""}" data-f="${f}"><a class="bub" href="#${hy(f)}" aria-label="${esc(x.s)} (${esc(FF[f].name)})"><span class="said"><q>${esc(x.s)}</q></span></a></li>`;
+    let k = 0;
+    const head = `<h2><span class="gn">${esc(g.name)}</span><span class="gt">${esc(g.text)}</span></h2>`;
+    if (g.id === "two") { const fs = SEQ.filter(f => rows[f] && FF[f]);
+      const unit = (f, i) => { const hp = rows[f].items.find(y => y.e === "helps"), ht = rows[f].items.find(y => y.e === "hurts");
+        return `<li class="pair sh${i % 4}" data-f="${f}"><a class="bub" href="#${hy(f)}" aria-label="${esc(FF[f].name)}: ${esc(hp ? hp.s : "")} ${esc(ht ? ht.s : "")}">${hp ? `<span class="said helps"><q>${esc(hp.s)}</q></span>` : ""}${ht ? `<span class="said hurts"><q>${esc(ht.s)}</q></span>` : ""}</a></li>`; };
+      return `<section class="sgrp two">${head}<ol class="srows pairs">${fs.map(unit).join("")}</ol></section>`; }
+    return `<section class="sgrp ${g.id}">${head}<ol class="srows flat">${SEQ.filter(f => rows[f] && FF[f]).map(f => note(f, rows[f].items[0], k++)).join("")}</ol></section>`; }).join("");
+  /* family menu removed */
+  const by = {}, where = {};
+  FG.structures.forEach(st => { const e = FG.entries[st.id]; if (!e || (FG.asExample || {})[st.id]) return;
+    ["useful","risky"].forEach(kind => { const c = e[kind]; if (!c || !c.forces) return;
+      c.forces.forEach((x,i) => { (by[x.f] = by[x.f] || []).push({sid:st.id, kind, c, x, i});
+        const w = (where[x.f] = where[x.f] || {helps:new Set(), hurts:new Set()}); w[x.e === "hurts" ? "hurts" : "helps"].add(st.id); }); }); });
+  { const grpOf = {}; G.groups.forEach(g => g.rows.forEach(r => r.f.forEach(id => { if (!grpOf[id]) grpOf[id] = g.id; })));
+    const pts = order.map(id => { const l = by[id] || [], h = l.filter(o => o.x.e !== "hurts").length, u = l.length - h;
+      const sc = l.length ? (h - u) / l.length : ({pos:.6, two:0, neg:-.8})[grpOf[id]];
+      return {id, sc, g:grpOf[id], name:FF[id].name}; }).sort((a,b) => b.sc - a.sc);
+    pts.sort((p,q) => SEQ.indexOf(p.id) - SEQ.indexOf(q.id));
+    const W = 1100, L = 30, R = W - 130, n = pts.length, step = (R - L) / n, maxw = Math.max(...pts.map(p => p.name.length)) * 6.4;
+    const base = Math.round(maxw * .71) + 30, H = base + 46;
+    const col = {pos:"var(--sage)", two:"var(--ochre-deep)", neg:"var(--terra)"};
+    let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="The ${n} social forces, from mostly positive to mostly harmful">`;
+    svg += `<defs><linearGradient id="hh" x1="0" x2="1"><stop offset="0" stop-color="var(--sage)"/><stop offset=".5" stop-color="var(--ochre)"/><stop offset="1" stop-color="var(--terra)"/></linearGradient></defs>`;
+    svg += `<rect x="${L}" y="${base-1.5}" width="${R-L}" height="3" rx="1.5" fill="url(#hh)"/>`;
+    const zones = ["pos","two","neg"].map(g => { const idx = pts.map((p,i) => p.g === g ? i : -1).filter(i => i >= 0); return {g, a:L + idx[0]*step, b:L + (idx[idx.length-1]+1)*step}; });
+    const zn = {pos:"Mostly positive", two:"Two-sided", neg:"Mostly harmful"};
+    zones.forEach((z,i) => { svg += `<text class="ax" x="${(z.a+z.b)/2}" y="${base+26}" text-anchor="middle" fill="${col[z.g]}">${zn[z.g]}</text>`;
+      if (i) svg += `<line x1="${z.a}" y1="${base-8}" x2="${z.a}" y2="${base+12}" stroke="var(--paper)" stroke-width="3"/>`; });
+    const colAt = t => t < .5 ? `color-mix(in srgb, var(--ochre) ${Math.round(t*200)}%, var(--sage))` : `color-mix(in srgb, var(--terra) ${Math.round((t-.5)*200)}%, var(--ochre))`;
+    pts.forEach((p,i) => { p.c = colAt(n > 1 ? i/(n-1) : 0); document.querySelectorAll(`#finder li[data-f="${p.id}"]`).forEach(li => { li.style.setProperty("--bub", p.c); li.style.setProperty("--dot", p.c); }); });
+    pts.forEach((p,i) => { const x = L + (i + .5) * step;
+      svg += `<a href="#${hy(p.id)}" class="sp"><circle cx="${x}" cy="${base}" r="6.5" fill="${p.c}" stroke="var(--paper)" stroke-width="2"/><text transform="translate(${x+3} ${base-12}) rotate(-45)" fill="var(--ink)">${esc(p.name)}</text></a>`; });
+    document.getElementById("strip").innerHTML = `<div class="stripsc">${svg}</svg></div>`; }
+  const slide = o => `<article class="slide ${o.kind}">
+      <p class="kicker"><a href="${sHref(o.sid)}">${esc(S[o.sid].name)}</a> · ${o.kind === "useful" ? "Useful when" : "Watch out for"}</p>
+      <h4>${esc(o.c.title)}</h4>
+      <p><span class="tag ${o.x.e === "hurts" ? "amp" : "damp"}">${o.x.e === "hurts" ? "caused trouble" : "helped"}</span></p>
+      <p${E(`ent:${o.sid}:${o.kind}.forces.${o.i}.how`,true)}>${o.x.how}</p>
+      <a class="more" href="${sHref(o.sid)}">Open ${esc(S[o.sid].name)} →</a>
+    </article>`;
+  const help = h => h[1] ? `<li><a href="shaping.html#${hy(h[1])}">${esc(h[0])}</a></li>` : `<li>${esc(h[0])}</li>`;
+  const sChip = id => `<a class="fchip" href="${sHref(id)}">${esc(S[id].name)}</a>`;
+  const PROTO = ["cascade"];
+  const exCard = o => o ? `<div class="excol ${o.x.e === "hurts" ? "hurt" : "help"}">
+      <p class="kicker">${o.x.e === "hurts" ? "Where it hurts" : "Where it helps"}</p>
+      <h4>${esc(o.c.title)}</h4>
+      <p class="mute">${esc(S[o.sid].name)} · ${o.kind === "useful" ? "Useful when" : "Watch out for"}</p>
+      <p${E(`ent:${o.sid}:${o.kind}.forces.${o.i}.how`,true)}>${o.x.how}</p>
+      <a class="more" href="${sHref(o.sid)}">See the full example →</a></div>` : "";
+  const numbersHTML = m => `<figure class="nums">${m.rows.map(r => { const avg = Math.round(r.vals.reduce((a,b) => a+b, 0) / r.vals.length);
+      return `<div class="nrow ${r.tone}"><p class="nl">${esc(r.label)}</p><p class="nv">${r.vals.map(v => `<span>${v}</span>`).join("")}<b>average ${avg}</b></p></div>`; }).join("")}<figcaption>${esc(m.note || "")}</figcaption></figure>`;
+  const lessonHTML = (id, f, g, L) => {
+    const fig = L.ice ? `<div class="ices ${L.ice.length > 1 ? "two" : ""}">${L.ice.map(m => modelFigure({type:"iceberg", layers:m.layers}, null, m.tone)).join("")}</div>` : "";
+    const scene = sc => `<div class="scene ${sc.tone}"><p class="case">${esc(sc.case || "")}</p><p>${esc(sc.text)}</p></div>`;
+    return `<section class="fsec proto lesson" id="${hy(id)}">
+      <h2><span${E(`frc:${id}:name`)}>${esc(f.name)}</span></h2>
+      <div class="txt">
+        <p class="what"${E(`frc:${id}:what`,true)}>${f.what}</p>
+        <div class="pairs2">${L.scenes.map((sc, i) => `<div class="sp2 ${sc.tone}">${scene(sc)}${L.ice && L.ice[i] ? `<div class="lfig">${modelFigure({type:"iceberg", layers:L.ice[i].layers}, null, L.ice[i].tone)}</div>` : ""}</div>`).join("")}</div><div class="lsec"><h4>What's going on</h4><p>${esc(L.mech)}</p></div>
+        <div class="lsec"><h4>What the research shows</h4><p>${esc(L.why)}</p></div>
+        ${g.spot ? `<div class="spot"><h4>How to spot it</h4>${g.spot.map(x => `<p>${esc(x)}</p>`).join("")}</div>` : ""}
+        <div class="act ${(G.when || {})[id] ? "two" : ""}">${(G.when || {})[id] ? `<div class="guide wh"><h4>When it helps</h4><ul>${G.when[id].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}${g.help ? `<div class="guide wd"><h4>What to do</h4><ul>${g.help.map(h => `<li>${esc(h[0])}</li>`).join("")}</ul></div>` : ""}</div>
+        <p class="remember">${esc(L.remember)}</p>
+      </div>
+    </section>`; };
+  const section2 = id => { const f = FF[id], g = G.guide[id] || {}, all = by[id] || [];
+    if ((G.lesson || {})[id]) return lessonHTML(id, f, g, G.lesson[id]);
+    const hp = all.find(o => o.x.e !== "hurts"), ht = all.find(o => o.x.e === "hurts");
+    return `<section class="fsec proto" id="${hy(id)}">
+      <h2><span${E(`frc:${id}:name`)}>${esc(f.name)}</span></h2>
+      <div class="txt">
+        <p class="what"${E(`frc:${id}:what`,true)}>${f.what}</p>
+        ${g.spot ? `<div class="spot"><h4>How to spot it</h4>${g.spot.map(x => `<p>${esc(x)}</p>`).join("")}</div>` : ""}
+        ${f.model || f.loop ? `<div class="how in ${f.model || f.loop2 ? "wide" : ""}"><h4>How it works</h4>${f.model ? modelFigure(f.model, f.loop, f.model.type === "crowd" ? "" : "bad") : f.loop2 ? `<div class="loops2">${loopFigure(f.loop2)}${loopFigure(f.loop)}</div>` : loopFigure(f.loop)}</div>` : ""}
+        <div class="act ${(G.when || {})[id] ? "two" : ""}">${(G.when || {})[id] ? `<div class="guide wh"><h4>When it helps</h4><ul>${G.when[id].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}${g.help ? `<div class="guide wd"><h4>What to do</h4><ul>${g.help.map(h => `<li>${esc(h[0])}</li>`).join("")}</ul></div>` : ""}</div>
+      </div>
+    </section>`; };
+  const section = id => { return section2(id); const f = FF[id], g = G.guide[id] || {}, list = (by[id] || []).slice(0, 3), w = where[id];
+    const refs = id === "spiral_silence" ? f.refs : f.refs;
+    return `<section class="fsec" id="${hy(id)}">
+      <h2><span${E(`frc:${id}:name`)}>${esc(f.name)}</span></h2>
+      <div class="txt">
+        <p class="what"${E(`frc:${id}:what`,true)}>${f.what}</p>
+        <div class="guide">${g.spot ? `<h4>How to spot it</h4><ul>${g.spot.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}</div>
+        <div class="guide">${g.help ? `<h4>What helps</h4><ul>${g.help.map(help).join("")}</ul>` : ""}</div>
+        ${w ? `<div class="where">${w.helps.size ? `<div class="row"><b>Helps in</b>${[...w.helps].map(sChip).join("")}</div>` : ""}${w.hurts.size ? `<div class="row"><b>Hurts in</b>${[...w.hurts].map(sChip).join("")}</div>` : ""}</div>` : ""}
+        ${list.length ? `<div class="slider" data-n="${list.length}">
+          <div class="track" tabindex="0" aria-label="Examples of ${esc(f.name)}">${list.map(slide).join("")}</div>
+          <div class="sbtns"><button class="btn prev" type="button" aria-label="Previous example">←</button><span class="count">1 of ${list.length}</span><button class="btn next" type="button" aria-label="Next example">→</button></div>
+        </div>` : g.ex ? `<p class="schoolex"><b>In a school.</b> ${esc(g.ex)}</p>` : ""}
+        ${evRow(refs)}
+      </div>
+      ${f.model || f.loop ? `<div class="how"><p class="kicker">How it works</p>${modelFigure(f.model, f.loop)}</div>` : ""}
+    </section>`; };
+  const dlg = document.getElementById("fdlg"), body = document.getElementById("fdlgBody");
+  const famOf = id => (G.families.find(fm => fm.forces.includes(id)) || {}).name || "Social force";
+  const openF = id => { if (!FF[id] || G.hidden.includes(id)) return; body.innerHTML = section(id).replace(/ id="[^"]+"/, '').replace('<h2>', '<h2 id="fdlgTitle">');
+    body.scrollTop = 0; if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; };
+  const closeF = () => { dlg.close(); };
+  dlg.addEventListener("close", () => { if (location.hash) history.replaceState(null, "", location.pathname + location.search); });
+  dlg.querySelector(".dclose").onclick = closeF;
+  dlg.addEventListener("click", e => { if (e.target === dlg) closeF(); });
+  const idFromHash = h => { const k = h.replace(/^#/, ""); return Object.keys(FF).find(id => hy(id) === k || id === k); };
+  ["finder","strip"].forEach(el => document.getElementById(el).addEventListener("click", e => { const a = e.target.closest("a[href^='#']"); if (!a) return; e.preventDefault();
+    const id = idFromHash(a.getAttribute("href")); history.replaceState(null, "", "#" + hy(id)); openF(id); }));
+  document.querySelectorAll(".slider").forEach(sl => {
+    const tr = sl.querySelector(".track"), n = +sl.dataset.n, cnt = sl.querySelector(".count");
+    const cur = () => Math.round(tr.scrollLeft / Math.max(1, tr.clientWidth));
+    const go = d => tr.scrollTo({left: clamp(cur() + d, 0, n-1) * tr.clientWidth, behavior: "smooth"});
+    sl.querySelector(".prev").onclick = () => go(-1); sl.querySelector(".next").onclick = () => go(1);
+    tr.addEventListener("scroll", () => { cnt.textContent = `${cur()+1} of ${n}`; }, {passive:true});
+  });
+  const fromHash = () => { if (location.hash){ const id = idFromHash(location.hash); if (id) openF(id); } };
+  addEventListener("hashchange", fromHash); fromHash();
+};
+</script>
+</body>
+</html>

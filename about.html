@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About · Making Decisions Together: A Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<link rel="stylesheet" href="site.css">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
+.reading{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:18px}
+.refs{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px; max-width:900px}
+.refs li{padding-left:2.2em; text-indent:-2.2em; scroll-margin-top:16px; line-height:1.55; overflow-wrap:anywhere}
+.refs li:target{background:color-mix(in srgb, var(--ochre) 14%, transparent); outline:8px solid color-mix(in srgb, var(--ochre) 14%, transparent)}
+.refs .on{display:block; text-indent:0; font-size:.84rem; color:var(--ink-mute); margin-top:3px}
+.refs .on a{color:var(--ink-soft)}
+.refnote{max-width:var(--measure); margin:-14px 0 14px; color:var(--ink-soft)}
+.about{display:flex; flex-direction:column; gap:14px; max-width:var(--measure)}
+.about h2{margin-top:10px}
+.more{margin-top:26px; max-width:900px}
+.more .lab{font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); margin:0 0 14px}
+.more ul{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:22px 36px}
+.more a{display:grid; grid-template-columns:76px 1fr; gap:16px; align-items:start; text-decoration:none; color:var(--ink)}
+.more svg{width:76px; height:76px; overflow:visible}
+.more .ico{width:76px; height:76px; transition:transform .5s ease}
+.more a:hover .ico{transform:rotate(-12deg) scale(1.04)}
+.more svg *{transition:transform .5s ease; transform-box:fill-box; transform-origin:center}
+.more a:hover .spin{transform:rotate(60deg)}
+.more a:hover .hop{transform:translateY(-4px)}
+.more .t{font-family:var(--serif); font-size:1.3rem; line-height:1.2; display:block}
+.more .d{display:block; color:var(--ink-mute); font-size:.92rem; margin-top:4px}
+.more .go{display:inline-block; margin-top:8px; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep)}
+.more a:hover .go{text-decoration:underline; text-underline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <div class="wrap">
+    <div class="sechead">
+      <h1>About this guide</h1>
+    </div>
+    <section class="about">
+      <p data-edit="dom:about:p1" data-html="1">A field guide to making decisions together maps the ways groups make decisions, and the social forces that shape how people reach agreement inside each one. It sorts 22 structures and methods into five groups: shaping proposals, deciding by authority, by vote or by consensus, and cases where no one is in charge. Many come with variations, which are described inside them. This education edition uses examples from schools, school systems and education projects, with a few from the wider social impact sector.</p>
+      <p data-edit="dom:about:p2" data-html="1">It is written for students, teachers, parents, school leaders, policy makers, and the NGOs and universities that work with schools: anyone who takes part in decisions about education. It builds on two earlier articles: <a href="https://welearnwegrow.medium.com/successful-collaboration-starts-with-eight-simple-rules-bbf60ee47498" target="_blank" rel="noopener">How to collaborate?</a> (2019), which first compared hierarchy, no structure, majority, unanimity, consensus and consent, and <a href="https://welearnwegrow.medium.com/a-better-way-to-dialogue-6a8b29fc8d3d" target="_blank" rel="noopener">A better way to dialogue</a> (2025), which looked at twelve dialogue traditions schools can learn from.</p>
+      <div class="more">
+        <p class="lab">Also from We Learn, We Grow</p>
+        <ul>
+          <li><a href="https://welearnwegrow.github.io/capacities/" target="_blank" rel="noopener">
+            <img class="ico" src="img/capacities.png" alt="" width="76" height="76">
+            <span><span class="t">Systems Change Learning Guide</span><span class="d">An open guide to 21 learning areas and a five-stage route for changing complex systems.</span><span class="go">Open the guide →</span></span></a></li>
+          <li><a href="https://jayaramchandani.substack.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 76 76" aria-hidden="true"><g class="spin"><circle cx="38" cy="22" r="15" fill="var(--sage)" opacity=".55"/><circle cx="25" cy="45" r="15" fill="var(--ochre)" opacity=".55"/><circle cx="51" cy="45" r="15" fill="var(--terra)" opacity=".5"/></g><circle cx="38" cy="38" r="4" fill="var(--ink)"/></svg>
+            <span><span class="t">Building pluriversal futures</span><span class="d">Essays on learning, collaboration and systems change, on Substack.</span><span class="go">Read the essays →</span></span></a></li>
+        </ul>
+      </div>
+    </section>
+    <section class="block">
+      <div class="sechead"><h2>References</h2></div>
+      <p class="refnote" data-edit="dom:about:p4" data-html="1">References follow APA 7th edition.</p>
+      <ol class="refs" id="refs"></ol>
+    </section>
+  </div>
+</main>
+<script src="data.js"></script>
+<script src="entries.js"></script>
+<script src="config.js"></script>
+<script src="edits.js"></script>
+<script src="site.js"></script>
+<script src="shaping.js"></script>
+<script src="scenes.js"></script>
+<script>
+window.PAGE = "about";
+window.page = function(){
+  const on = {}; const add = (r, label, href) => { (on[r] = on[r] || []).push(`<a href="${href}">${label}</a>`); };
+  Object.entries(FG.entries).forEach(([id,e]) => e.refs.forEach(r => add(r, S[id].name, sHref(id))));
+  FG.forces.filter(f => f.id !== "org_silence").forEach(f => f.refs.forEach(r => add(r, f.name, fHref(f.id))));
+  ["vroom1973","vroom1988","hoy2008","rau2018","lalley2018"].forEach(r => add(r, "Tool", "tool.html"));
+  ["sterman2000","meadows2008"].forEach(r => add(r, "Social forces", "forces.html"));
+  (window.SHAPING || []).forEach(st => st.techs.forEach(t => (t.refs || []).forEach(r => add(r, "Shaping proposals: " + t.name, "shaping.html#" + hy(t.id)))));
+  const strip = s => s.replace(/<[^>]+>/g,"");
+  const keys = Object.keys(FG.refs).filter(k => on[k]).sort((a,b) => strip(FG.refs[a].apa).localeCompare(strip(FG.refs[b].apa)));
+  document.getElementById("refs").innerHTML = keys.map(k => { const r = FG.refs[k];
+    const apa = r.apa.replace(/(https:\/\/\S+)$/, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+    return `<li id="${k}">${apa}${!/https:/.test(r.apa) && r.url ? ` <a href="${r.url}" target="_blank" rel="noopener">record</a>` : ""}
+      <span class="on">Cited on: ${[...new Set(on[k])].join(" · ")}</span></li>`; }).join("");
+  if (location.hash){ const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+};
+</script>
+</body>
+</html>

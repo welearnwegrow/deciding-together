@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Structure Chooser · Making Decisions Together: A Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<link rel="stylesheet" href="site.css">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
+.presets{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:8px}
+.presets button{font:inherit; font-size:.93rem; text-align:left; color:var(--ink); background:transparent; border:2px dotted var(--line); border-radius:18px; padding:8px 14px; cursor:pointer; display:flex; flex-direction:column; gap:0}
+.presets button small{color:var(--ink-mute); font-size:.8rem}
+.presets button[aria-pressed="true"]{border-color:var(--ochre); border-style:solid}
+.layout{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:34px; align-items:start; margin-top:22px}
+.qs{display:flex; flex-direction:column}
+.q{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 16px; align-items:center; padding-block:12px; border-bottom:1px dotted var(--line)}
+.q p{font-size:.98rem}
+.q small{display:block; font-size:.78rem; color:var(--ink-mute)}
+.seg{display:inline-flex; border:1px solid var(--ink-soft); border-radius:999px; overflow:hidden}
+.seg button{font:inherit; font-size:.86rem; border:none; background:transparent; color:var(--ink); padding:4px 12px; cursor:pointer}
+.seg button + button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.out{position:sticky; top:16px; display:flex; flex-direction:column; gap:14px}
+.res{display:flex; flex-direction:column; gap:6px; padding:16px 20px; border:2px dashed var(--line); border-radius:24px}
+.res.top{border-color:var(--ochre)}
+.res .hd{display:flex; justify-content:space-between; gap:10px; align-items:baseline}
+.res .hd a{font-family:var(--serif); font-weight:700; font-size:1.05rem}
+.res ul{margin:0; padding-left:1.1em; font-size:.88rem; color:var(--ink-soft)}
+.res .src{font-size:.75rem; color:var(--ink-mute)}
+.status{font-size:.9rem; color:var(--ink-mute)}
+@media (max-width:860px){ .layout{grid-template-columns:minmax(0,1fr)} .out{position:static} }
+@media (max-width:480px){ .q{grid-template-columns:minmax(0,1fr)} }
+</style>
+</head>
+<body>
+<main>
+  <div class="wrap">
+    <div class="sechead">
+      <h1>Choose a structure for your decision</h1>
+      <p class="soft" data-edit="dom:tool:p1" data-html="1">Answer the questions for a decision you are facing. The shortlist changes with each answer. Use it as something concrete to talk through with the people the decision affects.</p>
+    </div>
+    <div class="layout">
+      <div class="qs">
+        <div class="q"><div><p>How many people are affected?</p></div>
+          <div class="seg" id="size" role="group" aria-label="Group size"></div></div>
+        <div id="qs"></div>
+        <p style="margin-top:16px"><button class="btn" type="button" id="clear">Clear answers</button></p>
+      </div>
+      <aside class="out" aria-live="polite">
+        <h2>Your shortlist</h2>
+        <p class="status" id="status"></p>
+        <div id="results" class="stack"></div>
+        <p class="ev"><a href="about.html#vroom1973">Where these questions come from</a></p>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="data.js"></script>
+<script src="entries.js"></script>
+<script src="config.js"></script>
+<script src="edits.js"></script>
+<script src="site.js"></script>
+<script src="scenes.js"></script>
+<script>
+window.PAGE = "tool";
+const T = FG.tool;
+let A = {}, SIZE = null, PRESET = null;
+const SRC = {vy:"Vroom–Yetton", guide:"this guide", rau:"Rau &amp; Koch-Gonzalez, 2018", lw:"Lalley &amp; Weyl, 2018"};
+const y = k => A[k] === "y", n = k => A[k] === "n";
+const RULES = [
+  {when:()=>y("quality")&&n("info"), d:{autocracy:-10, oligarchy:-3, consultative:2, advice_process:2}, why:"The decider lacks the information, so deciding alone risks a poor answer.", src:"vy"},
+  {when:()=>n("goals"), d:{consensus_discussion:-6, unanimity:-6, quaker:-6, consent:-1}, why:"Without a shared goal, consensus stalls or turns coercive.", src:"vy"},
+  {when:()=>y("acceptance")&&n("solo"), d:{autocracy:-10, consultative:-3, consent:3, ngt:2, consensus_discussion:2, participatory_budgeting:2, citizens_assembly:2, rough_consensus:1}, why:"People must accept it and would not accept a solo call, so they need a real part in deciding.", src:"vy"},
+  {when:()=>(n("acceptance")||y("solo"))&&y("time"), d:{autocracy:3, consultative:4, advice_process:3}, why:"Acceptance is not at risk and time is short, so one accountable decider is defensible.", src:"vy"},
+  {when:()=>y("conflict"), d:{ngt:3, delphi:2, polis:3, citizens_assembly:3, majority:-1}, why:"Structured formats limit domination and polarization when people disagree.", src:"guide"},
+  {when:()=>y("time"), d:{advice_process:3, lazy_consensus:3, consultative:2, citizens_assembly:-5, delphi:-3, consensus_discussion:-3, quaker:-3, participatory_budgeting:-4}, why:"Short on time: favour fast formats that still include a check.", src:"guide"},
+  {when:()=>y("reversible"), d:{consent:3, advice_process:2, lazy_consensus:2}, why:"Reversible decisions suit “good enough for now, safe enough to try”.", src:"rau"},
+  {when:()=>n("reversible"), d:{supermajority:2, rough_consensus:2, citizens_assembly:1, delphi:1, lazy_consensus:-2}, why:"Hard-to-undo decisions deserve a higher bar and slower scrutiny.", src:"guide"},
+  {when:()=>SIZE==="small", d:{consensus_discussion:2, consent:2, ngt:1, citizens_assembly:-3, participatory_budgeting:-3, polis:-2}, why:"Small groups can hear every voice directly.", src:"guide"},
+  {when:()=>SIZE==="medium", d:{ngt:2, consent:1, participatory_budgeting:1, polis:1}, why:"Mid-sized groups need structure so a few don't dominate.", src:"guide"},
+  {when:()=>SIZE==="large", d:{majority:2, participatory_budgeting:3, citizens_assembly:2, polis:3, liquid:1, consensus_discussion:-4, unanimity:-4, quaker:-3, consent:-2}, why:"Large groups need counting, sampling or online mapping; whole-group consensus does not scale.", src:"guide"},
+  {when:()=>y("capture"), d:{citizens_assembly:3, kleroterion:2, quadratic:2, venice:1, dao_token:-5, oligarchy:-4, liquid:-2}, why:"Random selection and priced votes make capture harder.", src:"guide"},
+  {when:()=>y("intensity"), d:{quadratic:3, conviction:2, majority:-1}, why:"Some care far more than others; pricing votes lets intensity show without letting anyone dominate.", src:"lw"},
+  {when:()=>n("quality")&&y("goals"), d:{majority:1, consent:1}, why:"It is a matter of preference among people who share a goal, so a simple count or consent round can work.", src:"guide"}
+];
+const POOL = FG.structures.filter(s => s.tier !== "D" && !(FG.asExample || {})[s.id] && !["no_structure","voting_rules","liberum_veto","bees","herd","stigmergy","slime_mould"].includes(s.id)).map(s => s.id);
+const BASE = {consultative:1, consent:1, majority:1, advice_process:1};
+const WATCH = [
+  {when:()=>y("conflict"), f:"polarization"},
+  {when:()=>y("goals")&&!y("conflict")&&A.goals, f:"groupthink"},
+  {when:()=>y("capture"), f:"influence_few"},
+  {when:()=>y("time"), f:"cascade"},
+  {when:()=>SIZE==="large", f:"spiral_silence"},
+  {when:()=>y("acceptance")&&n("solo"), f:"pluralistic_ignorance"},
+  {when:()=>y("quality"), f:"conformity"}
+];
+
+function seg(id, opts, cur, onPick){
+  return opts.map(([v,l]) => `<button type="button" data-k="${id}" data-v="${v}" aria-pressed="${cur===v}">${l}</button>`).join("");
+}
+function renderQs(){
+  document.getElementById("size").innerHTML = seg("size", T.sizeOptions, SIZE);
+  document.getElementById("qs").innerHTML = T.questions.map(q => `<div class="q"><div><p${E(`tq:${q.id}:q`)}>${esc(q.q)}</p></div>
+    <div class="seg" role="group" aria-label="${q.q}">${seg(q.id, [["y","Yes"],["n","No"],["u","Not sure"]], A[q.id])}</div></div>`).join("");
+}
+function compute(){
+  const sc = {}, why = {}; POOL.forEach(id => { sc[id] = BASE[id] || 0; why[id] = []; });
+  RULES.forEach(r => { if (!r.when()) return; Object.entries(r.d).forEach(([id,v]) => { if (!(id in sc)) return; sc[id] += v; if (v > 0) why[id].push(r); }); });
+  const answered = Object.values(A).filter(v => v && v !== "u").length + (SIZE ? 1 : 0);
+  const top = POOL.slice().sort((a,b) => sc[b]-sc[a] || (built(b)-built(a))).slice(0,5);
+  document.getElementById("status").textContent = answered ? `${answered} of ${T.questions.length + 1} answered${PRESET ? " · example: " + T.presets.find(p=>p.id===PRESET).label : ""}` : "Answer a question to see a shortlist.";
+  document.getElementById("results").innerHTML = !answered ? "" : top.map((id,i) => `<div class="res${i===0 ? " top" : ""}">
+      <div class="hd"><a href="${sHref(id)}">${esc(S[id].name)}</a><span class="tag">${built(id) ? "full entry" : "entry in next pass"}</span></div>
+      <p style="font-size:.92rem">${esc(S[id].line)}</p>
+      ${why[id].length ? `<ul>${why[id].map(r => `<li>${r.why}</li>`).join("")}</ul>` : ""}
+    </div>`).join("");
+}
+window.page = function(){
+  A = {}; SIZE = null; PRESET = null;
+  renderQs(); compute();
+  document.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.p){ const p = T.presets.find(x => x.id === b.dataset.p); A = {...p.a}; SIZE = p.size; PRESET = p.id; }
+    else if (b.dataset.k === "size"){ SIZE = b.dataset.v; PRESET = null; }
+    else if (b.dataset.k){ A[b.dataset.k] = b.dataset.v; PRESET = null; }
+    else if (b.id === "clear"){ A = {}; SIZE = null; PRESET = null; }
+    else return;
+    renderQs(); compute();
+  });
+};
+</script>
+</body>
+</html>

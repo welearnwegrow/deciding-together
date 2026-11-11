@@ -1,0 +1,533 @@
+/* Layout idea: the We Learn We Grow resource family (Futures Wheel, Capacities): warm paper, a display serif set light
+   with amber italics, small tracked labels, soft panels; dotted rings and loops carry the WLWG line work. */
+:root{
+  --paper:#F5F4EE; --paper-2:#EDECE4; --surface:#EDECE4; --surface-2:#E4E2D8; --line:#D3D1C6;
+  --ink:#38352F; --ink-soft:#55514A; --ink-mute:#6A665E; --label:#7A5C22;
+  --ochre:#E0A030; --ochre-deep:#9C6A16; --sage:#46716F; --terra:#B0563C;
+  --stain-a:rgba(70,113,111,.07); --stain-b:rgba(120,120,110,.05); --stain-c:rgba(224,160,48,.06);
+  --dot-red:#B0563C; --dot-green:#7C8559; --dot-blue:#4F7485; --dot-magenta:#8B6F8E; --dot-cyan:#46716F; --dot-violet:#7A9DAD; --dot-orange:#C98A1E;
+  --loop-r:#B87F20; --loop-b:#46716F; --teal:#46716F; --good:#4E8A57; --bad:#B0563C;
+  --shadow:0 1px 2px rgba(56,53,47,.06), 0 8px 24px rgba(56,53,47,.07);
+  --shadow-lift:0 2px 6px rgba(56,53,47,.10), 0 14px 40px rgba(56,53,47,.13);
+  --serif:"DM Serif Display", Georgia, serif;
+  --sans:"DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --measure:66ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#26241F; --paper-2:#2F2C27; --surface:#2F2C27; --surface-2:#38352F; --line:#4A463E;
+    --ink:#F0ECE3; --ink-soft:#CFC8BB; --ink-mute:#B0A99C; --label:#E8B85C;
+    --ochre:#E8AE45; --ochre-deep:#F0BE63; --sage:#7DB0AC; --terra:#CE7357;
+    --stain-a:rgba(125,176,172,.05); --stain-b:rgba(200,190,170,.03); --stain-c:rgba(232,174,69,.04);
+    --dot-red:#CE7357; --dot-green:#A3AC80; --dot-blue:#6E9DB1; --dot-magenta:#A88BAB; --dot-cyan:#7DB0AC; --dot-violet:#93B4C3; --dot-orange:#E8AE45;
+    --loop-r:#E8AE45; --loop-b:#7DB0AC; --teal:#7DB0AC; --good:#7DBB86; --bad:#E08A70;
+    --shadow:0 1px 2px rgba(0,0,0,.28), 0 8px 24px rgba(0,0,0,.34);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.36), 0 14px 40px rgba(0,0,0,.46);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#26241F; --paper-2:#2F2C27; --surface:#2F2C27; --surface-2:#38352F; --line:#4A463E;
+  --ink:#F0ECE3; --ink-soft:#CFC8BB; --ink-mute:#B0A99C; --label:#E8B85C;
+  --ochre:#E8AE45; --ochre-deep:#F0BE63; --sage:#7DB0AC; --terra:#CE7357;
+  --stain-a:rgba(125,176,172,.05); --stain-b:rgba(200,190,170,.03); --stain-c:rgba(232,174,69,.04);
+  --dot-red:#CE7357; --dot-green:#A3AC80; --dot-blue:#6E9DB1; --dot-magenta:#A88BAB; --dot-cyan:#7DB0AC; --dot-violet:#93B4C3; --dot-orange:#E8AE45;
+  --loop-r:#E8AE45; --loop-b:#7DB0AC; --teal:#7DB0AC; --good:#7DBB86; --bad:#E08A70;
+  --shadow:0 1px 2px rgba(0,0,0,.28), 0 8px 24px rgba(0,0,0,.34);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.36), 0 14px 40px rgba(0,0,0,.46);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0}
+body{
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(38% 26% at 12% 18%, var(--stain-a), transparent 70%),
+    radial-gradient(22% 30% at 88% 10%, var(--stain-b), transparent 70%),
+    radial-gradient(30% 22% at 70% 62%, var(--stain-a), transparent 72%),
+    radial-gradient(26% 34% at 6% 82%, var(--stain-b), transparent 70%),
+    radial-gradient(24% 18% at 46% 96%, var(--stain-c), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .42  0 0 0 0 .36  0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-attachment:fixed;
+  color:var(--ink); font-family:var(--sans); font-size:16.5px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+a{color:inherit; text-decoration-color:var(--line); text-underline-offset:3px; text-decoration-thickness:1px}
+a:hover{text-decoration-color:var(--ink)}
+:focus-visible{outline:2px solid var(--ink); outline-offset:3px; border-radius:3px}
+h1,h2,h3{font-family:var(--serif); font-weight:400; margin:0; text-wrap:balance; line-height:1.1; letter-spacing:-.01em}
+h1{font-size:clamp(2.4rem,6vw,4.2rem); line-height:1.02}
+h1 em, h2 em{font-style:italic; color:var(--ochre-deep)}
+h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+h3{font-size:1.25rem; line-height:1.2}
+p{margin:0}
+.wrap{max-width:1180px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.measure{max-width:var(--measure)}
+.kicker{font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--label)}
+.soft{color:var(--ink-soft)}
+.mute{color:var(--ink-mute)}
+.stack{display:flex; flex-direction:column; gap:14px}
+.serif{font-family:var(--serif)}
+
+/* top bar */
+.top{border-bottom:1px solid var(--line); background:color-mix(in srgb, var(--paper) 90%, transparent)}
+.top .wrap{display:flex; justify-content:space-between; align-items:center; gap:10px 24px; flex-wrap:wrap; padding-block:16px}
+.brand{font-family:var(--sans); font-weight:700; font-size:1rem; letter-spacing:-.01em; text-decoration:none; display:flex; align-items:center; gap:10px}
+.brand svg{width:22px; height:22px; flex:none}
+.brand svg circle{fill:none; stroke:var(--ochre); stroke-width:1.5}
+.brand svg circle.d{stroke-dasharray:1.5 2.6; stroke-linecap:round}
+.top nav{display:flex; gap:4px 18px; flex-wrap:wrap}
+.top nav a{text-decoration:none; font-size:.94rem; color:var(--ink-soft); padding-block:2px; border-bottom:2px dotted transparent}
+.top nav a:hover{color:var(--ink)}
+.top nav a[aria-current="page"]{color:var(--ink); border-bottom-color:var(--ochre)}
+
+main{padding-block:40px 64px}
+section.block{padding-block:40px; border-top:1px solid var(--line)}
+section.block:first-child{border-top:none}
+.sechead{display:flex; flex-direction:column; gap:10px; margin-bottom:26px; max-width:var(--measure)}
+
+/* dotted devices (WLWG) */
+.ring{display:inline-flex; align-items:center; justify-content:center; border-radius:50%; border:2.5px dotted var(--dot-orange); font-family:var(--serif); color:var(--ochre-deep); flex:none}
+.outline{border:1px solid var(--line); border-radius:16px; padding:20px 22px; background:var(--surface); box-shadow:var(--shadow)}
+.outline.dotted{border-style:dotted; border-width:3px}
+
+/* chips */
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:4px 13px; font-size:.84rem; line-height:1.5; text-decoration:none; color:var(--ink); white-space:nowrap; transition:border-color .14s, background .14s}
+.chip:hover{border-color:var(--ochre); background:var(--surface-2)}
+.chip.force{border-style:dotted; border-width:2px}
+.chip.draft{border-style:dashed; color:var(--ink-mute); border-color:var(--line)}
+.chip .lt{font-family:var(--serif); font-weight:700; font-size:.78rem}
+.lt.R{color:var(--loop-r)} .lt.B{color:var(--loop-b)}
+.tag{font-size:.8rem; color:var(--ink-mute); border:1px dotted var(--line); border-radius:999px; padding:0 9px; white-space:nowrap}
+.tag.amp{color:var(--terra); border-color:var(--terra)}
+.tag.damp{color:var(--sage); border-color:var(--sage)}
+
+/* evidence row */
+.ev{display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline; font-size:.88rem; color:var(--ink-mute)}
+.ev b{font-weight:500; color:var(--ink-soft)}
+.ev a{color:var(--ink-soft)}
+
+/* scenario */
+.scenario{border:1px solid var(--line); border-left:3px solid var(--ochre); border-radius:16px; padding:20px 24px; display:flex; flex-direction:column; gap:8px; max-width:780px; background:var(--surface); box-shadow:var(--shadow)}
+.scenario .lab{font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--label)}
+.scenario h3{font-size:1.45rem}
+.scenario .where{font-size:.92rem; color:var(--ink-soft)}
+
+/* canvas plate */
+.plate{background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:6px; position:relative}
+.plate canvas{display:block; width:100%; aspect-ratio:16/10; max-width:100%; border-radius:15px}
+.play{font:inherit; margin-right:6px; font-size:.85rem; background:var(--paper); color:var(--ink); border:1px solid var(--ink-soft); border-radius:999px; padding:3px 12px; cursor:pointer}
+.legend{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:.86rem; color:var(--ink-soft)}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.sw{width:12px; height:12px; border-radius:50%; display:inline-block; flex:none}
+.sw.a{background:var(--ochre)} .sw.b{background:var(--sage)} .sw.d{border:3px solid var(--ink); width:14px; height:14px} .sw.r{border:2.5px dotted var(--ochre); width:16px; height:16px}
+
+/* loop diagrams */
+.loopfig{margin:0; display:flex; flex-direction:column; gap:8px}
+.loopfig svg{width:100%; max-width:560px; height:auto; display:block}
+.loopfig.model svg{max-width:720px}
+.loopfig h3{font-size:1.3rem}
+.cla{list-style:none; margin:4px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; max-width:620px}
+.cla li{display:grid; grid-template-columns:minmax(0,9rem) minmax(0,1fr); gap:4px 16px; padding:12px 16px; margin-left:calc(var(--d) * 18px); border-radius:12px; border:1px solid var(--line); background:color-mix(in srgb, var(--teal) calc(6% + var(--d) * 7%), var(--paper)); font-size:.95rem}
+.cla .k{font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--label); padding-top:3px}
+@media (max-width:560px){ .cla li{grid-template-columns:minmax(0,1fr); margin-left:calc(var(--d) * 8px)} }
+.loopfig figcaption{font-size:.9rem; color:var(--ink-soft); max-width:520px}
+.loopfig .ln{font-family:var(--serif); font-size:1.05rem; color:var(--ink)}
+
+/* entry cards (start here) */
+.entries{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:14px}
+.entry{display:flex; flex-direction:column; gap:6px; padding:18px 20px; border:1px solid var(--line); border-radius:16px; background:var(--surface); box-shadow:var(--shadow); text-decoration:none; color:var(--ink); transition:border-color .15s, transform .12s, box-shadow .15s}
+.entry:hover{box-shadow:var(--shadow-lift)}
+.entry small{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--label)}
+.entry:hover{border-color:var(--ochre); transform:translateY(-1px)}
+.entry b{font-family:var(--serif); font-weight:400; font-size:1.4rem; line-height:1.15; display:flex; justify-content:space-between; gap:10px; align-items:baseline}
+.entry b span{color:var(--ochre-deep); font-family:var(--sans)}
+.entry p{font-size:.94rem; color:var(--ink-soft)}
+@media (prefers-reduced-motion: reduce){ .entry{transition:none} .entry:hover{transform:none} }
+
+/* buttons */
+.btn{font:inherit; font-size:.92rem; font-weight:700; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:9px 16px; cursor:pointer; text-decoration:none; display:inline-flex; gap:8px; align-items:center}
+.btn:hover{border-color:var(--ochre)}
+.btn.solid{background:var(--ochre); border-color:var(--ochre); color:#2A2113}
+.btn.solid:hover{background:#C98E26; border-color:#C98E26}
+
+ul.clean{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px}
+ul.watch{margin:0; padding-left:1.1em; display:flex; flex-direction:column; gap:8px}
+ul.watch li::marker{content:"◦  "; color:var(--terra)}
+
+footer.site{border-top:1px solid var(--line); background:var(--surface); margin-top:24px}
+footer.site .wrap{display:flex; flex-wrap:wrap; gap:18px 40px; align-items:flex-start; justify-content:space-between; padding-block:28px 34px; font-size:.84rem; color:var(--ink-soft)}
+footer.site .fl{display:flex; flex-direction:column; gap:8px}
+footer.site .fr{display:flex; flex-direction:column; gap:8px; align-items:flex-start}
+footer.site a{color:var(--ink-soft)}
+footer.site a.wl{color:var(--ink); font-weight:500}
+footer.site .brand{color:var(--ink); font-size:.95rem}
+
+@media (prefers-reduced-motion: reduce){ *{scroll-behavior:auto !important} }
+
+/* structure cards */
+.scards{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr)); gap:14px}
+.scard{display:flex; flex-direction:column; gap:6px; text-align:left; font:inherit; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:10px 10px 14px; box-shadow:var(--shadow); cursor:pointer; text-decoration:none; transition:border-color .15s, box-shadow .15s, transform .12s}
+.scard:hover{border-color:var(--ochre); box-shadow:var(--shadow-lift); transform:translateY(-1px)}
+.scard canvas, .scard .ph{width:100%; aspect-ratio:16/10; display:block; border-radius:10px; background:var(--paper)}
+.scard .ph{display:flex; align-items:center; justify-content:center; color:var(--ink-mute); font-size:.82rem; text-align:center; padding:12px}
+.scard .ph span{border:2px dotted var(--line); border-radius:50%; width:64px; height:64px}
+.scard .nm{font-family:var(--serif); font-size:1.18rem; line-height:1.15; padding:4px 4px 0}
+.scard .ln{font-size:.88rem; color:var(--ink-soft); padding:0 4px}
+.scard .st{margin-top:auto; padding:4px 4px 0; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--label)}
+.scard.draft .st{color:var(--ink-mute)}
+@media (prefers-reduced-motion: reduce){ .scard{transition:none} .scard:hover{transform:none} }
+
+/* pop-up */
+dialog.pop{border:none; padding:0; width:min(940px, calc(100% - 24px)); max-height:calc(100% - 32px); border-radius:20px; background:var(--paper); color:var(--ink); box-shadow:var(--shadow-lift); overflow:auto}
+dialog.pop::backdrop{background:rgba(30,28,24,.5)}
+.popin{padding:22px max(18px, 3vw) 30px; display:flex; flex-direction:column; gap:20px}
+.pophead{display:flex; justify-content:space-between; align-items:center; gap:12px; position:sticky; top:-22px; padding-top:4px; background:var(--paper); z-index:2}
+.pop h2{font-size:clamp(2.2rem,5vw,3.4rem)}
+.popline{font-family:var(--serif); font-size:1.3rem; margin-top:-8px; max-width:80%}
+.popfig{margin:0; display:flex; flex-direction:column; gap:10px}
+.popbtns{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.pcase{display:flex; flex-direction:column; gap:14px; padding-top:20px; border-top:1px solid var(--line)}
+.casehead{font-size:1.6rem}
+.pcase.useful .casehead{color:var(--teal)}
+.pcase.risky .casehead{color:var(--terra)}
+.pcase.useful .scenario{border-left-color:var(--teal)}
+.pcase.risky .scenario{border-left-color:var(--terra)}
+.scenario h4{font-family:var(--serif); font-weight:400; font-size:1.4rem; margin:0}
+.pcase .forcelist li{display:grid; grid-template-columns:auto auto minmax(0,1fr); gap:6px 10px; align-items:baseline}
+.pcase .forcelist li p{grid-column:1 / -1; font-size:.93rem; color:var(--ink-soft)}
+.casefig{border:1px solid var(--line); border-radius:16px; padding:16px 18px; background:var(--surface)}
+.cap{display:flex; flex-direction:column; gap:2px; min-height:3.2em; font-size:.95rem}
+.cap b{font-weight:700}
+.cap span{color:var(--ink-mute); font-size:.9rem}
+.pophead .close{white-space:nowrap; flex:none}
+
+/* edit mode */
+.edbar{position:fixed; right:max(16px, env(safe-area-inset-right, 0px)); bottom:calc(16px + env(safe-area-inset-bottom, 0px)); z-index:50; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:flex-end; max-width:min(560px, calc(100% - 32px)); padding:8px; border-radius:14px; background:color-mix(in srgb, var(--paper) 92%, transparent); border:1px solid var(--line); box-shadow:var(--shadow-lift)}
+.edbar span{font-size:.84rem; color:var(--ink-soft); padding:0 6px; flex:1 1 220px}
+.editing [data-edit]{outline:1.5px dashed color-mix(in srgb, var(--ochre) 70%, transparent); outline-offset:3px; border-radius:3px; cursor:text}
+.editing [data-edit]:hover{background:color-mix(in srgb, var(--ochre) 8%, transparent)}
+.editing [data-edit]:focus{outline:2px solid var(--ochre); background:color-mix(in srgb, var(--ochre) 10%, transparent)}
+.edtoast{position:fixed; left:50%; transform:translateX(-50%); bottom:calc(84px + env(safe-area-inset-bottom, 0px)); z-index:60; background:var(--ink); color:var(--paper); padding:8px 16px; border-radius:999px; font-size:.9rem; box-shadow:var(--shadow-lift)}
+/* forces inside each example */
+.pcase .fhead{font-family:var(--sans, inherit); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ochre-deep); font-weight:700; margin-top:6px}
+.fblock{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.9fr); gap:18px; align-items:start; padding:14px 0; border-top:1px dotted var(--line)}
+.fblock .fbtxt{display:flex; flex-direction:column; gap:8px}
+.fblock .fbhead{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.fblock .fbtxt > p:last-child{font-size:.97rem}
+.fblock .fbfig .loopfig figcaption{font-size:.82rem}
+.fblock .fbfig svg{max-height:230px}
+.together{display:flex; flex-direction:column; gap:10px; padding-top:12px; border-top:1px dotted var(--line)}
+@media (max-width:700px){ .fblock{grid-template-columns:minmax(0,1fr)} }
+/* animation inside the example */
+.scenario .popfig{margin:14px 0 0}
+.scenario .popfig .plate{padding:4px}
+
+.related{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px}
+.related li{display:flex; flex-direction:column; gap:4px; padding-left:14px; border-left:2px dotted var(--line)}
+.related .src{font-size:.85rem; color:var(--ink-soft)}
+
+/* v2 structure layout */
+.popbtns.top{margin-top:-4px}
+.pcase.v2 .when{margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:6px}
+.pcase.v2 .when li::marker{color:var(--ochre)}
+.pcase.v2.risky .when li::marker{color:var(--terra)}
+.excar{display:flex; flex-direction:column; gap:10px}
+.excar .track{display:grid; grid-auto-flow:column; grid-auto-columns:100%; align-items:start; overflow-x:auto; overflow-y:hidden; transition:height .25s; scroll-snap-type:x mandatory; scrollbar-width:none; border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:18px; background:var(--surface); box-shadow:var(--shadow)}
+.pcase.v2.risky .excar .track{border-left-color:var(--terra)}
+.excar .track::-webkit-scrollbar{display:none}
+.excar .xs{scroll-snap-align:start; display:flex; flex-direction:column; gap:10px; padding:20px 22px; min-width:0}
+.excar .xs h4{font-family:var(--serif); font-weight:400; font-size:1.3rem}
+.excar .xs .lab{font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep)}
+.excar .xs.anim .plate{padding:4px}
+.excar .xs.anim .plate canvas{display:block; width:100%; aspect-ratio:16/10}
+.excar .xs .cap{display:flex; flex-direction:column; gap:2px; font-size:.95rem}
+.excar .xs .cap span{color:var(--ink-mute); font-size:.88rem}
+.excar .sbtns{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+.excar .count{font-size:.9rem; color:var(--ink-mute); min-width:4.5em; text-align:center}
+.excar .dots{display:flex; gap:6px; margin-left:auto}
+.excar .dots i{width:8px; height:8px; border-radius:50%; background:var(--line)}
+.excar .dots i.on{background:var(--ochre)}
+.fblock .fname{font-family:var(--serif); font-weight:400; font-size:1.2rem}
+.fblock .fname a{color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--line)}
+.fblock .fname a:hover{color:var(--ochre-deep)}
+.summary{display:flex; flex-direction:column; gap:12px; padding:20px 22px; border:1px solid var(--line); border-radius:18px; background:var(--surface); box-shadow:var(--shadow); margin-top:8px}
+.summary h3{font-family:var(--serif); font-weight:400; font-size:1.5rem}
+.summary h4{font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ochre-deep); font-weight:700; margin-top:6px}
+.summary .legend{display:flex; flex-wrap:wrap; gap:6px 14px; font-size:.86rem; color:var(--ink-soft)}
+.fblock .fname{margin:0}
+.fblock .fbtxt{gap:6px}
+.pop .hero{margin:4px auto 0; width:100%; max-width:640px; border:1px solid var(--line); border-radius:18px; overflow:hidden; background:var(--paper)}
+.pop .hero img{display:block; width:100%; height:auto}
+
+/* v2 forces hierarchy */
+.pcase.v2 .forces2{display:flex; flex-direction:column; gap:0; margin-top:10px; padding-top:22px; border-top:1px dotted var(--line)}
+.pcase.v2 .fhead2{font-family:var(--serif); font-weight:400; font-size:1.45rem; line-height:1.2; margin:0 0 6px}
+.pcase.v2 .forces2 .fblock{border-top:0; padding:14px 0}
+.pcase.v2 .forces2 .fblock + .fblock{border-top:1px dotted var(--line)}
+.pcase.v2 .fname{font-family:var(--sans, inherit); font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); margin:0}
+.pcase.v2 .fname a{color:inherit; text-decoration:none; border-bottom:0}
+.pcase.v2 .fname a:hover{text-decoration:underline}
+.pcase.v2 .together2{grid-template-columns:minmax(0,1fr)}
+.pcase.v2 .together2 .casefig{margin-top:10px}
+.fblock .fbfig figcaption{display:none}
+.fblock.solo{grid-template-columns:minmax(0,1fr)}
+.fblock.solo .fbtxt > p{max-width:70ch}
+
+/* carousel v3: side arrows, dots only, standard size */
+.excar{position:relative; display:block; padding:0 52px}
+.excar .track{height:auto !important; align-items:stretch; transition:none}
+.excar .xs.anim{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:22px; align-items:center; min-height:300px}
+.excar .xs .txt{display:flex; flex-direction:column; gap:10px}
+.excar .xs .txt p{font-size:.97rem}
+.excar .xs.sum .txt p{font-size:.93rem}
+.excar .xs .more{font-size:.86rem}
+.excar .nav{position:absolute; top:calc(50% - 14px); transform:translateY(-50%); width:40px; height:40px; padding:0; border-radius:50%; display:grid; place-items:center; z-index:2}
+.excar .nav.prev{left:0} .excar .nav.next{right:0}
+.excar .nav:disabled{opacity:.3; cursor:default}
+.excar .dots{display:flex; gap:7px; justify-content:center; margin:12px 0 0}
+@media (max-width:700px){ .excar{padding:0 0 48px} .excar .xs.anim{grid-template-columns:minmax(0,1fr); min-height:0} .excar .nav{top:auto; bottom:0; transform:none} .excar .dots{margin-top:16px} }
+
+/* carousel v4: one bordered box with title, arrows and dots inside */
+.excar{position:static; display:flex; flex-direction:column; gap:10px; padding:14px 14px 12px; border:1px solid var(--line); border-radius:18px; background:var(--surface); box-shadow:var(--shadow)}
+.excar .extitle{font-family:var(--serif); font-weight:400; font-size:1.3rem; line-height:1.25; margin:0 4px}
+.excar .exbody{display:grid; grid-template-columns:36px minmax(0,1fr) 36px; gap:8px; align-items:center}
+.excar .track, .pcase.v2.risky .excar .track{border:0; border-left:0; border-radius:12px; background:transparent; box-shadow:none}
+.excar .xs, .excar .xs.anim{padding:0; gap:16px; min-height:0}
+.excar .xs .plate{padding:2px}
+.excar .xs .txt{gap:8px}
+.excar .nav{position:static; transform:none; width:36px; height:36px}
+.excar .dots{margin:0}
+@media (max-width:700px){ .excar{padding:12px} .excar .exbody{grid-template-columns:minmax(0,1fr)} .excar .nav{display:none} .excar .xs.anim{grid-template-columns:minmax(0,1fr)} }
+
+/* carousel v5: fixed header band, slides top-aligned, arrows and dots in a bar at the bottom */
+.excar{gap:0; padding:0; overflow:hidden}
+.excar .extitle{margin:0; padding:10px 18px; background:var(--paper); border-bottom:1px solid var(--line); font-size:1.15rem}
+.excar .track{padding:0}
+.excar .xs, .excar .xs.anim{padding:12px 16px 0}
+.excar .xs, .excar .xs.anim{align-items:start; align-content:start}
+.excar .xs.sum{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+.excar .exnav{display:flex; align-items:center; justify-content:center; gap:14px; padding:8px 16px 10px}
+.excar .exnav .nav{display:grid; position:static; transform:none; width:32px; height:32px}
+@media (max-width:700px){ .excar .xs, .excar .xs.anim{padding:10px 12px 0} .excar .xs.sum{grid-template-columns:minmax(0,1fr)} .excar .exnav .nav{display:grid} }
+
+/* no divider above the first case (Useful when) */
+.pcase.v2.useful{border-top:0; padding-top:4px}
+
+/* no divider above Social forces at work */
+.pcase.v2 .forces2{border-top:0; padding-top:8px}
+
+/* no dividers between forces */
+.pcase.v2 .forces2 .fblock + .fblock{border-top:0}
+.pcase.v2 .forces2 .fblock{padding:10px 0}
+
+/* How they worked together: its own colour */
+.pcase.v2 .together2 .fname{color:var(--dot-blue)}
+
+/* close: cross only, round */
+.pophead .close{width:36px; height:36px; padding:0; border-radius:50%; display:grid; place-items:center; font-size:1rem; line-height:1}
+
+/* last slide: text only */
+.excar .xs.sum{display:flex; flex-direction:column; justify-content:flex-start}
+.excar .xs.sum .txt{max-width:72ch}
+.excar .xs.sum .txt p{font-size:.97rem}
+
+/* example title band: ochre */
+.excar .extitle{background:rgba(224,160,48,.22); border-bottom-color:rgba(224,160,48,.55)}
+
+/* carousel v6: arrows on the sides (desktop), dots over the bottom edge; bottom bar on mobile */
+.excar .exstage{position:relative}
+@media (min-width:701px){
+  .excar .xs, .excar .xs.anim{padding:12px 56px 24px}
+  .excar .exnav{position:absolute; inset:0; padding:0; pointer-events:none; display:block}
+  .excar .exnav .nav{position:absolute; top:50%; transform:translateY(-50%); pointer-events:auto}
+  .excar .exnav .prev{left:12px} .excar .exnav .next{right:12px}
+  .excar .exnav .dots{position:absolute; left:0; right:0; bottom:8px; display:flex; justify-content:center; gap:6px}
+  .excar .exnav .dots i{width:6px; height:6px}
+}
+
+/* carousel v7: forces live in the carousel */
+.excar .xs.sum .lab{font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); margin:0}
+.excar .xs.sum .lead{font-size:1.05rem}
+.excar .xs.fs .fname{font-family:var(--serif); font-weight:400; font-size:1.3rem; letter-spacing:0; text-transform:none; color:var(--ink); margin:0}
+.excar .xs.fs .fname a{color:inherit; text-decoration:none; border-bottom:1px solid var(--line)}
+.excar .xs.tg .lab{color:var(--dot-blue)}
+.excar .xs.tg.hasfig{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:18px}
+.excar .xs.tg .casefig{margin:0}
+@media (max-width:700px){ .excar .xs.tg.hasfig{grid-template-columns:minmax(0,1fr)} }
+/* In short: help / hinder lists */
+.summary .fsplit{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:4px 0 6px}
+.summary .flist{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px}
+.summary .flist li{font-size:.93rem}
+.summary .flist .fname{display:block; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); text-decoration:none}
+.summary .flist span{color:var(--ink-soft)}
+@media (max-width:700px){ .summary .fsplit{grid-template-columns:1fr} }
+
+/* carousel v8: one closing slide: why + together on the left, forces on the right */
+.excar .xs.sum.one{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; align-items:start}
+.excar .xs.sum.one .txt p{font-size:.93rem}
+.excar .xs.sum.one .fcol{gap:10px}
+.excar .xs.sum.one .fitem{display:flex; flex-direction:column; gap:2px}
+.excar .xs.sum.one .fname{font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); margin:0}
+.excar .xs.sum.one .fname a{color:inherit; text-decoration:none}
+.excar .xs.sum.one .fname a:hover{text-decoration:underline}
+.excar .xs.tg.hasfig{display:block}
+.excar .xs.tg.hasfig .casefig{max-width:640px; margin:0 auto}
+@media (max-width:700px){ .excar .xs.sum.one{grid-template-columns:minmax(0,1fr); gap:14px} }
+
+/* carousel v9: arrows and dots in the title band; box height follows the current slide */
+.excar .exhead{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 12px 8px 18px; background:rgba(224,160,48,.22); border-bottom:1px solid rgba(224,160,48,.55)}
+.excar .exhead .extitle{padding:0; background:none; border:0; flex:1 1 auto; min-width:0}
+.excar .exhead .exnav, .excar .exnav{position:static; inset:auto; display:flex; align-items:center; gap:8px; padding:0; pointer-events:auto; flex:none}
+.excar .exhead .nav{position:static; transform:none; width:30px; height:30px; display:grid}
+.excar .exhead .dots{position:static; display:flex; gap:5px}
+.excar .exhead .dots i{width:6px; height:6px}
+.excar .track{align-items:start !important; transition:height .25s ease !important}
+.excar .xs, .excar .xs.anim{padding:12px 16px 14px}
+@media (max-width:700px){ .excar .exhead{padding:8px 10px 8px 14px} .excar .exhead .dots{display:none} .excar .xs, .excar .xs.anim{padding:10px 12px 12px} }
+
+/* In short: clearer heading levels, forces as two panels */
+.summary h4{font-family:var(--serif); font-weight:400; font-size:1.15rem; letter-spacing:0; text-transform:none; color:var(--ink); margin:8px 0 0}
+.summary .fsplit{grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin:2px 0}
+.summary .fsplit > div{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px 14px; display:flex; flex-direction:column; gap:8px}
+.summary .fsplit h4{margin:0}
+.summary .flist{gap:10px}
+@media (max-width:700px){ .summary .fsplit{grid-template-columns:1fr} }
+
+/* colour key under the top drawing */
+.pop .hero .legend{display:flex; flex-wrap:wrap; justify-content:center; gap:6px 14px; font-size:.84rem; color:var(--ink-soft); padding:8px 12px; border-top:1px solid var(--line); background:var(--paper)}
+
+/* ===== v11: UX/UI review fixes ===== */
+/* top drawing: tighter, smaller */
+.pop .hero{max-width:520px}
+/* captions: larger, centred beside the drawing, with a Next link */
+.excar .xs.anim .txt{align-self:center; gap:12px}
+.excar .xs .cap b{font-size:1.1rem; line-height:1.35}
+.excar .xs .cap span{font-size:.95rem; margin-top:4px}
+.excar .nextstep{align-self:flex-start; background:none; border:0; padding:6px 0; margin:0; font:inherit; font-size:.9rem; font-weight:600; color:var(--ink-soft); cursor:pointer; text-align:left; border-bottom:1px solid var(--line)}
+.excar .nextstep:hover, .excar .nextstep:focus-visible{color:var(--ink); border-bottom-color:var(--ink-soft)}
+.excar .nextstep.wide{grid-column:1 / -1; justify-self:start}
+/* dots: visible in both modes */
+.excar .dots i{background:color-mix(in srgb, var(--ink) 22%, transparent)}
+.excar .dots i.on{background:var(--ochre)}
+/* closing slide: section headings in the section colour; force names stay ochre */
+.pcase.useful .excar .xs.sum > .txt > .lab{color:var(--teal)}
+.pcase.risky .excar .xs.sum > .txt > .lab{color:var(--terra)}
+.excar .xs.sum > .txt > .lab{font-size:.8rem}
+/* In short: one card level, one body size */
+.summary{border:0; box-shadow:none; background:color-mix(in srgb, var(--ochre) 7%, var(--paper))}
+.summary p, .summary li, .summary .flist li, .summary .watch li{font-size:.95rem}
+/* end of pop-up: less empty space */
+.popin{padding-bottom:20px}
+.pop .summary{margin-bottom:0}
+/* group label links back to its group */
+.pophead .kicker a{color:inherit; text-decoration:none}
+.pophead .kicker a:hover{text-decoration:underline}
+/* dark mode: warmer title band */
+@media (prefers-color-scheme: dark){
+  .excar .exhead{background:color-mix(in srgb, var(--ochre) 20%, var(--surface)); border-bottom-color:color-mix(in srgb, var(--ochre) 45%, var(--surface))}
+}
+/* phones: bigger arrows, dots on their own row under the title */
+@media (max-width:700px){
+  .excar .exhead{display:grid; grid-template-columns:minmax(0,1fr) auto auto; grid-template-areas:"t p n" "d d d"; gap:6px 8px; align-items:center}
+  .excar .exhead .extitle{grid-area:t}
+  .excar .exhead .exnav{display:contents}
+  .excar .exhead .prev{grid-area:p} .excar .exhead .next{grid-area:n}
+  .excar .exhead .nav{width:40px; height:40px}
+  .excar .exhead .dots{grid-area:d; display:flex; justify-content:center; gap:7px; padding-top:2px}
+  .excar .exhead .dots i{width:7px; height:7px}
+  .excar .xs .cap b{font-size:1.05rem}
+}
+.popin:focus{outline:none}
+@media (prefers-color-scheme: dark){ .excar .exhead{background:color-mix(in srgb, var(--ochre) 13%, var(--surface)); border-bottom-color:color-mix(in srgb, var(--ochre) 35%, var(--surface))} }
+
+/* sources under the In short panel */
+.pop .popsrc{margin:-6px 4px 0; font-size:.86rem}
+
+/* ===== v12: no arrows. Clickable dots in the band; Back / Next under the caption ===== */
+.excar .exhead, .excar .exhead{display:flex !important; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 12px}
+.excar .exhead .extitle{flex:1 1 200px}
+.excar .exhead .exnav.dots{display:flex !important; position:static; gap:0; padding:0; margin:0}
+.excar .dots .dot{width:22px; height:24px; padding:0; margin:0; border:0; background:none; cursor:pointer; display:grid; place-items:center; border-radius:6px}
+.excar .dots .dot::before{content:""; width:8px; height:8px; border-radius:50%; background:color-mix(in srgb, var(--ink) 22%, transparent); transition:background .15s, transform .15s}
+.excar .dots .dot:hover::before{background:color-mix(in srgb, var(--ink) 45%, transparent)}
+.excar .dots .dot.on::before{background:var(--ochre); transform:scale(1.25)}
+.excar .dots .dot:focus-visible{outline:2px solid var(--ochre-deep); outline-offset:1px}
+.excar .stepnav{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 18px}
+.excar .stepnav.wide{grid-column:1 / -1}
+.excar .backstep{background:none; border:0; padding:6px 0; margin:0; font:inherit; font-size:.9rem; font-weight:600; color:var(--ink-mute); cursor:pointer}
+.excar .backstep:hover, .excar .backstep:focus-visible{color:var(--ink)}
+.excar .xs.tg.hasfig .stepnav{margin-top:10px}
+@media (max-width:700px){
+  .excar .exhead{display:flex !important}
+  .excar .exhead .extitle{flex:1 1 100%}
+  .excar .exhead .exnav.dots{display:flex !important; margin-left:-6px}
+}
+
+/* Previous / Next: plain, equal weight */
+.excar .nextstep{color:var(--ink-soft); border-bottom:0}
+.excar .nextstep:hover, .excar .nextstep:focus-visible, .excar .backstep:hover, .excar .backstep:focus-visible{color:var(--ink); text-decoration:underline}
+.excar .backstep{color:var(--ink-soft)}
+
+/* case models in the carousel: no explanatory note under the figure */
+.excar .casefig figcaption{display:none}
+
+/* example slides: smaller drawing, more room for the caption */
+.excar .xs.anim{grid-template-columns:minmax(0,.85fr) minmax(0,1fr)}
+@media (max-width:700px){ .excar .xs.anim{grid-template-columns:minmax(0,1fr)} }
+
+/* example drawings sit straight on the box: no inner panel */
+.excar .xs.anim .plate{background:none; border:0; padding:0; border-radius:0}
+
+/* case models in the carousel sit straight on the box too */
+.excar .xs.tg .casefig{border:0; padding:0; background:none; border-radius:0}
+
+/* In short: one list of social forces */
+.summary .fone{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px 14px; display:flex; flex-direction:column; gap:8px; margin:2px 0}
+.summary .fone h4{margin:0}
+.summary .fone .flist{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:10px 22px}
+
+/* colour key: a range of views */
+.sw.s{width:34px; height:12px; border-radius:6px; background:linear-gradient(90deg, var(--ochre), color-mix(in srgb, color-mix(in srgb, var(--ochre) 50%, var(--sage)) 65%, var(--paper)), var(--sage))}
+/* v13: sticky header keeps a top margin when scrolled */
+.pophead{top:0; padding-top:14px; padding-bottom:10px; margin-top:-10px}
+/* v14: slide count on the Previous/Next line replaces the dots */
+.excar .stepnav .stepcount{margin-left:auto; font-size:.82rem; color:var(--ink-mute); font-variant-numeric:tabular-nums; letter-spacing:.02em}
+/* v15: "Builds on" lines show how structures derive from each other */
+.scard .bon{display:block; font-size:.78rem; color:var(--ink-mute); padding:0 4px; margin-top:2px}
+.popbuilds{margin-top:-10px; font-size:.92rem; color:var(--ink-soft); max-width:60ch}
+.popbuilds span{color:var(--ink-mute)}
+.popbuilds a{color:inherit; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px}
+/* v16: titled block inside a group */
+.stop h3.subgroup{font-family:var(--serif); font-weight:400; font-size:1.25rem; margin:26px 0 10px}
+dialog .pcase{scroll-margin-top:70px}
+footer.site .brand{white-space:nowrap} @media (max-width:560px){ footer.site .brand{white-space:normal} }
+
+.loopfig.model.bad{--ochre:var(--bad); --teal:var(--bad); --ochre-deep:var(--bad)}
+.loopfig.model.good{--ochre:var(--good); --teal:var(--good); --ochre-deep:var(--good)}
+.loops2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media (max-width:640px){ .loops2{grid-template-columns:1fr} }
+
+.summary .fmore{margin:.8rem 0 0; font-size:.95rem}
+.summary .fmore a{color:var(--ochre-deep); text-decoration:none; border-bottom:1px solid currentColor}
+
+.fname .st{font-weight:500; letter-spacing:.08em; margin-left:.5em; padding-left:.6em; border-left:1px solid var(--line)}
+.fname .st.helped{color:var(--good)} .fname .st.hurt{color:var(--bad)}
+.fname .st.held{color:var(--ink-mute)} .fname .st.ignored{color:var(--ink-mute); font-style:italic}
+
+/* reader feedback (pilot) */
+.fb{grid-column:1/-1; margin-top:6px; padding-top:14px; border-top:1px dashed var(--line); display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 22px}
+.fb .fbq{font-family:var(--serif); font-size:1.05rem; margin:0; color:var(--ink)}
+.fb .fbb{display:flex; gap:18px; flex-wrap:wrap}
+.fb .fbb button{background:none; border:0; padding:2px 0; font:inherit; font-size:.92rem; color:var(--ink-soft); cursor:pointer; border-bottom:1.5px solid transparent}
+.fb .fbb button::before{content:"○ "; color:var(--ink-mute)}
+.fb .fbb button[aria-pressed="true"]{color:var(--ink); border-bottom-color:var(--ochre)}
+.fb .fbb button[aria-pressed="true"]::before{content:"● "; color:var(--ochre)}
+.fb .fbnote{flex:1 1 100%; display:flex; gap:12px; align-items:flex-end; margin-top:4px}
+.fb .fbnote[hidden]{display:none}
+.fb .fbnote label{display:block; font-size:.86rem; color:var(--ink-soft); flex:1 1 auto}
+.fb .fbnote label span{color:var(--ink-mute)}
+.fb .fbnote input{display:block; width:100%; font:inherit; font-size:.92rem; padding:6px 0; margin-top:2px; border:0; border-bottom:1px solid var(--ink-mute); background:transparent; color:var(--ink)}
+.fb .fbnote button{background:none; border:0; font:inherit; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); cursor:pointer}
+.fb .fbmsg{margin:0; font-size:.84rem; color:var(--ink-mute)}
