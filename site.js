@@ -56,8 +56,9 @@ function cleanHTML(html){
       if (n.nodeType === 3) return;
       if (n.nodeType !== 1){ n.remove(); return; }
       const tag = n.tagName.toLowerCase();
-      if (!["b","strong","i","em","a","br"].includes(tag)){ walk(n); n.replaceWith(...n.childNodes); return; }
-      [...n.attributes].forEach(a => { if (!(tag === "a" && a.name === "href")) n.removeAttribute(a.name); });
+      const quote = tag === "span" && n.getAttribute("class") === "assume";
+      if (!quote && !["b","strong","i","em","a","br"].includes(tag)){ walk(n); n.replaceWith(...n.childNodes); return; }
+      [...n.attributes].forEach(a => { if (!(tag === "a" && a.name === "href") && !(quote && a.name === "class")) n.removeAttribute(a.name); });
       if (tag === "a"){ const h = n.getAttribute("href") || ""; if (!/^(https:\/\/|[a-z]+\.html|#|evidence|forces|tool|myths|index)/i.test(h)) n.removeAttribute("href"); }
       walk(n);
     });
