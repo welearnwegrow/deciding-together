@@ -34,7 +34,7 @@ window.FG_EDITS = {
 },
 "dom:index:lead1": {
 "html": true,
-"v": "When making decisions together, people tend to default to two options: the person in charge makes the call, or everyone votes and majority wins. But humans have invented more options than that. Consent-based decision making is often a good choice when everyone's voice matters. And when some people are affected more than others, weighted voting lets them show how strongly they feel. This guide sets out those options so an individual or group can choose <b><i>how</i></b><b> </b>the decision gets made before the default takes hold. It assumes that people want to make better decisions together, and need more on how. These structures don't exist in isolation from one another and can be combined for use."
+"v": "When making decisions together, people tend to default to two options: the person in charge makes the call, or everyone votes and majority wins. But humans have invented more options than that. Consent-based decision making is often a good choice when everyone's voice matters. And when some people are affected more than others, weighted voting lets them show how strongly they feel. This guide sets out those options so an individual or group can choose <b><i>how</i></b><b> </b>the decision gets made before the default takes hold. These structures don't exist in isolation from one another and can be combined for use.<span class=\"assume\">This guide assumes that people want to make better decisions together, and need more on how.</span>"
 },
 "dom:index:lead2": {
 "html": true,

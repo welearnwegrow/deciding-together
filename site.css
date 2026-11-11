@@ -554,3 +554,5 @@ footer.site .brand{white-space:nowrap} @media (max-width:560px){ footer.site .br
 .fb .fbnote input{display:block; width:100%; font:inherit; font-size:.92rem; padding:6px 0; margin-top:2px; border:0; border-bottom:1px solid var(--ink-mute); background:transparent; color:var(--ink)}
 .fb .fbnote button{background:none; border:0; font:inherit; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:var(--ochre-deep); cursor:pointer}
 .fb .fbmsg{margin:0; font-size:.84rem; color:var(--ink-mute)}
+/* the guide's stated assumption, set off as a quote */
+.assume{display:block; margin:18px 0 4px; padding:4px 0 4px 20px; border-left:3px solid var(--ochre); font-family:var(--serif); font-size:1.3rem; line-height:1.4; color:var(--ink)}
