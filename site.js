@@ -218,7 +218,7 @@ function chrome(){
   const ft = document.createElement("footer"); ft.className = "site";
   ft.innerHTML = `<div class="wrap">
     <div class="fl"><a class="brand" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle class="d" cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/></svg>A field guide to making decisions together (Education edition)</a></div>
-    <div class="fr"><p><a href="assets.html">Brand assets</a> · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> · 2026 <a class="wl" href="https://welearnwegrow.bio" target="_blank" rel="noopener">We Learn, We Grow</a></p>
+    <div class="fr"><p><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> · 2026 <a class="wl" href="https://welearnwegrow.bio" target="_blank" rel="noopener">We Learn, We Grow</a></p>
       </div></div>`;
   document.body.append(ft);
 }
