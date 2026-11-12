@@ -2,7 +2,7 @@
 window.FG_EDITS = {
 "dom:about:p1": {
 "html": true,
-"v": "A field guide to deciding together maps the ways groups make decisions, and the social forces that shape how people reach agreement inside each one. It sorts 25 structures and methods into five groups: shaping proposals, deciding by authority, by vote or by consensus, and cases where no one is in charge. Many come with variations, which are described inside them."
+"v": "A field guide to deciding together maps the ways groups make decisions, and the social forces that shape how people reach agreement inside each one. It sorts 25 structures and methods into four groups: deciding by authority, by vote or by consensus, and cases where no one is in charge. Many come with variations, which are described inside them."
 },
 "dom:about:p2": {
 "html": true,
