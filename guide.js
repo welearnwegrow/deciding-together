@@ -24,7 +24,7 @@ const SCHEMA = `{
 }`;
 
 function prompt(desc, answers, allowAsk){
-  return `You are "Guide me", the decision guide inside "A field guide to making decisions together". A reader has described a decision they face. Your job is to help them choose HOW to make it: who takes part, in what order, and by what rule. You do not make the decision for them.
+  return `You are "Guide me", the decision guide inside "A field guide to deciding together". A reader has described a decision they face. Your job is to help them choose HOW to make it: who takes part, in what order, and by what rule. You do not make the decision for them.
 
 The reader may work in any field: a school, a company, a hospital, a council, a charity, a family business. Speak about roles (the person with authority, the people affected, the people who will carry it out), using the reader's own words and details. Never assume they work in education.
 
@@ -190,7 +190,7 @@ async function pdf(text){
   let y = M + 30;
   doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.text("Guide me", M, y); y += 20;
   doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor(110);
-  doc.text(plain("A field guide to making decisions together - " + new Date().toISOString().slice(0, 10)), M, y); y += 26; doc.setTextColor(30);
+  doc.text(plain("A field guide to deciding together - " + new Date().toISOString().slice(0, 10)), M, y); y += 26; doc.setTextColor(30);
   plain(text).split("\n").forEach(line => {
     const head = /^[A-Z][A-Z ,:]+$/.test(line.trim()) || /^KIND OF SITUATION:/.test(line);
     doc.setFont("helvetica", head ? "bold" : "normal"); doc.setFontSize(head ? 10.5 : 10);
@@ -201,10 +201,10 @@ async function pdf(text){
   for (let i = 1; i <= n; i++){
     doc.setPage(i); doc.setDrawColor(200); doc.setLineWidth(.6);
     doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setTextColor(156, 106, 22);
-    doc.text("Making Decisions Together Field Guide", M, 34); doc.line(M, 42, W - M, 42);
+    doc.text("Deciding Together Field Guide", M, 34); doc.line(M, 42, W - M, 42);
     doc.line(M, 806, W - M, 806);
     doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(110);
-    doc.text("A field guide to making decisions together (Education edition)", M, 820);
+    doc.text("A field guide to deciding together (Education edition)", M, 820);
     doc.text("CC BY-NC-ND 4.0 - 2026 We Learn, We Grow - welearnwegrow.bio", M, 831);
     doc.text(`${i} of ${n}`, W - M, 820, {align: "right"});
   }
