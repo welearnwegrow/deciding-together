@@ -1098,10 +1098,10 @@ Object.assign(SCENES, {
       actor(g, p.x, p.y, 14, {v: t > .74 ? 0 : v, decider:true, alpha: quiet.includes(i) && t > .86 ? .3 : 1});
       if (named.includes(i) && t > .56 && t < .86) SX.flag(g, p.x + 16, p.y - 18); });
     SX.ring(g, C0.x, C0.y, 40, 28, ease(vote));
-    if (t < .24) caption(g, "Parents and staff meet openly about complaints over a teacher", "Anyone can speak, and the meeting aims to agree what to do");
-    else if (t < .48) caption(g, "The head knows what happened but cannot say", "The facts are about one member of staff and must stay private");
-    else if (t < .76) caption(g, "The room fills the gap with rumour", "The teacher is named in front of everyone");
-    else caption(g, "The meeting agrees steps that miss the problem", "The parents who complained stop coming");
+    if (t < .24) caption(g, "All staff meet openly about wellbeing in one year group", "Anyone can speak, and the meeting aims to agree what to do");
+    else if (t < .48) caption(g, "The counsellor and head of year know, but cannot say", "The facts are about individual students and must stay private");
+    else if (t < .76) caption(g, "The room fills the gap with guesses", "Some staff start naming students");
+    else caption(g, "The meeting agrees steps that miss the problem", "Teachers who noticed something stop raising it");
   }}
 });
 /* Show of hands vote and Liberum veto, new format */

@@ -5,12 +5,12 @@ window.FG = {};
 
 FG.families = [
   {id:"1", name:"Deciding by authority", sub:"One person or a few decide for everyone",
-   text:"The simplest structure is one person making the call, like a principal for a whole-school decision. Variations add a step first, such as asking for advice, or pass orders down through layers of managers. The decision can also sit with a small group, chosen for expertise, for seniority or by lot. These structures are fast, and they work well when the deciders already know what they need to know.",
+   text:"The simplest structure is one person making the call, like a principal for a whole-school decision. Variations add a step first, such as asking for advice, or pass orders down through layers of managers. The decision can also sit with a small group of leaders, who may talk it through in the open while everyone else listens, as in an indaba. These structures are fast, and they work well when the deciders already know what they need to know.",
    school:"A school owner setting fees, a principal setting the timetable, a trust board approving the budget, or a head teacher hiring after a panel interview.",
    agree:"Here, agreement is mostly about whether people go along with the decision. People below the decider often stay quiet even when they disagree, and advisers tend to repeat what the most senior person has said. So silence can look like agreement when it isn't.",
    forces:["spiral_silence","conformity","pluralistic_ignorance"]},
   {id:"3", name:"Deciding by consensus", sub:"The group works toward a decision everyone can support, or at least live with",
-   text:"Consent asks “can you live with it?” where a vote asks “which do you prefer?”. A proposal goes ahead unless someone raises a reasoned objection, and the group uses the objection to improve the proposal. Consensus goes further and keeps talking until everyone can support the decision. Both take more time than a vote, and both usually come with a date to review the decision. At the informal end, a small group of friends may simply agree with no rules at all, which works until the group grows. Many set a fallback vote in case agreement never comes. A whole community can also reach agreement in an open meeting, where raised hands show support without anyone counting them.",
+   text:"Consent asks “can you live with it?” where a vote asks “which do you prefer?”. A proposal goes ahead unless someone raises a reasoned objection, and the group uses the objection to improve the proposal. Consensus goes further and keeps talking until everyone can support the decision. Both take more time than a vote, and both usually come with a date to review the decision. At the informal end, a small group of friends may simply agree with no rules at all, which works until the group grows. A group drawn by lot can also work toward agreement on behalf of everyone else, as in a citizens’ assembly. Many set a fallback vote in case agreement never comes. A whole community can also reach agreement in an open meeting, where raised hands show support without anyone counting them.",
    school:"A Grade 7 team trying a homework policy for six weeks, or a curriculum committee that approves changes unless someone objects by Friday.",
    agree:"Agreement here means no one sees a serious problem, which is easier to reach than everyone liking the same option. The risk is that people with less power, like students or new staff, don't feel safe objecting, and their silence gets counted as consent.",
    forces:["spiral_silence","influence_few","groupthink"]},
@@ -36,8 +36,8 @@ FG.familyOf = {
   autocracy:"1", polycentric:"1", consultative:"1", oligarchy:"1", chain_of_command:"1", advice_process:"1",
   majority:"2", landsgemeinde:"2", gram_sabha:"3", supermajority:"2", liberum_veto:"2", voting_rules:"2",
   consent:"3", unanimity:"3", lazy_consensus:"3", rough_consensus:"3", holacracy:"3", consensus_discussion:"3", quaker:"3", no_structure:"7",
-  participatory_budgeting:"2", indaba:"3",
-  citizens_assembly:"1", kleroterion:"1", venice:"2",
+  participatory_budgeting:"2", indaba:"1",
+  citizens_assembly:"3", kleroterion:"3", venice:"2",
   quadratic:"2", dot_voting:"2", score_voting:"2", conviction:"2", dao_token:"2", liquid:"2", futarchy:"2",
   bees:"7", herd:"7", stigmergy:"7", slime_mould:"7"
 };
@@ -364,10 +364,10 @@ FG.tool = {
 FG.structures.forEach(x => { x.family = FG.familyOf[x.id]; });
 /* Order within each group: the simplest form first, then each variant after the one it changes */
 /* Within each group, roughly most used first */
-FG.order = ["autocracy","consultative","oligarchy","chain_of_command","polycentric","citizens_assembly",
-  "majority","supermajority","voting_rules","score_voting","dot_voting","landsgemeinde","venice","liberum_veto",
+FG.order = ["autocracy","consultative","chain_of_command","oligarchy","polycentric","indaba",
+  "majority","supermajority","score_voting","landsgemeinde","dot_voting","voting_rules","venice","liberum_veto",
   "dao_token","conviction","quadratic","futarchy","liquid",
-  "rough_consensus","consensus_discussion","consent","consensus_fallback","gram_sabha","indaba",
+  "rough_consensus","consensus_discussion","consent","consensus_fallback","gram_sabha","citizens_assembly",
   "no_structure","herd","bees","stigmergy","slime_mould",
   "affinity_mapping","nemawashi","ngt","delphi","premortem","gradients","polis"];
 /* The short paragraph on each home-page card (20 words or fewer) */
@@ -426,7 +426,7 @@ FG.builds = {
   gradients:{on:"consensus_discussion", adds:"Instead of yes or no, each person shows how strongly they support the proposal."},
   consensus_fallback:{on:"consensus_discussion", adds:"If agreement is not reached by a set point, the group switches to a supermajority vote."},
   kleroterion:{on:"citizens_assembly", adds:"The lottery fills public offices directly, as in ancient Athens."},
-  indaba:{on:"consent", adds:"Each objection must come with a proposal to fix it."},
+  indaba:{on:"oligarchy", adds:"The few talk it through in the open while everyone else listens, and each no must come with a fix."},
   consultative:{on:"autocracy", adds:"The decider still decides, but hears from others first."},
   advice_process:{on:"autocracy", adds:"Anyone can decide, not just the person in charge, but they must first ask the people affected and people who know."},
   oligarchy:{on:"autocracy", adds:"A small group decides instead of one person."},
@@ -450,7 +450,7 @@ FG.builds = {
   lazy_consensus:{on:"rough_consensus", adds:"Silence by a deadline counts as yes, with no chair judging."},
   nemawashi:{on:"consensus_discussion", adds:"Agreement is built one-to-one before the meeting."},
   delphi:{on:"ngt", adds:"Ideas are still given alone, but answers stay anonymous and repeat in rounds."},
-  citizens_assembly:{on:"oligarchy", adds:"The few are chosen by lot, so no one can lobby them in advance, and they learn and deliberate before recommending."},
+  citizens_assembly:{on:"consensus_discussion", adds:"A group drawn by lot, rather than the people in charge, learns about the issue and works toward agreement before recommending."},
   venice:{on:"majority", adds:"Rounds of lots narrow who gets to vote, and the final choice needs a large majority."}
 };
 FG.structures.sort((a,b) => { const i = FG.order.indexOf(a.id), j = FG.order.indexOf(b.id); return (i < 0 ? 999 : i) - (j < 0 ? 999 : j); });

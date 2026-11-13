@@ -58,6 +58,6 @@ window.FG_EDITS = {
 },
 "fam:1:text": {
 "html": true,
-"v": "The simplest structure is one person making the call, like a principal for a whole-school decision or a teacher for how to introduce a particular topic. The decider may ask for advice first, or orders may pass down through layers of managers, as in the military. Authority can also be split across many local centres, each deciding its own part under rules set from above. Or the decision can sit with a small group, chosen for expertise, for seniority or by lot. These structures are fast, and they work well when the deciders already know what they need to know."
+"v": "The simplest structure is one person making the call, like a principal for a whole-school decision or a teacher for how to introduce a particular topic. The decider may ask for advice first, or orders may pass down through layers of managers, as in the military. Authority can also be split across many local centres, each deciding its own part under rules set from above. Or the decision can sit with a small group of leaders, chosen for expertise or seniority, who may talk it through in the open while everyone else listens, as in an indaba. These structures are fast, and they work well when the deciders already know what they need to know."
 }
 };

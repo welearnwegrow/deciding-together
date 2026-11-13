@@ -378,11 +378,11 @@ Object.assign(FG.entries, {
         {f:"fair_process",e:"helps",gen:"People accept a loss more readily when they had a say and heard the reasons.",how:"Teachers whose plans were cut had argued for them in the room and then agreed to the final plan, so they accepted the result."}],
       together:""},
     risky:{bullets:["Few of those affected attend, or meetings suit some groups more than others.", "A few powerful people do most of the talking.", "The matter involves facts about individuals that must stay private.", "The group is too large or spread out to meet in one place."],
-      title:"Parents and staff hold an open meeting on complaints about a teacher", where:"", text:"",
-      why:"The meeting needed facts about one member of staff, and those could not be shared in the open. People filled the gap with rumour, the teacher was named in front of everyone, and the steps they agreed did not fit what had happened. Matters about individuals need a small, private process.",
+      title:"All staff hold an open meeting about student wellbeing in one year group", where:"", text:"",
+      why:"The counsellor and the head of year knew of a few students who were struggling, but they could not share any of it in the open. The meeting went ahead anyway. People filled the gap with guesses, some started naming students, and the steps they agreed did not fit what was actually happening. The open meeting was right for hearing concerns, but decisions about individual students needed a small, private group.",
       forces:[
-        {f:"shared_info",e:"hurts",gen:"When key facts cannot be shared, a group decides on guesswork.",how:"The head knew what had happened but could not say, so the room argued from rumour."},
-        {f:"spiral_silence",e:"hurts",gen:"When speaking up feels risky, people keep quiet and the group hears less.",how:"Parents whose children had raised the complaints would not speak in front of everyone, so the room heard least from those who knew most."}],
+        {f:"shared_info",e:"hurts",gen:"When key facts cannot be shared, a group decides on guesswork.",how:"The few who knew could not say, so the room argued from guesswork."},
+        {f:"spiral_silence",e:"hurts",gen:"When speaking up feels risky, people keep quiet and the group hears less.",how:"Teachers who had noticed something in their own classes stayed quiet in front of colleagues, unsure what they could say, so the room heard least from those who knew most."}],
       together:""},
     tips:["Hold meetings at times and places that everyone affected can reach.", "Put specific decisions on the agenda, with the facts people need.", "Take matters about individual people to a small, private group.", "Start each meeting by reporting what was done since the last one."],
     refs:["ramchandani2025"]
