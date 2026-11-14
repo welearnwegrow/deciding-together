@@ -1,17 +1,17 @@
 /* Shaping proposals: a how-to guide, organised by the stages of a decision */
-window.SHAPING_REFS = ["kaner2007", "s3proposal", "upraise2025", "delbecq1971", "dalkey1963", "klein2007", "small2021", "fetters1995"];
+window.SHAPING_REFS = ["kaner2007", "s3proposal", "upraise2025", "delbecq1971", "dalkey1963", "klein2007", "small2021", "fetters1995", "luskin2002", "oecd2020principles"];
 window.SHAPING = [
 { id:"frame", name:"Frame the question",
   intro:"Before gathering any ideas, agree what the question is, who it affects and how it will be decided. Ten minutes here saves hours later.",
   techs:[
-  { id:"frame_question", case:{"sid": "consultative", "text": "The principal gave parents one letter and five days to reply on a Friday early finish. Agreeing the question first, with a deadline that left time for questions and a clear statement of how replies would count, would have given working parents a real chance to take part."}, refs:["kaner2007","s3proposal","upraise2025"], name:"Agree on the question and the decision rule",
+  { id:"frame_question", case:{"sid": "consultative", "text": "The principal gave parents one letter and five days to reply on a Friday early finish. Agreeing the question first, with a deadline that left time for questions and a clear statement of how replies would count, would have given working parents a real chance to take part."}, refs:["kaner2007","s3proposal","upraise2025","oecd2020principles"], name:"Agree on the question and the decision rule",
     for:"Makes sure everyone works on the same question and knows who will make the final call, and how.",
     when:"at the start of any decision that will take more than one conversation.",
-    steps:["Write down why a decision is needed and what a good outcome must achieve, in one or two sentences.","Check that the group agrees this is the right question, and that it belongs to this group. If it doesn't, pass it on.","Agree on the decision rule now: who decides, using which structure, and what happens if there is no agreement by a set date.","Agree a deadline, and a date to review the decision once it is in place.","Keep the question where everyone can see it for the rest of the process."],
+    steps:["Write down why a decision is needed and what a good outcome must achieve, in one or two sentences.","Check that the group agrees this is the right question, and that it belongs to this group. If it doesn't, pass it on.","Agree on the decision rule now: who decides, using which structure, and what happens if there is no agreement by a set date.","Agree how you will close the loop: who will tell people what was taken up, what wasn't, and why, and by when.","Agree a deadline, and a date to review the decision once it is in place.","Keep the question where everyone can see it for the rest of the process."],
     tips:["Do this before the meeting if you can, and send it round.","Say the decision rule out loud even when the head will decide alone. People take part differently when they know their input is advice."],
     pitfalls:["Leaving the decision rule unstated, so people find out at the end that they were only consulted.","Framing the question as a solution (\"Should we buy tablets?\") when it is really a need (\"How do students get more practice at home?\")."],
     example:"A Grade 7 team writes: \"Students report two hours of homework a night. We need a policy that keeps it manageable without losing practice.\" The head says she will decide on the team's proposal by the end of the month.",
-    src:"Kaner and colleagues on decision rules, Sociocracy 3.0 (agree on the purpose first) and consensus-oriented decision-making (define the problem and the decision rule)." },
+    src:"Kaner and colleagues on decision rules, Sociocracy 3.0 (agree on the purpose first) and consensus-oriented decision-making (define the problem and the decision rule), and the OECD good practice principles for deliberative processes (commit to responding to recommendations)." },
   { id:"stakeholders", case:{"sid": "landsgemeinde", "text": "Two students could not go to the sea for medical reasons, and the outing was called off at the door. Asking first who each option would affect, and whether anyone could not take part, would have shown this before the vote raised everyone's hopes."}, refs:["kaner2007"], name:"Check who is missing",
     for:"Finds the people a decision affects who are not in the room.",
     when:"early, before ideas are gathered, and again before a proposal is final.",
@@ -191,6 +191,14 @@ window.SHAPING = [
     tips:["Agree beforehand what level of support is enough for this decision.","People with reservations often have the most useful improvements."],
     pitfalls:["Treating \"don't like it but will support it\" as enthusiasm. It is not.","Asking in turn, so later people copy earlier ones."],
     example:"A staff team tests a draft timetable. Most show support with reservations, so the team asks what the reservations are and fixes two of them before the head decides.",
-    src:"Kaner and colleagues (gradients of agreement)." }
+    src:"Kaner and colleagues (gradients of agreement)." },
+  { id:"informed_poll", case:{"sid": "majority", "text": "The tax vote was decided by the few who turned out, mostly older residents without children in school. An informed poll beforehand, with residents drawn at random and briefed on what the money would pay for, would have shown the board what a cross-section of the district thought, and what to explain or change before the vote."}, refs:["luskin2002"], name:"Informed poll (deliberative polling)",
+    for:"Shows what a representative group thinks after hearing the evidence and discussing it, not only their first reaction.",
+    when:"first reactions are likely to rest on little information, and whoever decides wants to know what an informed cross-section thinks.",
+    steps:["Draw a group at random from everyone affected, across year groups and roles.","Ask them privately what they think of the proposal.","Give them a short, balanced briefing, agreed by people on different sides. Let them question someone for and someone against.","Discuss in small groups. The aim is to understand, not to agree.","Ask the same questions privately again. Share both results, and the reasons people gave for changing their minds, with whoever decides."],
+    tips:["Ask someone on each side to check the briefing before it is used.","Report why people changed their minds, not just the numbers."],
+    pitfalls:["Treating the second poll as a vote. It is advice.","A briefing that leans one way, which steers the result."],
+    example:"Before deciding on phones, a school draws students and parents by lot, asks their view, holds a morning of briefings and questions, discusses in small groups and asks again. Support for a full ban drops, and most prefer phones locked away during lessons.",
+    src:"Fishkin's Deliberative Polling, and Luskin, Fishkin and Jowell on the first Deliberative Poll (1994)." }
   ]}
 ];
