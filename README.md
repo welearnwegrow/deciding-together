@@ -5,6 +5,7 @@ Static site for GitHub Pages. Open `index.html`, or serve the folder.
 - `edits.js` holds text changes made in the online editor, baked in.
 - `config.js` holds the address of the feedback Worker. When it is empty, the feedback buttons are hidden.
 - `worker/worker.js` is the Cloudflare Worker that passes anonymous feedback to Notion.
+- `tools/add-google-tag.py` adds the Google tag to every page. Run it from the repo root after copying in a fresh build, before pushing.
 
 ## Feedback setup
 
