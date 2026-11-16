@@ -565,3 +565,13 @@ footer.site .brand{white-space:nowrap} @media (max-width:560px){ footer.site .br
 /* the guide's stated assumption, set off as a quote */
 .assume{display:block; position:relative; margin:24px 0 6px; padding:2px 0 2px 52px; font-family:var(--serif); font-style:italic; font-size:1.5rem; line-height:1.4; color:var(--ink)}
 .assume::before{content:"\201C"; position:absolute; left:0; top:-14px; font-size:5rem; line-height:1; color:var(--ochre); font-style:normal}
+
+/* Balanced card rows: 6 cards sit 3 + 3, 8 sit 4 + 4, 5 sit 3 + 2, 4 sit 2 + 2 on mid-size screens */
+@media (min-width:1000px){
+  :is(.scards,.gccards){grid-template-columns:repeat(4,minmax(0,1fr))}
+  :is(.scards,.gccards):is(:has(> :last-child:nth-child(3)),:has(> :last-child:nth-child(5)),:has(> :last-child:nth-child(6)),:has(> :last-child:nth-child(9))){grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:700px) and (max-width:999.98px){
+  :is(.scards,.gccards){grid-template-columns:repeat(3,minmax(0,1fr))}
+  :is(.scards,.gccards):is(:has(> :last-child:nth-child(2)),:has(> :last-child:nth-child(4))){grid-template-columns:repeat(2,minmax(0,1fr))}
+}

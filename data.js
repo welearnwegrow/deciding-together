@@ -273,9 +273,12 @@ FG.forces = [
   {id:"diffusion", model:{"type": "fishbone", "effect": "Everyone waits for someone else", "bones": [["Numbers", ["Many people present", "Large, loose teams"]], ["Roles", ["No one named to act", "Shared, vague duties"]], ["Signals", ["Others not acting", "An unclear situation"]], ["Cost", ["Acting feels risky", "Fear of looking foolish"]]], "note": "Each cause makes it easier to assume that someone else will act."}, name:"Diffusion of responsibility", tier:"C",
    what:"When several people could act, each feels less responsible for acting, so everyone may wait for someone else.",
    refs:["darley1968"]},
-  {id:"blame_avoidance", model:{"type": "fishbone", "effect": "A decision no one can be blamed for", "bones": [["Deflect", ["Hand it to a committee", "Point to rules from above"]], ["Distract", ["Announce something else", "Reframe the problem"]], ["Decline", ["Avoid the risky option", "Keep the old way"]], ["Diffuse", ["Spread the sign-off widely", "Leave no one in charge"]]], "note": "Each strategy protects the decider. None of them makes the decision better."}, name:"Blame avoidance", tier:"C",
-   what:"People in charge often act to avoid blame more than to make the best decision. They deflect it onto others, distract from it, decline risky choices however good, or spread a decision so widely that no one can be held to account.",
-   refs:["weaver1986","hood2011"]}
+  {id:"blame_avoidance", model:{"type": "fishbone", "effect": "A decision no one can be blamed for", "bones": [["Deflect upward", ["Point to rules from above", "“It's the board's policy”"]], ["Deflect outward", ["Hand it to a committee", "Cite the consultants"]], ["Deflect downward", ["Someone junior takes the fall", "Staff told to own the result"]], ["Decline", ["Avoid the risky option", "Keep the old way"]]], "note": "Each move protects the decider. None of them makes the decision better."}, name:"Blame avoidance", tier:"C",
+   what:"People in charge often choose what is safest to defend over what is best. They deflect a decision onto someone else, or decline a good option because whoever backs it would be blamed if it failed.",
+   refs:["weaver1986","hood2011"]},
+  {id:"spin", model:{"type": "fishbone", "effect": "Bad news that few people notice", "bones": [["Timing", ["Last day of term", "Late on a Friday"]], ["Wording", ["Positive headings", "Vague terms"]], ["Placement", ["Buried in a long message", "Next to bigger good news"]], ["Questions", ["No meeting to ask at", "No one named to answer"]]], "note": "Each choice lowers the chance that people notice. None of them changes the decision."}, name:"Spinning bad news", tier:"C",
+   what:"People in charge present bad news so that fewer people notice it: at a quiet moment, in soft words, or next to better news.",
+   refs:["hood2011"]}
 ];
 
 /* ---------- the 38 structures ---------- */
