@@ -900,6 +900,7 @@ function openStructure(id){
   DLG.querySelectorAll(".popbuilds a[data-str], .pvars a[data-str]").forEach(ba => ba.onclick = ev => { ev.preventDefault(); openStructure(ba.dataset.str); });
   if (!DLG.open) DLG.showModal();
   fbInit(DLG);
+  fgTrack("open", s.name);
   { const pi = DLG.querySelector(".popin"); if (pi){ pi.tabIndex = -1; pi.focus({preventScroll:true}); } }
   const eb = document.getElementById("edBar"); if (eb) DLG.append(eb);
   DLG.querySelector(".popin").scrollTop = 0; DLG.scrollTop = 0;
@@ -929,4 +930,21 @@ function openStructure(id){
   }
 }
 
-document.addEventListener("DOMContentLoaded", async () => { chrome(); readColors(); await loadEdits(); if (window.page) window.page(); applyDom(document); initEditing(); });
+/* Anonymous visit log (public site only): one "Visit" row per visitor per day, one "Opened" row per structure per visitor per day.
+   Sends no IP, name or browser details. Skipped inside Claude and when the browser asks not to be tracked. */
+function fgVid(){ let v = ""; try { v = localStorage.getItem("fg_vid") || ""; if (!/^[a-f0-9]{32}$/.test(v)){ const r = new Uint8Array(16); crypto.getRandomValues(r); v = Array.from(r, x => x.toString(16).padStart(2, "0")).join(""); localStorage.setItem("fg_vid", v); } } catch (e){ v = ""; } return v; }
+function fgTrack(kind, what){
+  const url = window.FG_FEEDBACK_URL; if (!url || (window.claude && window.claude.use)) return;
+  if (navigator.globalPrivacyControl || navigator.doNotTrack === "1") return;
+  const day = new Date().toISOString().slice(0, 10), key = "fg_seen:" + kind + ":" + (what || "");
+  try { if (localStorage.getItem(key) === day) return; localStorage.setItem(key, day); } catch (e){ return; }
+  let from = "direct";
+  try { if (document.referrer){ const r = new URL(document.referrer);
+    if (r.origin !== location.origin) from = r.hostname.replace(/^www\./, "");
+    else { const m = r.pathname.match(/\/(s|f|m)\/([^/]+)\//); from = m ? "share link: " + m[2] : "this site"; } } } catch (e){}
+  const device = matchMedia("(max-width: 700px)").matches ? "Phone" : matchMedia("(max-width: 1100px)").matches ? "Tablet" : "Desktop";
+  const body = JSON.stringify({kind, example: what || "", page: location.pathname, visitor: fgVid(), from, device});
+  try { fetch(url.replace(/\/+$/, "") + "/visit", {method: "POST", headers: {"Content-Type": "text/plain"}, body, keepalive: true}).catch(() => {}); } catch (e){}
+}
+
+document.addEventListener("DOMContentLoaded", async () => { chrome(); readColors(); await loadEdits(); if (window.page) window.page(); applyDom(document); initEditing(); fgTrack("visit"); });
