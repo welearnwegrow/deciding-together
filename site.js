@@ -937,14 +937,16 @@ function fgTrack(kind, what){
   const url = window.FG_FEEDBACK_URL; if (!url || (window.claude && window.claude.use)) return;
   if (navigator.globalPrivacyControl || navigator.doNotTrack === "1") return;
   const day = new Date().toISOString().slice(0, 10), key = "fg_seen:" + kind + ":" + (what || "");
-  try { if (localStorage.getItem(key) === day) return; localStorage.setItem(key, day); } catch (e){ return; }
+  try { if (localStorage.getItem(key) === day) return; } catch (e){ return; }
   let from = "direct";
   try { if (document.referrer){ const r = new URL(document.referrer);
     if (r.origin !== location.origin) from = r.hostname.replace(/^www\./, "");
     else { const m = r.pathname.match(/\/(s|f|m)\/([^/]+)\//); from = m ? "share link: " + m[2] : "this site"; } } } catch (e){}
   const device = matchMedia("(max-width: 700px)").matches ? "Phone" : matchMedia("(max-width: 1100px)").matches ? "Tablet" : "Desktop";
   const body = JSON.stringify({kind, example: what || "", page: location.pathname, visitor: fgVid(), from, device});
-  try { fetch(url.replace(/\/+$/, "") + "/visit", {method: "POST", headers: {"Content-Type": "text/plain"}, body, keepalive: true}).catch(() => {}); } catch (e){}
+  /* mark the day as done only once the Worker confirms, so a failed send is retried on the next page load */
+  try { fetch(url.replace(/\/+$/, "") + "/visit", {method: "POST", headers: {"Content-Type": "text/plain"}, body, keepalive: true})
+    .then(r => { if (r.ok) { try { localStorage.setItem(key, day); } catch (e){} } }).catch(() => {}); } catch (e){}
 }
 
 document.addEventListener("DOMContentLoaded", async () => { chrome(); readColors(); await loadEdits(); if (window.page) window.page(); applyDom(document); initEditing(); fgTrack("visit"); });
