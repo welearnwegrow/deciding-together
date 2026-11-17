@@ -1353,12 +1353,12 @@ Object.assign(SCENES, {
     else caption(g, "The design graded good by almost everyone wins", "Few people are unhappy with the result");
   }},
   "score_voting:risky":{ P:15, draw(g,t){
-    const R = [[5,2],[0,4],[0,2]], W = [3,6];
-    SV.table(g, R, {max:5, weights:W, fill: clamp((t - .12)/.34, 0, 1)*2, sums: ph(t,.48,.52), avg: ph(t,.52,.58), med: ph(t,.8,.86), win: t < .8 ? 0 : 1, hl: t < .8 ? "avg" : "med", ring: t > .6 && t < .8 ? ease(ph(t,.6,.66)) : ease(ph(t,.88,.94))});
+    const R = [[5,5,4,3,2,3,2,3,2],[1,1,2,4,4,5,4,3,4],[2,1,2,3,2,3,3,2,3]];
+    SV.table(g, R, {max:5, fill: clamp((t - .12)/.34, 0, 1)*9, sums: ph(t,.48,.52), avg: ph(t,.52,.58), med: ph(t,.8,.86), win: t < .8 ? 0 : 1, hl: t < .8 ? "avg" : "med", ring: t > .6 && t < .8 ? ease(ph(t,.6,.66)) : ease(ph(t,.88,.94))});
     if (t < .12) caption(g, "Nine directors rate three candidates for head of school", "From 0 to 5; the best average rating wins");
-    else if (t < .48) caption(g, "Three give their favourite 5 and the others 0", "The other six give the second candidate a 4");
-    else if (t < .8) caption(g, "On the average, the first candidate wins, 3.0 to 2.7", "The favourite of three directors");
-    else caption(g, "The middle rating would have chosen the second candidate", "Most of the board rated that candidate highly");
+    else if (t < .48) caption(g, "Three directors rate their favourite high and her main rival low", "The other six rate on merit");
+    else if (t < .8) caption(g, "On the average, the favourite wins, 3.2 to 3.1", "A few low ratings pulled the rival down");
+    else caption(g, "The middle rating would have chosen the rival", "Most of the board rated her highly");
   }}
 });
 /* Weighted voting and Conviction voting */

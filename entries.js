@@ -148,9 +148,9 @@ Object.assign(FG.entries, {
       together:""},
     risky:{bullets:["The winner is chosen by average rating.","A group cares a lot about one option and can agree how to rate.","Voters see the vote as a contest to win, not an honest rating.","No one checks how the ratings are spread."],
       title:"A board of directors rates three candidates for head of school", where:"", text:"",
-      why:"Three directors gave their favourite candidate 5 and the other two 0, while the other six rated a second candidate highly. On the average, the favourite of three directors won. The median, the middle rating, would have chosen the candidate most of the board rated highly.",
+      why:"Three directors strongly preferred one candidate. They rated her main rival 1 or 2, even though the rival was well qualified. The other six rated each candidate on their merits, and most of them rated the rival highly. On the average, the favourite of the three won, 3.2 to 3.1. The median, the middle rating, would have chosen the rival.",
       forces:[
-        {f:"influence_few",e:"hurts",gen:"When the average decides, people who exaggerate count for more.",how:"Three directors rated in extremes and outweighed the six who rated each candidate on their merits."},
+        {f:"influence_few",e:"hurts",gen:"When the average decides, people who exaggerate count for more.",how:"Three directors marked the rival down, and that was enough to outweigh the six who rated each candidate on their merits."},
         {f:"fair_process",e:"hurts",gen:"People accept a result when they can see the count was fair.",how:"No one looked at how the ratings were spread before the result was announced, so the six directors felt the count had been gamed."}],
       together:""},
     tips:["Use the median, or middle rating, when exaggeration is likely.","Use words for the grades, such as Excellent, Good, Acceptable, Poor, Reject.","Ask people to rate every option, not just their favourite.","Look at how ratings are spread before announcing a winner."],

@@ -184,7 +184,7 @@ window.SHAPING = [
 { id:"test", name:"Test support",
   intro:"Before the formal decision, check how much support the proposal really has, and what would make it stronger.",
   techs:[
-  { id:"gradients", case:{"sid": "score_voting", "text": "The board's average rating picked a candidate whom most directors had rated low. Testing support for the leading candidate on the gradients scale, from full support to block, would have shown six directors with serious doubts before the result was announced."}, refs:["kaner2007"], name:"Gradients of agreement",
+  { id:"gradients", case:{"sid": "score_voting", "text": "The board's average rating picked a candidate whom six of the nine directors had rated only 2 or 3. Testing support for the leading candidate on the gradients scale, from full support to block, would have shown six directors with serious doubts before the result was announced."}, refs:["kaner2007"], name:"Gradients of agreement",
     for:"Shows how strongly people support a proposal, not just yes or no.",
     when:"you want to know whether support is real before deciding, or why some people are hesitant.",
     steps:["Show an eight-point scale: wholehearted support; agree with a minor point of contention; support with reservations; abstain; need more discussion; don't like it but will support it; serious disagreement; block.","Read out the proposal.","Everyone shows where they stand at the same moment, with cards, fingers or a quick online poll.","Look at the spread. Ask people at the low end what would change their view.","Change the proposal if needed and test again, or move to the decision."],
