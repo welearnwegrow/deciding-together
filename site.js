@@ -949,4 +949,37 @@ function fgTrack(kind, what){
     .then(r => { if (r.ok) { try { localStorage.setItem(key, day); } catch (e){} } }).catch(() => {}); } catch (e){}
 }
 
-document.addEventListener("DOMContentLoaded", async () => { chrome(); readColors(); await loadEdits(); if (window.page) window.page(); applyDom(document); initEditing(); fgTrack("visit"); });
+/* Scroll depth: when the reader first leaves or hides the page, send how far down they got (the last heading
+   that came into view), how much of the page they scrolled, how many structure cards they saw, and how long the
+   page was visible. Once per page per browser per day, with the same privacy checks as fgTrack. */
+function fgDepth(){
+  const url = window.FG_FEEDBACK_URL; if (!url || (window.claude && window.claude.use)) return;
+  if (navigator.globalPrivacyControl || navigator.doNotTrack === "1") return;
+  const day = new Date().toISOString().slice(0, 10), key = "fg_seen:scroll:" + location.pathname;
+  try { if (localStorage.getItem(key) === day) return; } catch (e){ return; }
+  let maxPct = 0, far = -1, reached = "Top of page", shown = 0, since = document.visibilityState === "visible" ? Date.now() : 0, sent = false;
+  const seen = new Set(), heads = [...document.querySelectorAll("main h2, .stops h2, section h2")].filter(h => !h.closest("dialog"));
+  const measure = () => {
+    const doc = document.documentElement, bottom = scrollY + innerHeight, h = Math.max(doc.scrollHeight, 1);
+    maxPct = Math.max(maxPct, Math.min(100, Math.round(100*bottom/h)));
+    heads.forEach((el, i) => { if (i > far && el.getBoundingClientRect().top + scrollY < bottom - 40){ far = i; reached = el.textContent.trim().slice(0, 120) || reached; } });
+  };
+  if ("IntersectionObserver" in window){
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) seen.add(e.target); }), {threshold: .5});
+    document.querySelectorAll("a.scard").forEach(c => io.observe(c));
+  }
+  addEventListener("scroll", measure, {passive: true}); measure();
+  const send = () => {
+    if (sent) return; sent = true;
+    if (since){ shown += Date.now() - since; since = 0; }
+    measure();
+    try { localStorage.setItem(key, day); } catch (e){}
+    const body = JSON.stringify({kind: "scroll", example: reached.slice(0, 120), page: location.pathname, visitor: fgVid(),
+      scroll: maxPct, cards: seen.size, seconds: Math.min(3600, Math.round(shown/1000))});
+    try { fetch(url.replace(/\/+$/, "") + "/visit", {method: "POST", headers: {"Content-Type": "text/plain"}, body, keepalive: true}).catch(() => {}); } catch (e){}
+  };
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") send(); else if (!since) since = Date.now(); });
+  addEventListener("pagehide", send);
+}
+
+document.addEventListener("DOMContentLoaded", async () => { chrome(); readColors(); await loadEdits(); if (window.page) window.page(); applyDom(document); initEditing(); fgTrack("visit"); fgDepth(); });

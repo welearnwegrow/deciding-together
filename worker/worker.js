@@ -3,6 +3,7 @@
    2. Guide me (POST /guide): passes the page's prompt to the Claude API and returns the answer text.
    3. Transcript (POST /transcript): saves a Guide me conversation to the Notion table, if the reader left "save a copy" ticked.
    4. Visit (POST /visit): one "Visit" row per visitor per day, and one "Opened" row per structure a visitor opens that day.
+      Also one "Scrolled" row per page per visitor per day: the furthest heading reached, Scroll %, Cards seen, Seconds.
       The site decides what to send once a day; this route only checks and writes it.
    Secrets (set in the Cloudflare dashboard, never in this file): NOTION_TOKEN, NOTION_DB_ID, ANTHROPIC_API_KEY.
    Variables: ALLOWED_ORIGIN, e.g. https://welearnwegrow.github.io
@@ -117,7 +118,7 @@ async function feedback(body, env, headers){
 }
 
 async function visit(body, env, headers, request){
-  const kind = body.kind === "visit" ? "Visit" : body.kind === "open" ? "Opened" : "";
+  const kind = body.kind === "visit" ? "Visit" : body.kind === "open" ? "Opened" : body.kind === "scroll" ? "Scrolled" : "";
   if (!kind) return new Response("Bad request", {status: 400, headers});
   const what = String(body.example || "").slice(0, 120);
   if (kind === "Opened" && !what) return new Response("Bad request", {status: 400, headers});
@@ -129,7 +130,7 @@ async function visit(body, env, headers, request){
   const rt = v => v ? [{text: {content: v}}] : [];
 
   const props = {
-    "Example": {title: [{text: {content: kind === "Opened" ? what : "Visit"}}]},
+    "Example": {title: [{text: {content: kind === "Visit" ? "Visit" : (what || "Top of page")}}]},
     "Kind": {select: {name: kind}},
     "Page": {rich_text: rt(page)},
     "Visitor ID": {rich_text: rt(visitor)},
@@ -138,6 +139,12 @@ async function visit(body, env, headers, request){
     "Time": {date: {start: new Date().toISOString().slice(0, 10)}}
   };
   if (device) props["Device"] = {select: {name: device}};
+  if (kind === "Scrolled"){
+    const num = (v, max) => { const n = Math.round(Number(v)); return Number.isFinite(n) ? Math.min(Math.max(n, 0), max) : 0; };
+    props["Scroll %"] = {number: num(body.scroll, 100)};
+    props["Cards seen"] = {number: num(body.cards, 500)};
+    props["Seconds"] = {number: num(body.seconds, 3600)};
+  }
 
   const res = await fetch("https://api.notion.com/v1/pages", {
     method: "POST",
