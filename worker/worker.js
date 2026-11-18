@@ -136,7 +136,7 @@ async function visit(body, env, headers, request){
     "Visitor ID": {rich_text: rt(visitor)},
     "Came from": {rich_text: rt(from)},
     "Country": {rich_text: rt(country)},
-    "Time": {date: {start: new Date().toISOString().slice(0, 10)}}
+    "Time": {date: {start: new Date().toISOString()}}
   };
   if (device) props["Device"] = {select: {name: device}};
   if (kind === "Scrolled"){
