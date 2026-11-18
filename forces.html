@@ -416,7 +416,7 @@ window.page = function(){
       <h2><span${E(`frc:${id}:name`)}>${esc(f.name)}</span></h2>
       <div class="txt">
         <p class="what"${E(`frc:${id}:what`,true)}>${f.what}</p>
-        <div class="pairs2">${L.scenes.map((sc, i) => `<div class="sp2 ${sc.tone}">${scene(sc)}${L.ice && L.ice[i] ? `<div class="lfig">${modelFigure({type:"iceberg", layers:L.ice[i].layers}, null, L.ice[i].tone)}</div>` : ""}</div>`).join("")}</div><div class="lsec"><h4>What's going on</h4><p>${esc(L.mech)}</p></div>
+        <div class="pairs2">${L.scenes.map((sc, i) => `<div class="sp2 ${sc.tone}">${scene(sc)}${L.ice && L.ice[i] ? `<div class="lfig">${modelFigure({type:"iceberg", layers:L.ice[i].layers}, null, L.ice[i].tone)}</div>` : ""}</div>`).join("")}</div><div class="lsec"><h4>What's going on</h4>${L.mech.split(/\n\s*\n/).map(p => `<p>${esc(p)}</p>`).join("")}</div>
         <div class="lsec"><h4>What the research shows</h4><p>${esc(L.why)}</p></div>
         ${g.spot ? `<div class="spot"><h4>How to spot it</h4>${g.spot.map(x => `<p>${esc(x)}</p>`).join("")}</div>` : ""}
         <div class="act ${(G.when || {})[id] ? "two" : ""}">${(G.when || {})[id] ? `<div class="guide wh"><h4>When it helps</h4><ul>${G.when[id].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}${g.help ? `<div class="guide wd"><h4>What to do</h4><ul>${g.help.map(h => `<li>${esc(h[0])}</li>`).join("")}</ul></div>` : ""}</div>
