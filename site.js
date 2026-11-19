@@ -932,7 +932,20 @@ function openStructure(id){
 
 /* Anonymous visit log (public site only): one "Visit" row per visitor per day, one "Opened" row per structure per visitor per day.
    Sends no IP, name or browser details. Skipped inside Claude and when the browser asks not to be tracked. */
-function fgVid(){ let v = ""; try { v = localStorage.getItem("fg_vid") || ""; if (!/^[a-f0-9]{32}$/.test(v)){ const r = new Uint8Array(16); crypto.getRandomValues(r); v = Array.from(r, x => x.toString(16).padStart(2, "0")).join(""); localStorage.setItem("fg_vid", v); } } catch (e){ v = ""; } return v; }
+/* The visitor ID is kept in a variable for the page load, so every row from one page view carries the same ID even in
+   in-app browsers (e.g. LinkedIn's) that don't keep localStorage reliably; sessionStorage is a second fallback. */
+let fgVidCache = "";
+function fgVid(){
+  if (fgVidCache) return fgVidCache;
+  const ok = v => /^[a-f0-9]{32}$/.test(v || "");
+  let v = "";
+  try { v = localStorage.getItem("fg_vid") || ""; } catch (e){}
+  if (!ok(v)) try { v = sessionStorage.getItem("fg_vid") || ""; } catch (e){}
+  if (!ok(v)){ try { const r = new Uint8Array(16); crypto.getRandomValues(r); v = Array.from(r, x => x.toString(16).padStart(2, "0")).join(""); } catch (e){ return ""; } }
+  try { localStorage.setItem("fg_vid", v); } catch (e){}
+  try { sessionStorage.setItem("fg_vid", v); } catch (e){}
+  return fgVidCache = v;
+}
 function fgTrack(kind, what){
   const url = window.FG_FEEDBACK_URL; if (!url || (window.claude && window.claude.use)) return;
   if (navigator.globalPrivacyControl || navigator.doNotTrack === "1") return;
@@ -952,6 +965,11 @@ function fgTrack(kind, what){
 /* Scroll depth: when the reader first leaves or hides the page, send how far down they got (the last heading
    that came into view), how much of the page they scrolled, how many structure cards they saw, and how long the
    page was visible. Once per page per browser per day, with the same privacy checks as fgTrack. */
+/* A heading's own words, without any subtitle or label nested inside it. */
+function fgHeadText(el){
+  const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join(" ").replace(/\s+/g, " ").trim();
+  return own || (el.firstElementChild ? el.firstElementChild.textContent.trim() : el.textContent.trim());
+}
 function fgDepth(){
   const url = window.FG_FEEDBACK_URL; if (!url || (window.claude && window.claude.use)) return;
   if (navigator.globalPrivacyControl || navigator.doNotTrack === "1") return;
@@ -962,7 +980,7 @@ function fgDepth(){
   const measure = () => {
     const doc = document.documentElement, bottom = scrollY + innerHeight, h = Math.max(doc.scrollHeight, 1);
     maxPct = Math.max(maxPct, Math.min(100, Math.round(100*bottom/h)));
-    heads.forEach((el, i) => { if (i > far && el.getBoundingClientRect().top + scrollY < bottom - 40){ far = i; reached = el.textContent.trim().slice(0, 120) || reached; } });
+    heads.forEach((el, i) => { if (i > far && el.getBoundingClientRect().top + scrollY < bottom - 40){ far = i; reached = fgHeadText(el).slice(0, 120) || reached; } });
   };
   if ("IntersectionObserver" in window){
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) seen.add(e.target); }), {threshold: .5});
