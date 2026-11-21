@@ -980,7 +980,6 @@ function fgGate(href, title){
       <label class="gchk"><input type="checkbox" name="updates"> <span>Also send me occasional updates about the guide. You can unsubscribe at any time.</span></label>
       <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="ghp">
       <button type="submit" class="btn gbtn">Download the PDF</button>
-      <p class="gsmall">We use your email address as described in our <a href="privacy.html">privacy policy</a>. We never sell or share it.</p>
     </form>
     <div class="gdone" hidden><h2>Thank you</h2><p>Your download has started. If it didn't, <a class="gagain" href="#">download the PDF here</a>.</p><button type="button" class="btn gclose2">Close</button></div>`;
     document.body.append(d);
