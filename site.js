@@ -218,7 +218,7 @@ function chrome(){
   const ft = document.createElement("footer"); ft.className = "site";
   ft.innerHTML = `<div class="wrap">
     <div class="fl"><a class="brand" href="index.html"><svg class="bmark" viewBox="0 0 200 200" aria-hidden="true"><defs><mask id="bmk-f" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200"><rect width="200" height="200" fill="#000"/><defs><clipPath id="trk15f"><path d="M86 178 C91 170 93 150 92 112 L108 112 C107 150 109 170 114 178Z"></path></clipPath></defs><path d="M86 178 C91 170 93 150 92 112 L108 112 C107 150 109 170 114 178Z" fill="#fff"></path><g clip-path="url(#trk15f)"><path d="M86 118 Q100 113 114 118" stroke="#000" stroke-width="1.6" fill="none"></path><path d="M86 125 Q100 120 114 125" stroke="#000" stroke-width="1.6" fill="none"></path><path d="M86 132 Q100 127 114 132" stroke="#000" stroke-width="1.6" fill="none"></path><path d="M86 139 Q100 134 114 139" stroke="#000" stroke-width="1.6" fill="none"></path><path d="M86 146 Q100 141 114 146" stroke="#000" stroke-width="1.6" fill="none"></path><path d="M86 153 Q100 148 114 153" stroke="#000" stroke-width="1.6" fill="none"></path></g><path d="M100 114 Q74.0 110.0 54 85" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"></path><path d="M100 114 Q85.0 93.0 70 52" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"></path><path d="M100 114 Q100.0 86.0 97 37" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"></path><path d="M100 114 Q115.0 93.0 124 51" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"></path><path d="M100 114 Q126.0 110.0 152 85" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"></path><circle cx="48" cy="78" r="13" fill="#fff"></circle><circle cx="48.0" cy="71.5" r="1.7" fill="#000"></circle><circle cx="53.6" cy="81.2" r="1.7" fill="#000"></circle><circle cx="42.4" cy="81.2" r="1.7" fill="#000"></circle><circle cx="70" cy="44" r="13" fill="#fff"></circle><circle cx="66.0" cy="38.0" r="1.7" fill="#000"></circle><circle cx="74.0" cy="38.0" r="1.7" fill="#000"></circle><circle cx="66.0" cy="44.0" r="1.7" fill="#000"></circle><circle cx="74.0" cy="44.0" r="1.7" fill="#000"></circle><circle cx="66.0" cy="50.0" r="1.7" fill="#000"></circle><circle cx="74.0" cy="50.0" r="1.7" fill="#000"></circle><circle cx="100" cy="30" r="13" fill="#fff"></circle><circle cx="100.0" cy="21.5" r="1.7" fill="#000"></circle><circle cx="106.0" cy="24.0" r="1.7" fill="#000"></circle><circle cx="108.5" cy="30.0" r="1.7" fill="#000"></circle><circle cx="106.0" cy="36.0" r="1.7" fill="#000"></circle><circle cx="100.0" cy="38.5" r="1.7" fill="#000"></circle><circle cx="94.0" cy="36.0" r="1.7" fill="#000"></circle><circle cx="91.5" cy="30.0" r="1.7" fill="#000"></circle><circle cx="94.0" cy="24.0" r="1.7" fill="#000"></circle><circle cx="130" cy="44" r="13" fill="#fff"></circle><circle cx="130.0" cy="37.0" r="1.7" fill="#000"></circle><circle cx="137.0" cy="44.0" r="1.7" fill="#000"></circle><circle cx="130.0" cy="51.0" r="1.7" fill="#000"></circle><circle cx="123.0" cy="44.0" r="1.7" fill="#000"></circle><circle cx="152" cy="78" r="13" fill="#fff"></circle><circle cx="152.0" cy="71.0" r="1.7" fill="#000"></circle><circle cx="158.1" cy="74.5" r="1.7" fill="#000"></circle><circle cx="158.1" cy="81.5" r="1.7" fill="#000"></circle><circle cx="152.0" cy="85.0" r="1.7" fill="#000"></circle><circle cx="145.9" cy="81.5" r="1.7" fill="#000"></circle><circle cx="145.9" cy="74.5" r="1.7" fill="#000"></circle><circle cx="152.0" cy="78.0" r="1.7" fill="#000"></circle><path d="M92.4 162.0 L91.7 164.8 L90.8 167.5 L89.6 170.1 L88.3 172.5 L86.6 174.9 L84.8 177.1 L82.6 179.2 L80.2 181.2 L77.5 183.1 L74.5 184.9 L71.3 186.5 L67.8 188.0 L64.0 189.4 L60.0 190.8 L60.0 191.2 L64.3 190.7 L68.4 189.9 L72.2 188.9 L75.8 187.7 L79.2 186.2 L82.4 184.6 L85.4 182.8 L88.1 180.7 L90.7 178.5 L93.0 176.0 L95.0 173.3 L96.8 170.4 L98.3 167.3 L99.6 164.0Z" fill="#fff"></path><path d="M100.5 164.3 L102.0 167.4 L103.8 170.4 L105.8 173.1 L108.1 175.6 L110.5 177.9 L113.1 180.0 L116.0 181.8 L119.0 183.5 L122.2 185.0 L125.6 186.3 L129.1 187.3 L132.9 188.2 L136.8 188.9 L141.0 189.2 L141.0 188.8 L137.1 187.5 L133.4 186.3 L129.9 184.9 L126.7 183.4 L123.8 181.8 L121.0 180.0 L118.5 178.2 L116.3 176.1 L114.3 174.0 L112.5 171.8 L110.9 169.4 L109.6 167.0 L108.5 164.4 L107.5 161.7Z" fill="#fff"></path><path d="M96.3 165.8 L96.2 168.3 L96.2 170.7 L96.0 173.0 L95.9 175.2 L95.7 177.3 L95.4 179.4 L95.1 181.3 L94.8 183.2 L94.4 185.0 L93.9 186.7 L93.4 188.3 L92.9 189.9 L92.4 191.4 L91.8 192.9 L92.2 193.1 L93.3 191.9 L94.3 190.6 L95.2 189.1 L96.1 187.6 L96.9 185.9 L97.7 184.1 L98.4 182.2 L99.0 180.2 L99.6 178.1 L100.2 175.9 L100.6 173.6 L101.1 171.2 L101.4 168.7 L101.7 166.2Z" fill="#fff"></path><path d="M99.8 168.6 L100.7 171.1 L101.6 173.6 L102.6 175.9 L103.6 178.0 L104.7 180.1 L105.9 182.0 L107.1 183.7 L108.3 185.4 L109.6 186.9 L111.0 188.3 L112.4 189.5 L113.8 190.6 L115.3 191.5 L116.9 192.2 L117.1 191.8 L115.9 190.7 L114.7 189.5 L113.5 188.3 L112.4 186.9 L111.4 185.5 L110.4 183.9 L109.4 182.3 L108.5 180.5 L107.7 178.6 L106.9 176.6 L106.1 174.5 L105.4 172.2 L104.8 169.9 L104.2 167.4Z" fill="#fff"></path><g opacity=".55"><path d="M60 191 Q51 193 43 189" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M52 192.5 Q47 196 41 196.5" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M141 189 Q150 192 158 188" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M150 191.5 Q154 195.5 160 195.5" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M60 191 Q76 196 92 193" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M92 193 Q104 197 117 192" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M117 192 Q130 193 141 189" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M76 195 Q80 198 86 198.5" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path><path d="M128 193 Q125 197 120 198" stroke="#fff" stroke-width="0.9" fill="none" stroke-linecap="round"></path></g></mask></defs><rect width="200" height="200" fill="currentColor" mask="url(#bmk-f)"/></svg>Deciding Together: A Field Guide (Education Edition)</a></div>
-    <div class="fr"><p><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> · 2026 <a class="wl" href="https://welearnwegrow.bio" target="_blank" rel="noopener">We Learn, We Grow</a></p>
+    <div class="fr"><p><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> · 2026 <a class="wl" href="https://welearnwegrow.bio" target="_blank" rel="noopener">We Learn, We Grow</a> · <a href="privacy.html">Privacy</a></p>
       </div></div>`;
   document.body.append(ft);
 }
@@ -961,6 +961,55 @@ function fgTrack(kind, what){
   /* mark the day as done only once the Worker confirms, so a failed send is retried on the next page load */
   try { fetch(url.replace(/\/+$/, "") + "/visit", {method: "POST", headers: {"Content-Type": "text/plain"}, body, keepalive: true})
     .then(r => { if (r.ok) { try { localStorage.setItem(key, day); } catch (e){} } }).catch(() => {}); } catch (e){}
+}
+
+/* Download gate: a reader enters an email address before a PDF downloads. The address (and whether they asked for
+   updates) goes to the Worker's /signup route. The download starts once the form is sent, even if saving fails,
+   so a Worker problem never blocks a reader who has filled the form in. */
+function fgGate(href, title){
+  let d = document.getElementById("fgGate");
+  if (!d){
+    d = document.createElement("dialog"); d.id = "fgGate"; d.className = "gate";
+    d.innerHTML = `<form novalidate>
+      <button type="button" class="gclose" aria-label="Close">×</button>
+      <p class="kicker">Free download · PDF</p>
+      <h2 class="gtitle"></h2>
+      <p>Enter your email address and the download starts straight away.</p>
+      <label class="gfield"><span>Email address</span><input type="email" name="email" required autocomplete="email" inputmode="email" placeholder="you@example.org"></label>
+      <p class="gerr" role="alert" hidden>Please enter a valid email address.</p>
+      <label class="gchk"><input type="checkbox" name="updates"> <span>Also send me occasional updates about the guide. You can unsubscribe at any time.</span></label>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="ghp">
+      <button type="submit" class="btn gbtn">Download the PDF</button>
+      <p class="gsmall">We use your email address as described in our <a href="privacy.html">privacy policy</a>. We never sell or share it.</p>
+    </form>
+    <div class="gdone" hidden><h2>Thank you</h2><p>Your download has started. If it didn't, <a class="gagain" href="#">download the PDF here</a>.</p><button type="button" class="btn gclose2">Close</button></div>`;
+    document.body.append(d);
+    d.querySelector(".gclose").onclick = () => d.close();
+    d.querySelector(".gclose2").onclick = () => d.close();
+    d.addEventListener("click", e => { if (e.target === d) d.close(); });
+  }
+  const f = d.querySelector("form"), done = d.querySelector(".gdone"), err = d.querySelector(".gerr"), btn = d.querySelector(".gbtn");
+  d.querySelector(".gtitle").textContent = title;
+  f.hidden = false; done.hidden = true; err.hidden = true; btn.disabled = false;
+  const fire = () => { const a = document.createElement("a"); a.href = href; a.download = href.split("/").pop(); document.body.append(a); a.click(); a.remove(); };
+  d.querySelector(".gagain").onclick = e => { e.preventDefault(); fire(); };
+  f.onsubmit = async e => {
+    e.preventDefault();
+    const email = f.email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ err.hidden = false; f.email.focus(); return; }
+    err.hidden = true; btn.disabled = true; btn.textContent = "Starting your download…";
+    const url = window.FG_FEEDBACK_URL;
+    if (url && !(window.claude && window.claude.use)){
+      try {
+        const ctl = new AbortController(); setTimeout(() => ctl.abort(), 5000);
+        await fetch(url.replace(/\/+$/, "") + "/signup", {method: "POST", headers: {"Content-Type": "text/plain"}, signal: ctl.signal,
+          body: JSON.stringify({email, updates: f.updates.checked, website: f.website.value, file: title, page: location.pathname, visitor: fgVid()})});
+      } catch (e2){}
+    }
+    fire(); btn.textContent = "Download the PDF"; f.hidden = true; done.hidden = false;
+  };
+  if (!d.open) d.showModal();
+  setTimeout(() => f.email.focus(), 30);
 }
 
 /* Scroll depth: when the reader first leaves or hides the page, send how far down they got (the last heading

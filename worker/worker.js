@@ -4,6 +4,7 @@
    3. Transcript (POST /transcript): saves a Guide me conversation to the Notion table, if the reader left "save a copy" ticked.
    4. Visit (POST /visit): one "Visit" row per visitor per day, and one "Opened" row per structure a visitor opens that day.
       Also one "Scrolled" row per page per visitor per day: the furthest heading reached, Scroll %, Cards seen, Seconds.
+   5. Download sign-up (POST /signup): one "Download" row with the email a reader gives to download the PDF.
       The site decides what to send once a day; this route only checks and writes it.
    Secrets (set in the Cloudflare dashboard, never in this file): NOTION_TOKEN, NOTION_DB_ID, ANTHROPIC_API_KEY.
    Variables: ALLOWED_ORIGIN, e.g. https://welearnwegrow.github.io
@@ -154,6 +155,35 @@ async function visit(body, env, headers, request){
   return new Response(res.ok ? "ok" : "error", {status: res.ok ? 200 : 502, headers});
 }
 
+/* Download sign-up (POST /signup): one "Download" row with the reader's email, whether they asked for updates,
+   the file, the page and the country. Sent only when a reader submits the download form, so it is not
+   subject to the Do Not Track / Global Privacy Control checks that the anonymous visit log uses. */
+async function signup(body, env, headers, request){
+  if (body.website) return new Response("ok", {status: 200, headers});          /* hidden field: filled only by bots */
+  const email = String(body.email || "").trim().slice(0, 200);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return new Response("Bad request", {status: 400, headers});
+  const file = String(body.file || "").slice(0, 120);
+  const page = String(body.page || "").slice(0, 120);
+  const visitor = /^[a-f0-9]{32}$/.test(String(body.visitor || "")) ? String(body.visitor) : "";
+  const country = String((request.cf && request.cf.country) || "").slice(0, 8);
+  const rt = v => v ? [{text: {content: v}}] : [];
+  const res = await fetch("https://api.notion.com/v1/pages", {
+    method: "POST",
+    headers: {"Authorization": `Bearer ${env.NOTION_TOKEN}`, "Notion-Version": "2022-06-28", "Content-Type": "application/json"},
+    body: JSON.stringify({parent: {database_id: env.NOTION_DB_ID}, properties: {
+      "Example": {title: [{text: {content: file || "Download"}}]},
+      "Kind": {select: {name: "Download"}},
+      "Email": {email},
+      "Updates": {checkbox: body.updates === true},
+      "Page": {rich_text: rt(page)},
+      "Visitor ID": {rich_text: rt(visitor)},
+      "Country": {rich_text: rt(country)},
+      "Time": {date: {start: new Date().toISOString()}}
+    }})
+  });
+  return new Response(res.ok ? "ok" : "error", {status: res.ok ? 200 : 502, headers});
+}
+
 export default {
   async fetch(request, env){
     const origin = request.headers.get("Origin") || "";
@@ -166,6 +196,7 @@ export default {
     if (path === "/guide") return guide(body, env, headers);
     if (path === "/transcript") return transcript(body, env, headers);
     if (path === "/visit") return visit(body, env, headers, request);
+    if (path === "/signup") return signup(body, env, headers, request);
     return feedback(body, env, headers);
   }
 };

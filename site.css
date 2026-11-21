@@ -575,3 +575,19 @@ footer.site .brand{white-space:nowrap} @media (max-width:560px){ footer.site .br
   :is(.scards,.gccards){grid-template-columns:repeat(3,minmax(0,1fr))}
   :is(.scards,.gccards):is(:has(> :last-child:nth-child(2)),:has(> :last-child:nth-child(4))){grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* download gate */
+dialog.gate{border:1px solid var(--line); border-radius:18px; background:var(--paper); color:var(--ink); padding:28px 28px 22px; width:min(92vw,460px); box-shadow:var(--shadow)}
+dialog.gate::backdrop{background:rgba(30,26,20,.45)}
+.gate form, .gate .gdone{display:flex; flex-direction:column; gap:12px}
+.gate h2{font-family:var(--serif); font-weight:400; font-size:1.7rem; line-height:1.1; margin:0}
+.gate .gclose{position:absolute; top:10px; right:12px; border:0; background:none; font-size:1.6rem; line-height:1; color:var(--ink-mute); cursor:pointer}
+.gate .gfield{display:flex; flex-direction:column; gap:5px; font-size:.9rem; font-weight:700}
+.gate input[type=email]{font:inherit; font-weight:400; font-size:1rem; padding:11px 13px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink)}
+.gate input[type=email]:focus{outline:2px solid var(--ochre); outline-offset:1px}
+.gate .gchk{display:flex; gap:9px; align-items:flex-start; font-size:.9rem; color:var(--ink-soft)}
+.gate .gchk input{margin-top:3px}
+.gate .gerr{color:#9A3B26; font-size:.88rem; margin:-4px 0 0}
+.gate .gbtn{justify-content:center; font-size:1.02rem; padding:12px 20px; background:var(--ochre); border-color:var(--ochre); color:#2A2113}
+.gate .gsmall{font-size:.8rem; color:var(--ink-mute); margin:0}
+.gate .ghp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0}

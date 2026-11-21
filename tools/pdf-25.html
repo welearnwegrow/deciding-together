@@ -90,14 +90,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
   const foot = n => `<div class="foot"><span>Deciding Together: A Field Guide · Education edition · We Learn, We Grow</span><span><b>${URL_}</b> · ${n}</span></div>`;
   const strip = h => { const d = document.createElement("div"); d.innerHTML = h; d.querySelectorAll(".assume").forEach(x => x.remove()); return d.innerHTML; };
 
-  let html = `<section class="page cover">
-    <div class="coverhead"><span class="kick">A field guide to deciding together · Education edition</span><img class="mark" src="../img/favicon-180.png" alt=""></div>
-    <h1>${total} ways to <em>decide together</em></h1>
-    <p class="sub">From one person deciding to consent rounds and lotteries: the ways groups make decisions, sorted by who or what makes the final call.</p>
-    <div class="intro"><p>${strip(T("dom:index:lead1", ""))}</p></div>
-    <div class="toc">${FAMS.map((f, n) => `<div><b>${n+1}</b><span>${esc(T(`fam:${f.id}:name`, f.name))}</span><small>${esc(T(`fam:${f.id}:sub`, f.sub || ""))}</small><ul>${inFam(f).map(s => `<li>${esc(T(`str:${s.id}:name`, s.name))}</li>`).join("")}</ul><i>Page ${n+2}</i></div>`).join("")}</div>
-    ${foot(1)}
-  </section>`;
+  let html = "";
   FAMS.forEach((f, n) => {
     const last = n === FAMS.length - 1;
     html += `<section class="page">
@@ -110,11 +103,11 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
     </section>`;
   });
   const ALLS = FAMS.flatMap((f, n) => inFam(f).map((x, i) => Object.assign({}, x, {gi: n, grp: i === 0 ? `${n+1} · ${T(`fam:${f.id}:name`, f.name)}` : ""})));
-  html += `<section class="page all">
+  html = `<section class="page all">
     <div class="coverhead"><h2 class="allh">${ALLS.length} ways to decide together</h2><img class="mark" src="../img/favicon-180.png" alt=""></div>
     <div class="grid25">${ALLS.map(s => `<div class="c25 g${s.gi}"><em class="g25">${esc(s.grp)}</em><canvas width="460" height="288" data-thumb="${s.id}"></canvas><span>${esc(T(`str:${s.id}:name`, s.name))}</span></div>`).join("")}</div>
-    ${foot(FAMS.length + 2)}
-  </section>`;
+    ${foot(1)}
+  </section>` + html;
   document.getElementById("out").innerHTML = html;
   document.querySelectorAll("canvas[data-thumb]").forEach(c => { try { drawStill(c, c.dataset.thumb); } catch (e){ console.warn(c.dataset.thumb, e); } });
   await document.fonts.ready;
