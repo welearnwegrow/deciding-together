@@ -12,7 +12,7 @@
 @font-face{font-family:"DM Serif Display"; src:url(_fonts/dm-serif-display-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:"DM Serif Display"; src:url(_fonts/dm-serif-display-latin-400-italic.woff2) format("woff2"); font-style:italic}
 @page{size:A4; margin:0}
-:root{--paper:#ffffff}
+:root{--paper:#ffffff; --line:#857E70; --ink-mute:#5E584D; --ink-soft:#3E3A34}
 html,body{margin:0; padding:0; background:#fff}
 body{font-family:"DM Sans",sans-serif; color:#2E2A25; -webkit-print-color-adjust:exact; print-color-adjust:exact}
 header.top, footer, body > *:not(#out):not(script){display:none !important}
@@ -81,6 +81,8 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
 <script>
 (async () => {
   await loadEdits(); readColors(); chrome();
+  /* print: thicker connecting lines, so they survive being shrunk onto paper */
+  { const base = line; line = (g, x1, y1, x2, y2, col, w, dash) => base(g, x1, y1, x2, y2, col, (w || 1) * 2, dash); }
   const mk = document.querySelector("header.top .bmark"); const MARK = mk ? mk.outerHTML.replace('class="bmark"', 'class="mark"') : ""; document.querySelectorAll("header.top, footer").forEach(x => x.remove());
   const T = (k, d) => (window.FG_EDITS && FG_EDITS[k] && FG_EDITS[k].v) || d;
   const FAMS = FG.families.filter(f => f.id !== "8");
