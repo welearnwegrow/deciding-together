@@ -459,7 +459,7 @@ window.page = function(){
     document.getElementById("dspec").innerHTML = `<div class="row">${sp.map(p => `<a href="#${hy(p.id)}" style="--c:${p.c}" aria-label="${esc(p.name)}"${p.id === id ? ' aria-current="true"' : ""}><i></i><span>${esc(p.name)}</span></a>`).join("")}</div>
       <div class="lab"><span class="p">Mostly positive</span><span class="n">Mostly harmful</span></div>`;
     const sb = document.getElementById("fshare"); sb.innerHTML = SHARE_ICON + "<span>Share</span>"; setShare(sb, "f", id, FF[id].name, FF[id].what);
-    body.scrollTop = 0; if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; body.tabIndex = -1; body.focus({preventScroll:true}); };
+    body.scrollTop = 0; if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; body.tabIndex = -1; body.focus({preventScroll:true});  if (window.fgTrack) fgTrack("open", "Force: " + FF[id].name);};
   const closeF = () => { dlg.close(); };
   dlg.addEventListener("close", () => { if (location.hash) history.replaceState(null, "", location.pathname + location.search); });
   dlg.querySelector(".dclose").onclick = closeF;

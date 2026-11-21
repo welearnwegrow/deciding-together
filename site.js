@@ -955,6 +955,7 @@ function fgTrack(kind, what){
   try { if (document.referrer){ const r = new URL(document.referrer);
     if (r.origin !== location.origin) from = r.hostname.replace(/^www\./, "");
     else { const m = r.pathname.match(/\/(s|f|m)\/([^/]+)\//); from = m ? "share link: " + m[2] : "this site"; } } } catch (e){}
+  try { const v = new URLSearchParams(location.search).get("via"); if (v && /^[a-z0-9-]{1,40}$/i.test(v)) from = "post: " + v; } catch (e){}
   const device = matchMedia("(max-width: 700px)").matches ? "Phone" : matchMedia("(max-width: 1100px)").matches ? "Tablet" : "Desktop";
   const body = JSON.stringify({kind, example: what || "", page: location.pathname, visitor: fgVid(), from, device});
   /* mark the day as done only once the Worker confirms, so a failed send is retried on the next page load */
