@@ -12,10 +12,11 @@
 @font-face{font-family:"DM Serif Display"; src:url(_fonts/dm-serif-display-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:"DM Serif Display"; src:url(_fonts/dm-serif-display-latin-400-italic.woff2) format("woff2"); font-style:italic}
 @page{size:A4; margin:0}
-html,body{margin:0; padding:0; background:#F3F0E7}
+:root{--paper:#ffffff}
+html,body{margin:0; padding:0; background:#fff}
 body{font-family:"DM Sans",sans-serif; color:#2E2A25; -webkit-print-color-adjust:exact; print-color-adjust:exact}
 header.top, footer, body > *:not(#out):not(script){display:none !important}
-.page{width:210mm; height:297mm; box-sizing:border-box; padding:16mm 15mm 14mm; position:relative; overflow:hidden; break-after:page; background:#F3F0E7; display:flex; flex-direction:column}
+.page{width:210mm; height:297mm; box-sizing:border-box; padding:16mm 15mm 14mm; position:relative; overflow:hidden; break-after:page; background:#fff; display:flex; flex-direction:column}
 .page:last-child{break-after:auto}
 .serif{font-family:"DM Serif Display",Georgia,serif; font-weight:400}
 .kick{font-size:8.5pt; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#7A5C22}
@@ -46,7 +47,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
 .gtext{font-size:9.5pt; line-height:1.5; color:#3E3A34; margin:0 0 5mm}
 .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm 4mm}
 .card{display:flex; flex-direction:column; gap:1.5mm; break-inside:avoid}
-.card canvas{width:100%; height:auto; aspect-ratio:460/288; background:#F7F5EF; border:1px solid #E2DDD0; border-radius:3mm; display:block}
+.card canvas{width:100%; height:auto; aspect-ratio:460/288; background:#fff; border:1px solid #DDD7C9; border-radius:3mm; display:block}
 .card b{font-size:10pt; line-height:1.25; font-weight:700}
 .card span{font-size:8.6pt; line-height:1.4; color:#55514A}
 .end{margin-top:6mm; background:#8B4526; color:#F3E9DC; border-radius:4mm; padding:6mm 7mm; display:grid; grid-template-columns:1fr auto; gap:3mm 8mm; align-items:center}
@@ -56,7 +57,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
 .allh{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:34pt; line-height:1.05; margin:2mm 0 6mm}
 .grid25{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5mm 3.5mm; flex:1; align-content:space-evenly}
 .c25{display:flex; flex-direction:column; gap:1.5mm}
-.c25 canvas{width:100%; height:auto; aspect-ratio:460/288; background:#F7F5EF; border:1px solid #E2DDD0; border-radius:2.5mm; display:block}
+.c25 canvas{width:100%; height:auto; aspect-ratio:460/288; background:#fff; border:1px solid #DDD7C9; border-radius:2.5mm; display:block}
 .g25{display:block; height:4.6mm; font-style:normal; font-size:8pt; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#7A5C22; white-space:nowrap; overflow:visible; border-left:2px solid transparent}
 .c25{--gc:#7A5C22}
 .c25.g0{--gc:#B07A1E}
@@ -104,7 +105,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
   });
   const ALLS = FAMS.flatMap((f, n) => inFam(f).map((x, i) => Object.assign({}, x, {gi: n, grp: i === 0 ? `${n+1} · ${T(`fam:${f.id}:name`, f.name)}` : ""})));
   html = `<section class="page all">
-    <div class="coverhead"><h2 class="allh">${ALLS.length} ways to decide together</h2><img class="mark" src="../img/favicon-180.png" alt=""></div>
+    <div class="coverhead"><h2 class="allh">${ALLS.length} ways to decide together</h2><img class="mark" src="tree-mark.png" alt=""></div>
     <div class="grid25">${ALLS.map(s => `<div class="c25 g${s.gi}"><em class="g25">${esc(s.grp)}</em><canvas width="460" height="288" data-thumb="${s.id}"></canvas><span>${esc(T(`str:${s.id}:name`, s.name))}</span></div>`).join("")}</div>
     ${foot(1)}
   </section>` + html;
