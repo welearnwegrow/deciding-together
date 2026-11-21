@@ -54,9 +54,10 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
 .end b{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:17pt; color:#fff; display:block; margin-bottom:1.5mm}
 .end .url{font-weight:700; font-size:11pt; color:#fff; white-space:nowrap}
 .allh{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:34pt; line-height:1.05; margin:2mm 0 6mm}
-.grid25{display:grid; grid-template-columns:repeat(5,1fr); gap:5mm 3.5mm; flex:1; align-content:space-evenly}
+.grid25{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5mm 3.5mm; flex:1; align-content:space-evenly}
 .c25{display:flex; flex-direction:column; gap:1.5mm}
 .c25 canvas{width:100%; height:auto; aspect-ratio:460/288; background:#F7F5EF; border:1px solid #E2DDD0; border-radius:2.5mm; display:block}
+.g25{display:block; width:0; height:4.2mm; font-style:normal; font-size:8pt; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#7A5C22; white-space:nowrap; overflow:visible; border-left:2px solid transparent}
 .c25 span{font-size:8.8pt; line-height:1.25; font-weight:500}
 .allurl{display:flex; justify-content:center; padding:4mm 0 2mm}
 .allurl span{background:#8B4526; color:#fff; font-weight:700; font-size:13pt; border-radius:999px; padding:3.5mm 9mm}
@@ -101,10 +102,10 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
       ${foot(n+2)}
     </section>`;
   });
-  const ALLS = FAMS.flatMap(f => inFam(f));
+  const ALLS = FAMS.flatMap((f, n) => inFam(f).map((x, i) => Object.assign({}, x, {grp: i === 0 ? `${n+1} · ${T(`fam:${f.id}:name`, f.name)}` : ""})));
   html += `<section class="page all">
     <div class="coverhead"><h2 class="allh">${ALLS.length} ways to decide together</h2><img class="mark" src="../img/favicon-180.png" alt=""></div>
-    <div class="grid25">${ALLS.map(s => `<div class="c25"><canvas width="460" height="288" data-thumb="${s.id}"></canvas><span>${esc(T(`str:${s.id}:name`, s.name))}</span></div>`).join("")}</div>
+    <div class="grid25">${ALLS.map(s => `<div class="c25"><em class="g25">${esc(s.grp)}</em><canvas width="460" height="288" data-thumb="${s.id}"></canvas><span>${esc(T(`str:${s.id}:name`, s.name))}</span></div>`).join("")}</div>
     <div class="allurl"><span>${URL_}</span></div>
     ${foot(FAMS.length + 2)}
   </section>`;
