@@ -106,7 +106,6 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
   html += `<section class="page all">
     <div class="coverhead"><h2 class="allh">${ALLS.length} ways to decide together</h2><img class="mark" src="../img/favicon-180.png" alt=""></div>
     <div class="grid25">${ALLS.map(s => `<div class="c25"><em class="g25">${esc(s.grp)}</em><canvas width="460" height="288" data-thumb="${s.id}"></canvas><span>${esc(T(`str:${s.id}:name`, s.name))}</span></div>`).join("")}</div>
-    <div class="allurl"><span>${URL_}</span></div>
     ${foot(FAMS.length + 2)}
   </section>`;
   document.getElementById("out").innerHTML = html;
