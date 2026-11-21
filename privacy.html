@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-5BD2LBVB"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  /* Google consent mode: nothing is stored on the reader's device, so Google Analytics sends only cookieless pings */
+  gtag('consent', 'default', {analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'denied'});
   gtag('js', new Date());
 </script>
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-5BD2LBVB"></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -68,6 +70,7 @@
         <tbody>
           <tr><td><b>Your email address</b>, and whether you asked for updates</td><td>Only when you download a PDF</td><td>To provide the download and to understand who uses the guide. If you tick the box, to send you occasional updates about the guide.</td></tr>
           <tr><td><b>Anonymous usage records</b>: a random ID kept in your browser's local storage, the pages you visit, the structures, social forces and methods you open, how far you scroll and how long a page is visible, the name of the site that linked to us (not the full address), the type of device (worked out from screen width) and your country</td><td>When you use the guide, unless your browser sends Do Not Track or Global Privacy Control, in which case none of this is recorded</td><td>To see which parts of the guide are useful and improve it. The random ID is not linked to your name or email. Your country comes from your internet address, but we do not store the address itself.</td></tr>
+          <tr><td><b>Google Analytics</b>: the page you view, the site that linked to you, your type of device and browser, and an approximate location worked out from your internet address</td><td>When you load a page</td><td>To count visits across the site. Google Analytics runs in a mode that stores nothing on your device: no cookies are set and no identifier is kept, so visits cannot be linked to each other or to you. Google receives your internet address to deliver the request.</td></tr>
           <tr><td><b>Feedback</b>: your reaction to an example and any note you add</td><td>Only when you press a feedback button</td><td>To improve the examples</td></tr>
           <tr><td><b>Guide me</b>: the decision you describe and the answers</td><td>When you use Guide me</td><td>To give you an answer. The text is sent to our AI provider to produce it. We keep the conversation only if you tick the box agreeing to it; we keep an estimate of the cost of every conversation.</td></tr>
         </tbody>
@@ -76,7 +79,7 @@
       <h2>Legal basis</h2>
       <ul>
         <li>Updates by email: your consent, which you can withdraw at any time.</li>
-        <li>Download email, usage records and feedback: our legitimate interest in providing the guide and understanding how it is used, kept to the minimum needed.</li>
+        <li>Download email, usage records, Google Analytics and feedback: our legitimate interest in providing the guide and understanding how it is used, kept to the minimum needed.</li>
         <li>Saved Guide me conversations: your consent.</li>
       </ul>
 
@@ -86,14 +89,18 @@
         <li><b>Notion</b> stores them.</li>
         <li><b>Anthropic</b> produces the Guide me answers.</li>
         <li><b>GitHub</b> hosts the website and, like any web host, receives your internet address when pages load.</li>
-        <li><b>Google</b> serves the fonts and runs Google Tag Manager on the pages.</li>
+        <li><b>Google</b> serves the fonts, and runs Google Tag Manager and Google Analytics on the pages without cookies.</li>
       </ul>
       <p>Some of these companies are based in the United States, so your information may be processed there. We do not sell or share your information with anyone else, and we do not use it for advertising.</p>
+
+      <h2>Cookies and storage on your device</h2>
+      <p>The guide sets no cookies, and Google Analytics is set not to store anything on your device. The guide keeps a few small items in your browser's storage: the random ID used for the anonymous usage records, a note of which pages and examples were already counted today so each is counted once, and the reactions you gave to examples so the buttons show them. You can remove them at any time by clearing your browser's site data. If your browser sends Do Not Track or Global Privacy Control, no usage records are sent.</p>
 
       <h2>How long we keep it</h2>
       <ul>
         <li>Email addresses: until you ask us to delete yours or unsubscribe from updates, and in any case no longer than 24 months after your last download.</li>
         <li>Usage records, feedback and saved Guide me conversations: up to 24 months.</li>
+        <li>Google Analytics data: 2 months in Google Analytics, the shortest period it offers.</li>
       </ul>
 
       <h2>Your rights</h2>
