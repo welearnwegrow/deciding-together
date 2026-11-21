@@ -21,7 +21,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
 .kick{font-size:8.5pt; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#7A5C22}
 .cover h1{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:64pt; line-height:.98; margin:10mm 0 6mm}
 .cover h1 em{color:#9C6A16}
-.cover .sub{font-size:13pt; line-height:1.45; color:#55514A; max-width:150mm; margin:0 0 8mm}
+.cover .sub{font-size:13pt; line-height:1.45; color:#55514A; max-width:150mm; margin:0 0 6mm}
 .cover .intro{font-size:10.5pt; line-height:1.55; color:#3E3A34; max-width:160mm}
 .cover .intro p{margin:0 0 3mm}
 .mosaic{display:grid; grid-template-columns:repeat(4,1fr); gap:3mm; margin:7mm 0 8mm}
@@ -31,7 +31,9 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
 .toc b{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:24pt; color:#B07A1E; display:block; line-height:1}
 .toc span{font-family:"DM Serif Display",Georgia,serif; font-size:12.5pt; display:block; margin:1mm 0}
 .toc small{font-size:8.5pt; color:#6A665E; display:block; line-height:1.35}
-.toc i{font-style:normal; font-size:8.5pt; color:#7A5C22; display:block; margin-top:1.5mm}
+.toc i{font-style:normal; font-size:8pt; color:#7A5C22; display:block; margin-top:2mm}
+.toc ul{list-style:none; margin:3mm 0 0; padding:0}
+.toc li{font-size:9pt; line-height:1.3; padding:1.2mm 0; border-top:1px solid #D6D1C3}
 .mark{width:20mm; height:20mm; margin:-4mm -3mm 0 0}
 .coverhead{display:flex; justify-content:space-between; align-items:flex-start}
 .foot{margin-top:auto; padding-top:4mm; display:flex; justify-content:space-between; align-items:center; font-size:8pt; color:#6A665E; border-top:1px solid #D6D1C3}
@@ -78,8 +80,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
     <h1>${total} ways to <em>decide together</em></h1>
     <p class="sub">From one person deciding to consent rounds and lotteries: the ways groups make decisions, sorted by who or what makes the final call.</p>
     <div class="intro"><p>${strip(T("dom:index:lead1", ""))}</p></div>
-    <div class="mosaic">${["consultative","consent","score_voting","bees"].map(id => `<canvas width="460" height="288" data-thumb="${id}"></canvas>`).join("")}</div>
-    <div class="toc">${FAMS.map((f, n) => `<div><b>${n+1}</b><span>${esc(T(`fam:${f.id}:name`, f.name))}</span><small>${esc(T(`fam:${f.id}:sub`, f.sub || ""))}</small><i>${inFam(f).length} structures · page ${n+2}</i></div>`).join("")}</div>
+    <div class="toc">${FAMS.map((f, n) => `<div><b>${n+1}</b><span>${esc(T(`fam:${f.id}:name`, f.name))}</span><small>${esc(T(`fam:${f.id}:sub`, f.sub || ""))}</small><ul>${inFam(f).map(s => `<li>${esc(T(`str:${s.id}:name`, s.name))}</li>`).join("")}</ul><i>Page ${n+2}</i></div>`).join("")}</div>
     ${foot(1)}
   </section>`;
   FAMS.forEach((f, n) => {
