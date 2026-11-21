@@ -100,7 +100,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
       <div class="gh"><span class="n">${n+1}</span><h2>${esc(T(`fam:${f.id}:name`, f.name))}</h2></div>
       <p class="gsub">${esc(T(`fam:${f.id}:sub`, f.sub || ""))}</p>
       <p class="gtext">${T(`fam:${f.id}:text`, f.text)}</p>
-      <div class="cards">${inFam(f).map(s => `<div class="card"><canvas width="460" height="288" data-thumb="${s.id}"></canvas><b>${esc(T(`str:${s.id}:name`, s.name))}</b><span>${esc(T(`str:${s.id}:card`, s.card || s.line))}</span></div>`).join("")}</div>
+      <div class="cards">${inFam(f).map(s => `<div class="card"><canvas width="1380" height="864" data-thumb="${s.id}"></canvas><b>${esc(T(`str:${s.id}:name`, s.name))}</b><span>${esc(T(`str:${s.id}:card`, s.card || s.line))}</span></div>`).join("")}</div>
       ${last ? `<div class="end"><div><b>Open any of these online</b><p>Each structure in the guide has an example where it works and one where it backfires, and the social forces to watch for. If you have a decision in front of you now, describe it in Guide me and get a step-by-step way to decide.</p></div><span class="url">${URL_}</span></div>` : ""}
       ${foot(n+2)}
     </section>`;
@@ -108,7 +108,7 @@ header.top, footer, body > *:not(#out):not(script){display:none !important}
   const ALLS = FAMS.flatMap((f, n) => inFam(f).map((x, i) => Object.assign({}, x, {gi: n, grp: i === 0 ? `${n+1} · ${T(`fam:${f.id}:name`, f.name)}` : ""})));
   html = `<section class="page all">
     <div class="coverhead"><h2 class="allh">${ALLS.length} ways to decide together</h2><img class="mark" src="tree-mark.png" alt=""></div>
-    <div class="grid25">${ALLS.map(s => `<div class="c25 g${s.gi}"><em class="g25">${esc(s.grp)}</em><canvas width="460" height="288" data-thumb="${s.id}"></canvas><span>${esc(T(`str:${s.id}:name`, s.name))}</span></div>`).join("")}</div>
+    <div class="grid25">${ALLS.map(s => `<div class="c25 g${s.gi}"><em class="g25">${esc(s.grp)}</em><canvas width="1380" height="864" data-thumb="${s.id}"></canvas><span>${esc(T(`str:${s.id}:name`, s.name))}</span></div>`).join("")}</div>
     ${foot(1)}
   </section>` + html;
   document.getElementById("out").innerHTML = html;
