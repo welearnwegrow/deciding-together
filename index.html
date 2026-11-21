@@ -69,7 +69,15 @@
 .forwho p{max-width:70ch; color:var(--ink-soft)}
 @media (max-width:980px){ .sitgrid{grid-template-columns:repeat(2, minmax(0,1fr))} }
 @media (max-width:560px){ .sitgrid{grid-template-columns:minmax(0,1fr); gap:8px} .sit{padding:12px 14px}
-  .smap .smcol ul{display:none} .smap .sms{min-height:0; margin-bottom:10px} }
+}
+.pdfdl{display:grid; grid-template-columns:auto minmax(0,1fr); gap:24px; align-items:center; margin-top:8px; padding:20px 24px; border-radius:18px; background:var(--surface); border:1px solid var(--line); text-decoration:none; color:var(--ink); box-shadow:var(--shadow)}
+.pdfdl img{width:150px; height:auto; border-radius:6px; border:1px solid var(--line); box-shadow:0 6px 18px rgba(0,0,0,.12); transform:rotate(-2deg); transition:transform .2s}
+.pdfdl:hover img{transform:rotate(0)}
+.pdft{display:flex; flex-direction:column; gap:8px; align-items:flex-start}
+.pdft b{font-family:var(--serif); font-weight:400; font-size:clamp(1.6rem,3.4vw,2.4rem); line-height:1.05}
+.pdft > span:not(.smk):not(.btn){color:var(--ink-soft); max-width:52ch}
+.pdfbtn{font-size:1.05rem; padding:12px 22px; background:var(--ochre); border-color:var(--ochre); color:#2A2113}
+@media (max-width:560px){ .pdfdl{grid-template-columns:96px minmax(0,1fr); gap:14px; padding:14px} .pdfdl img{width:96px} .pdfbtn{font-size:.95rem; padding:10px 16px} }
 .smap{margin-top:8px}
 .smk{font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--label); margin-bottom:6px}
 .smcols{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); border-top:2px solid var(--ink)}
@@ -137,7 +145,10 @@
         </div>
         <p class="guideline">Have a decision in front of you now? <a href="tool.html">Describe it in Guide me</a> and get a way to decide.</p>
       </nav>
-      <nav class="smap" aria-label="Structures"><p class="smk">At a glance</p><div class="smcols" id="menu"></div></nav>
+      <a class="pdfdl" href="deciding-together-25-ways.pdf" download>
+        <img src="img/pdf-cover.png" alt="" width="150" height="212">
+        <span class="pdft"><span class="smk">Free download · PDF · 5 pages</span><b>25 ways to decide together</b><span>Every structure in the guide on one printable handout, grouped by who or what makes the final call.</span><span class="btn pdfbtn">Download the PDF</span></span>
+      </a>
     </section>
   </div>
   <div class="wrap">
@@ -159,12 +170,9 @@
 <script>
 window.PAGE = "path";
 window.page = function(){
+  const dl = document.querySelector(".pdfdl"); if (dl) dl.addEventListener("click", () => { if (window.fgTrack) fgTrack("open", "Download: 25 ways PDF"); });
   const FAMS = FG.families.filter(f => f.id !== "8");
   const inFam = f => FG.structures.filter(s => S[s.id] && (FG.familyOf ? FG.familyOf[s.id] : s.family) === f.id && !(FG.asExample || {})[s.id]).sort((a,b) => (FG.order.indexOf(a.id) + 999*(FG.order.indexOf(a.id) < 0)) - (FG.order.indexOf(b.id) + 999*(FG.order.indexOf(b.id) < 0)));
-  document.getElementById("menu").innerHTML = FAMS.map((f,n) => { const list = inFam(f);
-    return `<div class="smcol"><a class="smh" href="#group-${f.id}"><span class="smn">${n+1}</span><span class="smt"${E(`fam:${f.id}:name`)}>${esc(f.name)}</span></a>
-      <p class="sms">${esc(f.sub || "")}</p>
-      <ul>${list.map(s => `<li><a href="#${hy(s.id)}">${esc(s.name)}</a></li>`).join("")}</ul></div>`; }).join("");
 
   const flink = id => F[id] ? `<a href="${fHref(id)}">${F[id].name}</a>` : "";
   const card = s => built(s.id)

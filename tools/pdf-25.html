@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>25 ways to decide together</title>
+<!-- Print layout for the downloadable PDF. Build: serve the repo, open this page in headless Chrome, print to A4. -->
+<link rel="stylesheet" href="../site.css">
+<style>
+@font-face{font-family:"DM Sans"; src:url(_fonts/dm-sans-latin-400-normal.woff2) format("woff2"); font-weight:400}
+@font-face{font-family:"DM Sans"; src:url(_fonts/dm-sans-latin-500-normal.woff2) format("woff2"); font-weight:500}
+@font-face{font-family:"DM Sans"; src:url(_fonts/dm-sans-latin-700-normal.woff2) format("woff2"); font-weight:700}
+@font-face{font-family:"DM Serif Display"; src:url(_fonts/dm-serif-display-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"DM Serif Display"; src:url(_fonts/dm-serif-display-latin-400-italic.woff2) format("woff2"); font-style:italic}
+@page{size:A4; margin:0}
+html,body{margin:0; padding:0; background:#F3F0E7}
+body{font-family:"DM Sans",sans-serif; color:#2E2A25; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+header.top, footer, body > *:not(#out):not(script){display:none !important}
+.page{width:210mm; height:297mm; box-sizing:border-box; padding:16mm 15mm 14mm; position:relative; overflow:hidden; break-after:page; background:#F3F0E7; display:flex; flex-direction:column}
+.page:last-child{break-after:auto}
+.serif{font-family:"DM Serif Display",Georgia,serif; font-weight:400}
+.kick{font-size:8.5pt; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#7A5C22}
+.cover h1{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:64pt; line-height:.98; margin:10mm 0 6mm}
+.cover h1 em{color:#9C6A16}
+.cover .sub{font-size:13pt; line-height:1.45; color:#55514A; max-width:150mm; margin:0 0 8mm}
+.cover .intro{font-size:10.5pt; line-height:1.55; color:#3E3A34; max-width:160mm}
+.cover .intro p{margin:0 0 3mm}
+.mosaic{display:grid; grid-template-columns:repeat(4,1fr); gap:3mm; margin:7mm 0 8mm}
+.mosaic canvas{width:100%; height:auto; aspect-ratio:460/288; background:#F7F5EF; border:1px solid #E2DDD0; border-radius:2.5mm; display:block}
+.toc{margin-top:auto; border-top:2px solid #2E2A25; display:grid; grid-template-columns:repeat(4,1fr)}
+.toc div{padding:4mm 4mm 0 0}
+.toc b{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:24pt; color:#B07A1E; display:block; line-height:1}
+.toc span{font-family:"DM Serif Display",Georgia,serif; font-size:12.5pt; display:block; margin:1mm 0}
+.toc small{font-size:8.5pt; color:#6A665E; display:block; line-height:1.35}
+.toc i{font-style:normal; font-size:8.5pt; color:#7A5C22; display:block; margin-top:1.5mm}
+.mark{width:20mm; height:20mm; margin:-4mm -3mm 0 0}
+.coverhead{display:flex; justify-content:space-between; align-items:flex-start}
+.foot{margin-top:auto; padding-top:4mm; display:flex; justify-content:space-between; align-items:center; font-size:8pt; color:#6A665E; border-top:1px solid #D6D1C3}
+.foot b{color:#8B4526; font-weight:700}
+.cover .foot{margin-top:6mm}
+.gh{display:flex; align-items:baseline; gap:4mm; margin:0 0 1mm}
+.gh .n{font-family:"DM Serif Display",Georgia,serif; font-size:40pt; color:#B07A1E; line-height:1}
+.gh h2{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:28pt; margin:0; line-height:1.05}
+.gsub{font-size:12pt; font-weight:700; margin:1mm 0 2.5mm}
+.gtext{font-size:9.5pt; line-height:1.5; color:#3E3A34; margin:0 0 5mm}
+.cards{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm 4mm}
+.card{display:flex; flex-direction:column; gap:1.5mm; break-inside:avoid}
+.card canvas{width:100%; height:auto; aspect-ratio:460/288; background:#F7F5EF; border:1px solid #E2DDD0; border-radius:3mm; display:block}
+.card b{font-size:10pt; line-height:1.25; font-weight:700}
+.card span{font-size:8.6pt; line-height:1.4; color:#55514A}
+.end{margin-top:6mm; background:#8B4526; color:#F3E9DC; border-radius:4mm; padding:6mm 7mm; display:grid; grid-template-columns:1fr auto; gap:3mm 8mm; align-items:center}
+.end p{margin:0; font-size:10pt; line-height:1.5}
+.end b{font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:17pt; color:#fff; display:block; margin-bottom:1.5mm}
+.end .url{font-weight:700; font-size:11pt; color:#fff; white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="out"></div>
+<script src="../data.js"></script>
+<script src="../entries.js"></script>
+<script src="../edits.js"></script>
+<script src="../site.js"></script>
+<script src="../scenes.js"></script>
+<script>
+(async () => {
+  await loadEdits(); readColors(); chrome();
+  const mk = document.querySelector("header.top .bmark"); const MARK = mk ? mk.outerHTML.replace('class="bmark"', 'class="mark"') : ""; document.querySelectorAll("header.top, footer").forEach(x => x.remove());
+  const T = (k, d) => (window.FG_EDITS && FG_EDITS[k] && FG_EDITS[k].v) || d;
+  const FAMS = FG.families.filter(f => f.id !== "8");
+  const inFam = f => FG.structures.filter(s => S[s.id] && (FG.familyOf ? FG.familyOf[s.id] : s.family) === f.id && !(FG.asExample || {})[s.id])
+    .sort((a,b) => (FG.order.indexOf(a.id) + 999*(FG.order.indexOf(a.id) < 0)) - (FG.order.indexOf(b.id) + 999*(FG.order.indexOf(b.id) < 0)));
+  const total = FAMS.reduce((n, f) => n + inFam(f).length, 0);
+  const URL_ = "welearnwegrow.github.io/deciding-together";
+  const foot = n => `<div class="foot"><span>Deciding Together: A Field Guide · Education edition · We Learn, We Grow</span><span><b>${URL_}</b> · ${n}</span></div>`;
+  const strip = h => { const d = document.createElement("div"); d.innerHTML = h; d.querySelectorAll(".assume").forEach(x => x.remove()); return d.innerHTML; };
+
+  let html = `<section class="page cover">
+    <div class="coverhead"><span class="kick">A field guide to deciding together · Education edition</span><img class="mark" src="../img/favicon-180.png" alt=""></div>
+    <h1>${total} ways to <em>decide together</em></h1>
+    <p class="sub">From one person deciding to consent rounds and lotteries: the ways groups make decisions, sorted by who or what makes the final call.</p>
+    <div class="intro"><p>${strip(T("dom:index:lead1", ""))}</p></div>
+    <div class="mosaic">${["consultative","consent","score_voting","bees"].map(id => `<canvas width="460" height="288" data-thumb="${id}"></canvas>`).join("")}</div>
+    <div class="toc">${FAMS.map((f, n) => `<div><b>${n+1}</b><span>${esc(T(`fam:${f.id}:name`, f.name))}</span><small>${esc(T(`fam:${f.id}:sub`, f.sub || ""))}</small><i>${inFam(f).length} structures · page ${n+2}</i></div>`).join("")}</div>
+    ${foot(1)}
+  </section>`;
+  FAMS.forEach((f, n) => {
+    const last = n === FAMS.length - 1;
+    html += `<section class="page">
+      <div class="gh"><span class="n">${n+1}</span><h2>${esc(T(`fam:${f.id}:name`, f.name))}</h2></div>
+      <p class="gsub">${esc(T(`fam:${f.id}:sub`, f.sub || ""))}</p>
+      <p class="gtext">${T(`fam:${f.id}:text`, f.text)}</p>
+      <div class="cards">${inFam(f).map(s => `<div class="card"><canvas width="460" height="288" data-thumb="${s.id}"></canvas><b>${esc(T(`str:${s.id}:name`, s.name))}</b><span>${esc(T(`str:${s.id}:card`, s.card || s.line))}</span></div>`).join("")}</div>
+      ${last ? `<div class="end"><div><b>Open any of these online</b><p>Each structure in the guide has an example where it works and one where it backfires, and the social forces to watch for. If you have a decision in front of you now, describe it in Guide me and get a step-by-step way to decide.</p></div><span class="url">${URL_}</span></div>` : ""}
+      ${foot(n+2)}
+    </section>`;
+  });
+  document.getElementById("out").innerHTML = html;
+  document.querySelectorAll("canvas[data-thumb]").forEach(c => { try { drawStill(c, c.dataset.thumb); } catch (e){ console.warn(c.dataset.thumb, e); } });
+  await document.fonts.ready;
+  window.PDF_READY = {total, fams: FAMS.map(f => inFam(f).length)};
+})();
+</script>
+</body>
+</html>
