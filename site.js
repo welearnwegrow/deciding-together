@@ -228,6 +228,7 @@ let C = {};
 function readColors(){
   const cs = getComputedStyle(document.documentElement);
   ["paper","paper-2","ink","ink-soft","ink-mute","line","ochre","sage","terra","loop-r","loop-b"].forEach(k => C[k] = cs.getPropertyValue("--"+k).trim());
+  const dl = cs.getPropertyValue("--draw-line").trim(); if (dl) C.line = dl;
 }
 function hex2rgb(h){ h = h.replace("#",""); if (h.length===3) h = h.split("").map(c=>c+c).join(""); return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)); }
 function toRgb(c){ const m = /^rgb\((\d+),(\d+),(\d+)\)$/.exec(String(c).replace(/\s/g,"")); return m ? [+m[1], +m[2], +m[3]] : hex2rgb(c); }
@@ -405,7 +406,7 @@ function caption(g, text, sub){
   g.fillText(text, 24, 20);
   if (sub){ g.fillStyle = C["ink-mute"]; g.font = "14px DM Sans, Arial, sans-serif"; g.fillText(sub, 24, 44); }
 }
-function line(g, x1,y1,x2,y2, col, w, dash){ g.save(); g.strokeStyle = col; g.lineWidth = w||1; if (dash) g.setLineDash(dash); g.beginPath(); g.moveTo(x1,y1); g.lineTo(x2,y2); g.stroke(); g.restore(); }
+function line(g, x1,y1,x2,y2, col, w, dash){ g.save(); g.strokeStyle = col; g.lineWidth = (w||1)*1.5; if (dash) g.setLineDash(dash); g.beginPath(); g.moveTo(x1,y1); g.lineTo(x2,y2); g.stroke(); g.restore(); }
 function dot(g,x,y,r,col){ g.beginPath(); g.arc(x,y,r,0,Math.PI*2); g.fillStyle = col; g.fill(); }
 function text(g, s, x, y, o){ if (WORDLESS) return; o=o||{}; g.fillStyle = o.col || C["ink-soft"]; g.font = `${o.w||400} ${(o.fs||14)*FSK}px ${o.serif ? "DM Serif Display, Georgia, serif" : "DM Sans, Arial, sans-serif"}`; g.textAlign = o.align||"center"; g.textBaseline = o.base||"middle"; g.fillText(s,x,y); }
 function tick(g,x,y,col){ g.save(); g.strokeStyle = col; g.lineWidth = 2.4; g.beginPath(); g.moveTo(x-6,y); g.lineTo(x-1,y+5); g.lineTo(x+7,y-5); g.stroke(); g.restore(); }

@@ -1,7 +1,7 @@
 /* Layout idea: the We Learn We Grow resource family (Futures Wheel, Capacities): warm paper, a display serif set light
    with amber italics, small tracked labels, soft panels; dotted rings and loops carry the WLWG line work. */
 :root{
-  --paper:#F5F4EE; --paper-2:#EDECE4; --surface:#EDECE4; --surface-2:#E4E2D8; --line:#D3D1C6;
+  --paper:#F5F4EE; --paper-2:#EDECE4; --surface:#EDECE4; --surface-2:#E4E2D8; --line:#D3D1C6; --draw-line:#857E70;
   --ink:#38352F; --ink-soft:#55514A; --ink-mute:#6A665E; --label:#7A5C22;
   --ochre:#E0A030; --ochre-deep:#9C6A16; --sage:#46716F; --terra:#B0563C;
   --stain-a:rgba(70,113,111,.07); --stain-b:rgba(120,120,110,.05); --stain-c:rgba(224,160,48,.06);
@@ -15,7 +15,7 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#26241F; --paper-2:#2F2C27; --surface:#2F2C27; --surface-2:#38352F; --line:#4A463E;
+    --paper:#26241F; --paper-2:#2F2C27; --surface:#2F2C27; --surface-2:#38352F; --line:#4A463E; --draw-line:#8F887B;
     --ink:#F0ECE3; --ink-soft:#CFC8BB; --ink-mute:#B0A99C; --label:#E8B85C;
     --ochre:#E8AE45; --ochre-deep:#F0BE63; --sage:#7DB0AC; --terra:#CE7357;
     --stain-a:rgba(125,176,172,.05); --stain-b:rgba(200,190,170,.03); --stain-c:rgba(232,174,69,.04);
@@ -27,7 +27,7 @@
   }
 }
 :root[data-theme="dark"]{
-  --paper:#26241F; --paper-2:#2F2C27; --surface:#2F2C27; --surface-2:#38352F; --line:#4A463E;
+  --paper:#26241F; --paper-2:#2F2C27; --surface:#2F2C27; --surface-2:#38352F; --line:#4A463E; --draw-line:#8F887B;
   --ink:#F0ECE3; --ink-soft:#CFC8BB; --ink-mute:#B0A99C; --label:#E8B85C;
   --ochre:#E8AE45; --ochre-deep:#F0BE63; --sage:#7DB0AC; --terra:#CE7357;
   --stain-a:rgba(125,176,172,.05); --stain-b:rgba(200,190,170,.03); --stain-c:rgba(232,174,69,.04);
