@@ -74,7 +74,7 @@ async function ask(p, onText){
 }
 /* keep only catalogue ids the guide can link to */
 function clean(r){
-  r.approach = r.approach || {}; r.approach.steps = (r.approach.steps || []).filter(s => s && (s.kind === "none" || s.kind === "" || IDS[s.kind] && IDS[s.kind].has(s.id) || (s.kind = "none"))).map(s => (s.kind === "" && (s.kind = "none"), s));
+  r.approach = r.approach || {}; if (!Array.isArray(r.forces) && Array.isArray(r.approach.forces)) r.forces = r.approach.forces; /* the model sometimes nests forces inside approach */ r.approach.steps = (r.approach.steps || []).filter(s => s && (s.kind === "none" || s.kind === "" || IDS[s.kind] && IDS[s.kind].has(s.id) || (s.kind = "none"))).map(s => (s.kind === "" && (s.kind = "none"), s));
   r.approach.steps.forEach(s => { s.role = ROLE[s.role] ? s.role : "shape"; s.because = String(s.because || "").replace(/^because\s+/i, ""); s.key = s.key === true; });
   const keys = r.approach.steps.filter(s => s.key); if (keys.length !== 1){ r.approach.steps.forEach(s => s.key = false); const d = r.approach.steps.find(s => s.role === "decide"); if (d) d.key = true; }
   r.crux = String(r.crux || ""); r.rule = String(r.rule || "");
